@@ -1018,6 +1018,54 @@
       box-shadow: 0 1px 0 #3b1f0e;
     }
 
+    /* Prank Robot Mini-Racing Modal Styling */
+    #raceCanvas {
+      display: block;
+      width: 100%;
+      height: auto;
+      cursor: pointer;
+      image-rendering: pixelated;
+      image-rendering: crisp-edges;
+    }
+
+    .race-controls-row {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn-race-lane {
+      cursor: pointer;
+      flex: 0 0 112px;
+      border: 3px solid #4a2511;
+      padding: 14px 10px;
+      border-radius: 6px;
+      background: #2b6cb0;
+      color: #fffbeb;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 900;
+      box-shadow: 0 4px 0 #3b1f0e, inset -3px -3px 0px #1e4e8c, inset 3px 3px 0px #63b3ed;
+    }
+
+    .btn-race-gas {
+      cursor: pointer;
+      flex: 1;
+      border: 3px solid #4a2511;
+      padding: 14px 16px;
+      border-radius: 6px;
+      background: #dc2626;
+      color: #fffbeb;
+      font-family: inherit;
+      font-size: 16px;
+      font-weight: 900;
+      box-shadow: 0 4px 0 #3b1f0e, inset -3px -3px 0px #991b1b, inset 3px 3px 0px #fca5a5;
+    }
+
+    .btn-race-gas:active, .btn-race-gas.pressed, .btn-race-lane:active {
+      transform: translateY(2px);
+      box-shadow: 0 1px 0 #3b1f0e;
+    }
+
     @media (max-width: 640px) {
       #startScreenOverlay {
         padding: 12px;
@@ -1252,6 +1300,9 @@
       </div>
 
       <button id="confirmTalkBtn" type="button" class="btn-next-q">知道啦，繼續探索！ ➜</button>
+      <button id="talkActionEggBtn" type="button" class="btn-next-q hidden" style="background:#ea580c;margin-top:8px;">
+        🏎️ 順便挑戰「機器人極速賽車」➜
+      </button>
     </div>
   </div>
 
@@ -1295,6 +1346,54 @@
 
       <button id="shootBballBtn" type="button" class="btn-shoot-bball">
         🏀 瞄準力度並投籃！（或按空白鍵）
+      </button>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- 8B. 2/F ROBOT ARENA UNWINNABLE PRANK RACING GAME MODAL                -->
+  <!-- ===================================================================== -->
+  <div id="raceModal" class="modal-backdrop hidden">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="npc-header-left">
+          <div class="npc-avatar-box" style="background:#fee2e2;border-color:#fca5a5;">🏎️</div>
+          <div>
+            <div class="badge-row">
+              <span class="subject-badge" style="background:#fee2e2;color:#991b1b;">2/F 機械人競技場</span>
+              <span class="level-badge">絕對公平競速（？）</span>
+            </div>
+            <div class="modal-title">基朗機器人極速賽車</div>
+          </div>
+        </div>
+        <button id="closeRaceBtn" type="button" class="btn-close-modal" aria-label="關閉">✕</button>
+      </div>
+
+      <div class="bball-stats-bar">
+        <div class="bball-stat-item">
+          <div class="bball-stat-label">挑戰次數</div>
+          <div id="raceAttemptVal" class="bball-stat-val" style="color:#2b6cb0;">1</div>
+        </div>
+        <div class="bball-stat-item">
+          <div class="bball-stat-label">玩家勝場</div>
+          <div class="bball-stat-val" style="color:#15803d;">0 勝</div>
+        </div>
+        <div class="bball-stat-item">
+          <div class="bball-stat-label">機器人勝場</div>
+          <div id="raceBotWinVal" class="bball-stat-val" style="color:#dc2626;">0 勝</div>
+        </div>
+      </div>
+
+      <div class="bball-canvas-wrap">
+        <canvas id="raceCanvas" width="520" height="230"></canvas>
+      </div>
+
+      <div id="raceActionRow" class="race-controls-row">
+        <button id="raceLaneBtn" type="button" class="btn-race-lane">↕ 切換車道</button>
+        <button id="raceGasBtn" type="button" class="btn-race-gas">🔥 按住狂踩油門！（空白鍵）</button>
+      </div>
+      <button id="raceRetryBtn" type="button" class="btn-next-q hidden" style="background:#ea580c;margin-top:10px;">
+        🔄 不服氣！再挑戰機器人一次！
       </button>
     </div>
   </div>
@@ -1810,7 +1909,7 @@
           role: '資訊科技與編程',
           shirtColor: '#0284c7',
           message: '歡迎來到基朗創科電腦室！同學們在這裡學習 Python 編程、人工智能及 3D 建模設計。',
-          tip: '💻 秘訣：點擊電腦室旁的神秘終端機光點，可啟動機械人超頻加速！'
+          tip: '💻 秘訣：走近右下角機器人，點擊它頭上的 1982 終端機或挑戰機器人賽車！'
         },
         {
           id: 'va_lee',
@@ -1837,7 +1936,7 @@
           avatar: '📜',
           title: '基朗創校年份密碼（1982）',
           message: '你細心觀察校史展板，發現中華基督教會基朗中學創校於 1982 年，並一直以「識真理得自由以服務」培育英才！',
-          tip: '✨ 已解鎖隱藏彩蛋 1 / 3！記得去 2/F 電腦室試試這組密碼喔！'
+          tip: '✨ 已解鎖隱藏彩蛋 1 / 3！記得去 2/F 機器人頭上的終端機看看喔！'
         },
         {
           id: 'egg_1f_bookmark',
@@ -1854,12 +1953,12 @@
           id: 'egg_2f_terminal',
           floor: 2,
           floorName: '2/F 二樓',
-          x: 488,
-          y: 225,
+          x: 650,
+          y: 472,
           avatar: '⚡',
-          title: '電腦室超頻加速指令（1982）',
-          message: '你在電腦室終端機輸入創校年份「1982」，成功啟動機械人競技場的「極速超頻模式」8 秒鐘！',
-          tip: '✨ 已解鎖隱藏彩蛋 3 / 3！快看看右下方機械人的移動速度吧！'
+          title: '機器人1982超頻終端機',
+          message: '你點擊了直接裝在機器人頭上的「1982 終端機」，成功啟動機器人「極速超頻模式」8 秒鐘！順便也可以跟機器人比一場賽車（如果你贏得到的話哈哈）！',
+          tip: '✨ 已解鎖隱藏彩蛋 3 / 3！快看看機器人的極速飆車吧！'
         }
       ];
 
@@ -1877,11 +1976,14 @@
         nearbyTeacher: null,
         nearbyEgg: null,
         nearbyBasketball: false,
+        nearbyArena: false,
         activeQuiz: null,
         foundEggs: {},
         robotTurboTimer: 0,
         bballScore: 0,
         bballBest: 0,
+        raceAttempts: 0,
+        raceBotWins: 0,
         keys: {},
         dpad: { up: false, down: false, left: false, right: false },
         player: {
@@ -1933,10 +2035,13 @@
         state.nearbyTeacher = null;
         state.nearbyEgg = null;
         state.nearbyBasketball = false;
+        state.nearbyArena = false;
         state.activeQuiz = null;
         state.foundEggs = {};
         state.robotTurboTimer = 0;
         state.bballScore = 0;
+        state.raceAttempts = 0;
+        state.raceBotWins = 0;
         state.confetti = [];
         state.keys = {};
         state.dpad = { up: false, down: false, left: false, right: false };
@@ -1952,7 +2057,7 @@
           completed: false
         }));
 
-        ['quizModal', 'questListModal', 'summaryModal', 'npcTalkModal', 'basketballModal'].forEach(id => {
+        ['quizModal', 'questListModal', 'summaryModal', 'npcTalkModal', 'basketballModal', 'raceModal'].forEach(id => {
           const el = document.getElementById(id);
           if (el) el.classList.add('hidden');
         });
@@ -3000,7 +3105,7 @@
           } else if (obs.isComputerRoom) {
             ctx.fillText('💻 ' + obs.label, obs.x + obs.w * 0.5, obs.y + 13);
           } else if (obs.isArena) {
-            ctx.fillText(obs.label, obs.x + obs.w * 0.5, obs.y + 15);
+            ctx.fillText(obs.label + '（點擊或按 E 惡搞賽車）', obs.x + obs.w * 0.5, obs.y + 15);
           } else {
             ctx.fillText(obs.label, obs.x + obs.w * 0.5, obs.y + obs.h * 0.5);
           }
@@ -3467,8 +3572,22 @@
       function drawEasterEggPixelBody(egg, timeSec) {
         const found = !!state.foundEggs[egg.id];
         const bob = Math.round(Math.sin(timeSec * 4.2 + egg.x) * 3);
-        const r = Math.round(15 + Math.sin(timeSec * 5) * 2);
 
+        if (egg.id === 'egg_2f_terminal') {
+          // Mini 1982 Terminal Mounted Directly on Top of the Robot
+          pCtx.fillStyle = '#0f172a';
+          pCtx.fillRect(egg.x - 12, egg.y - 11 + bob, 24, 16);
+          pCtx.strokeStyle = found ? '#4ade80' : '#facc15';
+          pCtx.lineWidth = 2;
+          pCtx.strokeRect(egg.x - 12, egg.y - 11 + bob, 24, 16);
+          pCtx.fillStyle = found ? '#22c55e' : '#38bdf8';
+          pCtx.fillRect(egg.x - 9, egg.y - 8 + bob, 18, 10);
+          pCtx.fillStyle = '#4a2511';
+          pCtx.fillRect(egg.x - 3, egg.y + 5 + bob, 6, 6);
+          return;
+        }
+
+        const r = Math.round(15 + Math.sin(timeSec * 5) * 2);
         pCtx.fillStyle = found ? 'rgba(58, 140, 78, 0.32)' : 'rgba(246, 196, 69, 0.45)';
         pCtx.fillRect(egg.x - r, egg.y - r + bob, r * 2, r * 2);
         pCtx.strokeStyle = found ? '#15803d' : '#b45309';
@@ -3479,6 +3598,19 @@
       function drawEasterEggIcon(egg, timeSec) {
         const found = !!state.foundEggs[egg.id];
         const bob = Math.round(Math.sin(timeSec * 4.2 + egg.x) * 3);
+        if (egg.id === 'egg_2f_terminal') {
+          ctx.fillStyle = '#0f172a';
+          ctx.fillRect(egg.x - 24, egg.y - 26 + bob, 48, 14);
+          ctx.strokeStyle = '#facc15';
+          ctx.lineWidth = 1.5;
+          ctx.strokeRect(egg.x - 24, egg.y - 26 + bob, 48, 14);
+          ctx.fillStyle = '#fde047';
+          ctx.font = '900 9.5px "Courier New", monospace';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText('1982終端', egg.x, egg.y - 19 + bob);
+          return;
+        }
         ctx.font = '18px sans-serif';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
@@ -3598,6 +3730,13 @@
           }
         });
 
+        // Keep the 1982 terminal mounted right on top of the first robot!
+        const terminalEgg = EASTER_EGGS.find(e => e.id === 'egg_2f_terminal');
+        if (terminalEgg && state.miniRobots[0]) {
+          terminalEgg.x = state.miniRobots[0].x;
+          terminalEgg.y = state.miniRobots[0].y - 22;
+        }
+
         if (state.stairCooldown > 0) {
           state.stairCooldown = Math.max(0, state.stairCooldown - dt);
         }
@@ -3607,14 +3746,14 @@
         const isSummaryOpen = !document.getElementById('summaryModal').classList.contains('hidden');
         const isTalkOpen = !document.getElementById('npcTalkModal').classList.contains('hidden');
         const isBballOpen = !document.getElementById('basketballModal').classList.contains('hidden');
-        if (isQuizOpen || isQuestOpen || isSummaryOpen || isTalkOpen || isBballOpen) return;
+        const isRaceOpen = !document.getElementById('raceModal').classList.contains('hidden');
+        if (isQuizOpen || isQuestOpen || isSummaryOpen || isTalkOpen || isBballOpen || isRaceOpen) return;
 
-        // 1. Update 5-minute countdown timer
+        // 1. Update 5-Minute Countdown Timer
         if (state.remainingSeconds > 0) {
           state.remainingSeconds = Math.max(0, state.remainingSeconds - dt);
           updateTimerDisplay();
           if (state.remainingSeconds <= 0) {
-            sfx.playWrong();
             openSummaryModal(true);
             return;
           }
@@ -3719,10 +3858,11 @@
 
         const floorEggs = EASTER_EGGS.filter(egg => egg.floor === state.currentFloor);
         let closestEgg = null;
-        let minEggDist = 62;
+        let minEggDist = 96;
         floorEggs.forEach(egg => {
           const d = Math.hypot(state.player.x - egg.x, state.player.y - egg.y);
-          if (d < minEggDist) {
+          const reachLimit = egg.id === 'egg_2f_terminal' ? 96 : 62;
+          if (d < reachLimit && d < minEggDist) {
             minEggDist = d;
             closestEgg = egg;
           }
@@ -3739,12 +3879,28 @@
         }
         state.nearbyBasketball = nearBball;
 
+        let nearArena = false;
+        if (state.currentFloor === 2) {
+          const ax = Math.max(585, Math.min(state.player.x, 915));
+          const ay = Math.max(425, Math.min(state.player.y, 580));
+          if (Math.hypot(state.player.x - ax, state.player.y - ay) < 55) {
+            nearArena = true;
+          }
+        }
+        state.nearbyArena = nearArena;
+
         const actionBtn = document.getElementById('interactActionBtn');
         if (closest) {
           actionBtn.classList.remove('hidden');
           actionBtn.textContent = closest.completed
             ? `💬 再次向【${closest.npcName}】請教`
             : `💬 按 E 或點擊與【${closest.npcName}】挑戰`;
+        } else if (closestEgg && !state.foundEggs[closestEgg.id]) {
+          actionBtn.classList.remove('hidden');
+          actionBtn.textContent = `✨ 按 E 或點擊查看【${closestEgg.title}】`;
+        } else if (nearArena) {
+          actionBtn.classList.remove('hidden');
+          actionBtn.textContent = `🏎️ 按 E 或點擊玩「機器人極速賽車（惡搞版）」`;
         } else if (closestEgg) {
           actionBtn.classList.remove('hidden');
           actionBtn.textContent = `✨ 按 E 或點擊查看【${closestEgg.title}】`;
@@ -4005,7 +4161,8 @@
         const isSummaryOpen = !document.getElementById('summaryModal').classList.contains('hidden');
         const isTalkOpen = !document.getElementById('npcTalkModal').classList.contains('hidden');
         const isBballOpen = !document.getElementById('basketballModal').classList.contains('hidden');
-        if (!isQuizOpen && !isSummaryOpen && !isTalkOpen && !isBballOpen && state.remainingSeconds > 0) {
+        const isRaceOpen = !document.getElementById('raceModal').classList.contains('hidden');
+        if (!isQuizOpen && !isSummaryOpen && !isTalkOpen && !isBballOpen && !isRaceOpen && state.remainingSeconds > 0) {
           updateTimerDisplay();
         }
       }, 250);
@@ -4027,6 +4184,7 @@
 
         const box = document.getElementById('talkSpeechBox');
         box.classList.remove('egg-box');
+        document.getElementById('talkActionEggBtn').classList.add('hidden');
         document.getElementById('npcTalkModal').classList.remove('hidden');
       }
 
@@ -4057,6 +4215,12 @@
 
         const box = document.getElementById('talkSpeechBox');
         box.classList.add('egg-box');
+        const extraRaceBtn = document.getElementById('talkActionEggBtn');
+        if (egg.id === 'egg_2f_terminal') {
+          extraRaceBtn.classList.remove('hidden');
+        } else {
+          extraRaceBtn.classList.add('hidden');
+        }
         document.getElementById('npcTalkModal').classList.remove('hidden');
       }
 
@@ -4068,8 +4232,12 @@
 
       document.getElementById('closeTalkModalBtn').addEventListener('click', closeTalkModal);
       document.getElementById('confirmTalkBtn').addEventListener('click', closeTalkModal);
+      document.getElementById('talkActionEggBtn').addEventListener('click', () => {
+        document.getElementById('npcTalkModal').classList.add('hidden');
+        openRaceModal();
+      });
 
-      // G/F Mini Basketball Game Engine
+      // G/F Mini Basketball Shooting Game Engine
       const bballCanvas = document.getElementById('bballCanvas');
       const bballCtx = bballCanvas.getContext('2d');
       const bballState = {
@@ -4077,26 +4245,26 @@
         streak: 0,
         aimAngle: -0.95,
         aimDir: 1,
-        ball: { x: 95, y: 205, vx: 0, vy: 0, flying: false, scoredThisShot: false },
         netRipple: 0,
         bannerText: '',
         bannerTimer: 0,
-        lastTime: 0
+        lastTime: 0,
+        ball: { x: 115, y: 195, vx: 0, vy: 0, flying: false, scored: false }
       };
 
-      function resetBballShot() {
-        bballState.ball.x = 95;
-        bballState.ball.y = 205;
-        bballState.ball.vx = 0;
-        bballState.ball.vy = 0;
-        bballState.ball.flying = false;
-        bballState.ball.scoredThisShot = false;
-      }
-
-      function updateBballStatsUI() {
+      function updateBasketballStatsUI() {
         document.getElementById('bballScoreVal').textContent = state.bballScore;
         document.getElementById('bballStreakVal').textContent = bballState.streak;
         document.getElementById('bballBestVal').textContent = state.bballBest;
+      }
+
+      function resetBasketballShot() {
+        bballState.ball.x = 115;
+        bballState.ball.y = 195;
+        bballState.ball.vx = 0;
+        bballState.ball.vy = 0;
+        bballState.ball.flying = false;
+        bballState.ball.scored = false;
       }
 
       function openBasketballModal() {
@@ -4104,10 +4272,10 @@
         state.player.targetPoint = null;
         bballState.active = true;
         bballState.lastTime = performance.now();
-        bballState.bannerText = '點擊「投籃」或按空白鍵出手！';
-        bballState.bannerTimer = 2.5;
-        resetBballShot();
-        updateBballStatsUI();
+        bballState.bannerText = '抓準拋物線角度點擊投籃！';
+        bballState.bannerTimer = 2.2;
+        resetBasketballShot();
+        updateBasketballStatsUI();
         document.getElementById('basketballModal').classList.remove('hidden');
         requestAnimationFrame(bballLoop);
       }
@@ -4123,10 +4291,10 @@
         if (!bballState.active || bballState.ball.flying) return;
         sfx.playClick();
         const speed = 555;
-        bballState.ball.flying = true;
-        bballState.ball.scoredThisShot = false;
         bballState.ball.vx = Math.cos(bballState.aimAngle) * speed;
         bballState.ball.vy = Math.sin(bballState.aimAngle) * speed;
+        bballState.ball.flying = true;
+        bballState.ball.scored = false;
       }
 
       function bballLoop(now) {
@@ -4139,13 +4307,17 @@
         const w = bballCanvas.width;
         const h = bballCanvas.height;
         const hoopX = 415;
-        const hoopY = 112;
+        const hoopY = 102;
 
-        if (bballState.netRipple > 0) bballState.netRipple = Math.max(0, bballState.netRipple - dt * 2.5);
-        if (bballState.bannerTimer > 0) bballState.bannerTimer = Math.max(0, bballState.bannerTimer - dt);
+        if (bballState.netRipple > 0) {
+          bballState.netRipple = Math.max(0, bballState.netRipple - dt * 2.2);
+        }
+        if (bballState.bannerTimer > 0) {
+          bballState.bannerTimer = Math.max(0, bballState.bannerTimer - dt);
+        }
 
         if (!bballState.ball.flying) {
-          bballState.aimAngle += bballState.aimDir * dt * 1.35;
+          bballState.aimAngle += bballState.aimDir * 1.15 * dt;
           if (bballState.aimAngle > -0.62) {
             bballState.aimAngle = -0.62;
             bballState.aimDir = -1;
@@ -4154,75 +4326,58 @@
             bballState.aimDir = 1;
           }
         } else {
-          const b = bballState.ball;
-          const prevY = b.y;
-          b.vy += 680 * dt;
-          b.x += b.vx * dt;
-          b.y += b.vy * dt;
+          const prevY = bballState.ball.y;
+          bballState.ball.vy += 680 * dt;
+          bballState.ball.x += bballState.ball.vx * dt;
+          bballState.ball.y += bballState.ball.vy * dt;
 
           // Backboard bounce
-          if (b.x + 15 > hoopX + 34 && b.x - 15 < hoopX + 46 && b.y > hoopY - 56 && b.y < hoopY + 14) {
-            b.x = hoopX + 19;
-            b.vx = -Math.abs(b.vx) * 0.52;
-            sfx.playTone(220, 'sine', 0.08, 0, 0.1);
+          if (bballState.ball.x + 14 >= hoopX + 34 && bballState.ball.y >= hoopY - 56 && bballState.ball.y <= hoopY + 12) {
+            bballState.ball.x = hoopX + 20;
+            bballState.ball.vx = -Math.abs(bballState.ball.vx) * 0.55;
           }
 
-          // Check clean basket score passing downward through rim (hoopX - 24 .. hoopX + 24)
-          if (!b.scoredThisShot && b.vy > 0 && prevY <= hoopY && b.y >= hoopY && Math.abs(b.x - hoopX) < 25) {
-            b.scoredThisShot = true;
-            state.bballScore += 1;
-            bballState.streak += 1;
-            if (state.bballScore > state.bballBest) state.bballBest = state.bballScore;
-            bballState.netRipple = 1;
-            bballState.bannerText = bballState.streak >= 2 ? `🔥 ${bballState.streak} 連中！神射手！` : '🎉 好球！+1 分！';
-            bballState.bannerTimer = 1.6;
-            sfx.playCorrect();
-            updateBballStatsUI();
-
-            if (state.bballScore === 3) {
-              showToast('🏀 太厲害了！你已獲得「基朗籃球場神射手」稱號！');
-              spawnConfettiBurst(212, 510, 45);
+          // Check clean basket score
+          if (!bballState.ball.scored && bballState.ball.vy > 0 && prevY <= hoopY && bballState.ball.y >= hoopY) {
+            if (Math.abs(bballState.ball.x - (hoopX + 4)) <= 24) {
+              bballState.ball.scored = true;
+              bballState.netRipple = 1;
+              state.bballScore += 1;
+              bballState.streak += 1;
+              if (state.bballScore > state.bballBest) {
+                state.bballBest = state.bballScore;
+              }
+              updateBasketballStatsUI();
+              sfx.playCorrect();
+              if (bballState.streak >= 3) {
+                bballState.bannerText = `🔥 連中 ${bballState.streak} 球！基朗神射手！`;
+                spawnConfettiBurst(190, 470, 36);
+              } else {
+                bballState.bannerText = '🏀 空心入網！好球！';
+              }
+              bballState.bannerTimer = 2.0;
             }
           }
 
-          // Reset once ball leaves court floor
-          if (b.y > h + 25 || b.x > w + 25 || b.x < -25) {
-            if (!b.scoredThisShot) {
+          // Reset ball once it hits ground or exits right edge
+          if (bballState.ball.y > h * 0.75 - 10 || bballState.ball.x > w + 30) {
+            if (!bballState.ball.scored) {
               bballState.streak = 0;
-              bballState.bannerText = '差一點點！再試一次吧！';
-              bballState.bannerTimer = 1.2;
-              updateBballStatsUI();
+              updateBasketballStatsUI();
+              sfx.playWrong();
+              bballState.bannerText = '差一點點！再試一球！';
+              bballState.bannerTimer = 1.5;
             }
-            resetBballShot();
+            resetBasketballShot();
           }
         }
 
-        // Render Cozy Stardew-Style Mini Basketball Court Scene
+        // Draw Cozy Pixel Basketball Mini-Game Scene
         bballCtx.imageSmoothingEnabled = false;
-        bballCtx.fillStyle = '#64a6ed';
-        bballCtx.fillRect(0, 0, w, h * 0.45);
         bballCtx.fillStyle = '#bae6fd';
-        bballCtx.fillRect(0, h * 0.45, w, h * 0.30);
+        bballCtx.fillRect(0, 0, w, h * 0.75);
         bballCtx.fillStyle = '#48bb78';
-        bballCtx.fillRect(0, h * 0.75, w, h * 0.14);
-        bballCtx.fillStyle = '#2f855a';
-        bballCtx.fillRect(0, h * 0.89, w, h * 0.11);
-
-        // Fluffy Stardew Pixel Cloud in Mini-Game Sky
-        bballCtx.fillStyle = '#fffbeb';
-        bballCtx.fillRect(72, 34, 68, 14);
-        bballCtx.fillStyle = '#ffffff';
-        bballCtx.fillRect(84, 24, 44, 12);
-
-        // Cute Bushes along Mini-Court Background
-        [45, 165, 295].forEach((bxPos, idx) => {
-          bballCtx.fillStyle = '#276749';
-          bballCtx.fillRect(bxPos, h * 0.75 - 16, 44, 16);
-          bballCtx.fillStyle = '#68d391';
-          bballCtx.fillRect(bxPos + 6, h * 0.75 - 22, 32, 10);
-          bballCtx.fillStyle = idx % 2 === 0 ? '#fde047' : '#f87171';
-          bballCtx.fillRect(bxPos + 14, h * 0.75 - 15, 4, 4);
-        });
+        bballCtx.fillRect(0, h * 0.75, w, h * 0.25);
 
         // Court white line
         bballCtx.strokeStyle = '#fffbeb';
@@ -4315,9 +4470,295 @@
         shootBasketball();
       });
 
+      // =====================================================================
+      // N3. 2/F ROBOT ARENA UNWINNABLE PRANK RACING MINI-GAME
+      // =====================================================================
+      const raceCanvas = document.getElementById('raceCanvas');
+      const raceCtx = raceCanvas.getContext('2d');
+      const raceState = {
+        active: false,
+        finished: false,
+        gasHeld: false,
+        playerDist: 0,
+        botDist: 0,
+        playerLane: 1,
+        botLane: 0,
+        finishDist: 1000,
+        prankTriggered: false,
+        prankType: 0,
+        prankTimer: 0,
+        headline: '',
+        subline: '',
+        lastTime: 0
+      };
+
+      const PRANK_SCENARIOS = [
+        {
+          headline: '🍌 惡搞突發：終點前踩中神秘香蕉皮！',
+          subline: '你的賽車原地打轉 3 圈！機器人：「多謝承讓哈哈！」'
+        },
+        {
+          headline: '🚧 惡搞突發：終點線長出雙腳往前跑了！',
+          subline: '終點線自動向後移動 200 米，機器人順勢衝線奪冠！'
+        },
+        {
+          headline: '🪫 惡搞突發：賽車電量剩 1%，啟動龜速模式！',
+          subline: '機器人開啟「1982 超頻噴射」以 3 倍音速衝過終點！'
+        },
+        {
+          headline: '🛸 惡搞突發：機器人啟動「量子瞬移外掛」！',
+          subline: '機器人直接傳送到終點線前 1 厘米，判定絕對公平勝利！'
+        }
+      ];
+
+      function updateRaceStatsUI() {
+        document.getElementById('raceAttemptVal').textContent = state.raceAttempts;
+        document.getElementById('raceBotWinVal').textContent = `${state.raceBotWins} 勝`;
+      }
+
+      function resetRaceRound() {
+        state.raceAttempts += 1;
+        raceState.finished = false;
+        raceState.gasHeld = false;
+        raceState.playerDist = 0;
+        raceState.botDist = 0;
+        raceState.playerLane = 1;
+        raceState.botLane = 0;
+        raceState.finishDist = 1000;
+        raceState.prankTriggered = false;
+        raceState.prankType = (state.raceAttempts - 1) % PRANK_SCENARIOS.length;
+        raceState.prankTimer = 0;
+        raceState.headline = '按住紅色「狂踩油門」按鈕或空白鍵衝刺！';
+        raceState.subline = '';
+        document.getElementById('raceActionRow').classList.remove('hidden');
+        document.getElementById('raceRetryBtn').classList.add('hidden');
+        updateRaceStatsUI();
+      }
+
+      function openRaceModal() {
+        sfx.playClick();
+        state.player.targetPoint = null;
+        raceState.active = true;
+        raceState.lastTime = performance.now();
+        resetRaceRound();
+        document.getElementById('raceModal').classList.remove('hidden');
+        requestAnimationFrame(raceLoop);
+      }
+
+      function closeRaceModal() {
+        sfx.playClick();
+        raceState.active = false;
+        raceState.gasHeld = false;
+        document.getElementById('raceModal').classList.add('hidden');
+        state.lastTimestamp = performance.now();
+      }
+
+      function toggleRaceLane() {
+        if (!raceState.active || raceState.finished) return;
+        sfx.playClick();
+        raceState.playerLane = raceState.playerLane === 0 ? 1 : 0;
+      }
+
+      function raceLoop(now) {
+        if (!raceState.active) return;
+        requestAnimationFrame(raceLoop);
+
+        const dt = Math.min(0.05, Math.max(0.001, (now - raceState.lastTime) / 1000));
+        raceState.lastTime = now;
+
+        const w = raceCanvas.width;
+        const h = raceCanvas.height;
+
+        if (!raceState.finished) {
+          // Player movement (always slower right when prank triggers!)
+          let playerSpeed = raceState.gasHeld ? 255 : 55;
+          if (raceState.prankTriggered && raceState.prankType === 2) {
+            playerSpeed = 18; // 1% battery turtle mode!
+          } else if (raceState.prankTriggered && raceState.prankType === 0) {
+            playerSpeed = 0; // Banana spinout!
+          }
+          raceState.playerDist += playerSpeed * dt;
+
+          // Unwinnable Rubber-Band AI: Robot always matches or outpaces player!
+          const gap = raceState.playerDist - raceState.botDist;
+          let botSpeed = 235;
+          if (gap > -20) {
+            botSpeed = Math.max(330, playerSpeed + 135); // Instant 1982 Overclock Turbo!
+          }
+          if (raceState.prankTriggered) {
+            botSpeed = 480;
+          }
+          raceState.botDist += botSpeed * dt;
+
+          // Trigger guaranteed last-second prank once player reaches 82% of track
+          if (!raceState.prankTriggered && raceState.playerDist >= raceState.finishDist * 0.82) {
+            raceState.prankTriggered = true;
+            raceState.prankTimer = 0;
+            const scenario = PRANK_SCENARIOS[raceState.prankType];
+            raceState.headline = scenario.headline;
+            raceState.subline = scenario.subline;
+            sfx.playWrong();
+
+            if (raceState.prankType === 1) {
+              // Finish line literally runs away!
+              raceState.finishDist += 220;
+              raceState.botDist = raceState.finishDist - 55;
+            } else if (raceState.prankType === 3) {
+              // Quantum teleport straight to finish line!
+              raceState.botDist = raceState.finishDist + 5;
+            }
+          }
+
+          if (raceState.prankTriggered) {
+            raceState.prankTimer += dt;
+          }
+
+          // Robot crosses finish line first every single time!
+          if (raceState.botDist >= raceState.finishDist) {
+            raceState.botDist = raceState.finishDist;
+            if (raceState.playerDist >= raceState.finishDist - 12) {
+              raceState.playerDist = raceState.finishDist - 18;
+            }
+            raceState.finished = true;
+            state.raceBotWins += 1;
+            updateRaceStatsUI();
+            sfx.playWrong();
+            document.getElementById('raceActionRow').classList.add('hidden');
+            document.getElementById('raceRetryBtn').classList.remove('hidden');
+          }
+        }
+
+        // Draw Retro Stardew Pixel Race Track
+        raceCtx.imageSmoothingEnabled = false;
+        raceCtx.fillStyle = '#48bb78';
+        raceCtx.fillRect(0, 0, w, h);
+
+        // Track asphalt & white curbs
+        const trackTop = 62;
+        const trackH = 116;
+        raceCtx.fillStyle = '#334155';
+        raceCtx.fillRect(0, trackTop, w, trackH);
+        raceCtx.fillStyle = '#fffbeb';
+        raceCtx.fillRect(0, trackTop - 5, w, 5);
+        raceCtx.fillRect(0, trackTop + trackH, w, 5);
+
+        // Dashed center lane divider
+        raceCtx.fillStyle = '#fde047';
+        for (let lx = 16; lx < w - 20; lx += 36) {
+          raceCtx.fillRect(lx, trackTop + trackH * 0.5 - 2, 20, 4);
+        }
+
+        // Checkered Finish Line on Right
+        const finishX = 468;
+        for (let fy = trackTop; fy < trackTop + trackH; fy += 10) {
+          raceCtx.fillStyle = (Math.floor(fy / 10) % 2 === 0) ? '#ffffff' : '#0f172a';
+          raceCtx.fillRect(finishX, fy, 8, 10);
+          raceCtx.fillStyle = (Math.floor(fy / 10) % 2 === 0) ? '#0f172a' : '#ffffff';
+          raceCtx.fillRect(finishX + 8, fy, 8, 10);
+        }
+
+        // Map race progress onto pixel X coordinates
+        const startX = 42;
+        const spanX = finishX - startX - 18;
+        const botX = Math.round(startX + Math.min(1, raceState.botDist / raceState.finishDist) * spanX);
+        const playerX = Math.round(startX + Math.min(0.97, raceState.playerDist / raceState.finishDist) * spanX);
+
+        const botY = raceState.botLane === 0 ? trackTop + 28 : trackTop + 86;
+        const playerY = raceState.playerLane === 0 ? trackTop + 28 : trackTop + 86;
+
+        // Draw Robot Racer Car (Red & Gold 1982 Overclock Car)
+        raceCtx.fillStyle = '#dc2626';
+        raceCtx.fillRect(botX - 18, botY - 11, 36, 22);
+        raceCtx.strokeStyle = '#0f172a';
+        raceCtx.lineWidth = 2.5;
+        raceCtx.strokeRect(botX - 18, botY - 11, 36, 22);
+        raceCtx.fillStyle = '#fde047';
+        raceCtx.fillRect(botX - 4, botY - 7, 14, 14);
+        // Flame boost exhaust when robot accelerates
+        if (raceState.prankTriggered || raceState.playerDist > 120) {
+          raceCtx.fillStyle = '#f97316';
+          raceCtx.fillRect(botX - 30, botY - 6, 12, 12);
+          raceCtx.fillStyle = '#fef08a';
+          raceCtx.fillRect(botX - 25, botY - 3, 7, 6);
+        }
+
+        // Draw Player Racer Car (Sky Blue Mini-Car)
+        raceCtx.save();
+        raceCtx.translate(playerX, playerY);
+        if (raceState.prankTriggered && raceState.prankType === 0 && !raceState.finished) {
+          raceCtx.rotate(raceState.prankTimer * 14);
+        }
+        raceCtx.fillStyle = '#38bdf8';
+        raceCtx.fillRect(-18, -11, 36, 22);
+        raceCtx.strokeStyle = '#0f172a';
+        raceCtx.lineWidth = 2.5;
+        raceCtx.strokeRect(-18, -11, 36, 22);
+        raceCtx.fillStyle = '#fffbeb';
+        raceCtx.fillRect(-4, -7, 14, 14);
+        raceCtx.restore();
+
+        // Banana peel visual for prank 0
+        if (raceState.prankTriggered && raceState.prankType === 0) {
+          raceCtx.font = '20px sans-serif';
+          raceCtx.fillText('🍌', playerX - 6, playerY - 18);
+        }
+
+        // Top & Bottom Retro Status Banners
+        raceCtx.fillStyle = '#fdf3dc';
+        raceCtx.fillRect(12, 10, w - 24, 38);
+        raceCtx.strokeStyle = '#4a2511';
+        raceCtx.lineWidth = 2.5;
+        raceCtx.strokeRect(12, 10, w - 24, 38);
+
+        raceCtx.fillStyle = raceState.prankTriggered ? '#b91c1c' : '#3b2314';
+        raceCtx.font = '900 13px "Courier New", monospace';
+        raceCtx.textAlign = 'center';
+        raceCtx.textBaseline = 'middle';
+        raceCtx.fillText(raceState.headline, w * 0.5, raceState.subline ? 22 : 29);
+        if (raceState.subline) {
+          raceCtx.fillStyle = '#5c3a21';
+          raceCtx.font = '800 11px "Courier New", monospace';
+          raceCtx.fillText(raceState.subline, w * 0.5, 38);
+        }
+
+        if (raceState.finished) {
+          raceCtx.fillStyle = '#0f172a';
+          raceCtx.fillRect(46, h - 42, w - 92, 32);
+          raceCtx.strokeStyle = '#facc15';
+          raceCtx.lineWidth = 2.5;
+          raceCtx.strokeRect(46, h - 42, w - 92, 32);
+          raceCtx.fillStyle = '#fde047';
+          raceCtx.font = '900 13px "Courier New", monospace';
+          raceCtx.fillText('🏆 冠軍：基朗機器人（你又差 0.001 秒就贏了！）', w * 0.5, h - 26);
+        }
+      }
+
+      const raceGasBtn = document.getElementById('raceGasBtn');
+      raceGasBtn.addEventListener('pointerdown', (e) => {
+        e.preventDefault();
+        raceState.gasHeld = true;
+        raceGasBtn.classList.add('pressed');
+      });
+      ['pointerup', 'pointerleave', 'pointercancel'].forEach(evt => {
+        raceGasBtn.addEventListener(evt, () => {
+          raceState.gasHeld = false;
+          raceGasBtn.classList.remove('pressed');
+        });
+      });
+      document.getElementById('raceLaneBtn').addEventListener('click', toggleRaceLane);
+      document.getElementById('raceRetryBtn').addEventListener('click', () => {
+        sfx.playClick();
+        resetRaceRound();
+      });
+      document.getElementById('closeRaceBtn').addEventListener('click', closeRaceModal);
+
       function triggerContextInteraction() {
         if (state.nearbyStation) {
           openQuizForStation(state.nearbyStation);
+        } else if (state.nearbyEgg && !state.foundEggs[state.nearbyEgg.id]) {
+          openEasterEggModal(state.nearbyEgg);
+        } else if (state.nearbyArena) {
+          openRaceModal();
         } else if (state.nearbyEgg) {
           openEasterEggModal(state.nearbyEgg);
         } else if (state.nearbyBasketball) {
@@ -4402,28 +4843,26 @@
         const floorEggs = EASTER_EGGS.filter(egg => egg.floor === state.currentFloor);
         for (let i = 0; i < floorEggs.length; i++) {
           const egg = floorEggs[i];
-          if (Math.hypot(pos.x - egg.x, pos.y - egg.y) < 36) {
-            if (Math.hypot(state.player.x - egg.x, state.player.y - egg.y) < 68) {
+          const clickRadius = egg.id === 'egg_2f_terminal' ? 42 : 36;
+          if (Math.hypot(pos.x - egg.x, pos.y - egg.y) < clickRadius) {
+            const reachDist = egg.id === 'egg_2f_terminal' ? 96 : 68;
+            if (Math.hypot(state.player.x - egg.x, state.player.y - egg.y) < reachDist) {
               openEasterEggModal(egg);
             } else {
-              state.player.targetPoint = { x: egg.x, y: egg.y + 24 };
+              state.player.targetPoint = { x: egg.x, y: egg.id === 'egg_2f_terminal' ? 404 : egg.y + 24 };
             }
             return;
           }
         }
 
-        // Check Extra Friendly Teachers click
-        const floorTeachers = EXTRA_TEACHERS.filter(t => t.floor === state.currentFloor);
-        for (let i = 0; i < floorTeachers.length; i++) {
-          const t = floorTeachers[i];
-          if (Math.hypot(pos.x - t.x, pos.y - t.y) < 42) {
-            if (Math.hypot(state.player.x - t.x, state.player.y - t.y) < 72) {
-              openFriendlyTeacherModal(t);
-            } else {
-              state.player.targetPoint = { x: t.x, y: t.y + 32 };
-            }
-            return;
+        // Check 2/F Robot Arena click for Unwinnable Prank Racing Game
+        if (state.currentFloor === 2 && pos.x >= 585 && pos.x <= 915 && pos.y >= 425 && pos.y <= 580) {
+          if (state.nearbyArena) {
+            openRaceModal();
+          } else {
+            state.player.targetPoint = { x: 750, y: 404 };
           }
+          return;
         }
 
         // Check G/F Mini Basketball Hoop click
@@ -4431,9 +4870,23 @@
           if (state.nearbyBasketball) {
             openBasketballModal();
           } else {
-            state.player.targetPoint = { x: 215, y: 455 };
+            state.player.targetPoint = { x: 215, y: 452 };
           }
           return;
+        }
+
+        // Check Friendly Teachers click
+        const floorTeachers = EXTRA_TEACHERS.filter(t => t.floor === state.currentFloor);
+        for (let i = 0; i < floorTeachers.length; i++) {
+          const teacher = floorTeachers[i];
+          if (Math.hypot(pos.x - teacher.x, pos.y - teacher.y) < 46) {
+            if (Math.hypot(state.player.x - teacher.x, state.player.y - teacher.y) < 72) {
+              openFriendlyTeacherModal(teacher);
+            } else {
+              state.player.targetPoint = { x: teacher.x, y: teacher.y + 32 };
+            }
+            return;
+          }
         }
 
         const clampedX = Math.max(60, Math.min(WORLD_W - 60, pos.x));
@@ -4505,6 +4958,22 @@
           return;
         }
 
+        const isRaceOpen = !document.getElementById('raceModal').classList.contains('hidden');
+        if (isRaceOpen) {
+          if (k === ' ' || k === 'arrowright' || k === 'd') {
+            e.preventDefault();
+            raceState.gasHeld = true;
+            raceGasBtn.classList.add('pressed');
+          } else if (k === 'arrowup' || k === 'arrowdown' || k === 'w' || k === 's') {
+            e.preventDefault();
+            toggleRaceLane();
+          } else if (k === 'escape') {
+            e.preventDefault();
+            closeRaceModal();
+          }
+          return;
+        }
+
         state.keys[k] = true;
 
         if (k === 'e' || k === ' ') {
@@ -4514,7 +4983,12 @@
       });
 
       window.addEventListener('keyup', (e) => {
-        state.keys[e.key.toLowerCase()] = false;
+        const k = e.key.toLowerCase();
+        state.keys[k] = false;
+        if (k === ' ' || k === 'arrowright' || k === 'd') {
+          raceState.gasHeld = false;
+          raceGasBtn.classList.remove('pressed');
+        }
       });
 
       window.addEventListener('resize', resizeCanvas);
