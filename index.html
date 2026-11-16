@@ -1,0 +1,4372 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>中華基督教會基朗中學・小學開放日校園探索大冒險</title>
+  <style>
+    /* ===================================================================== */
+    /* 1. RESET & BASE LAYOUT (100% Self-Contained, Zero External Links)     */
+    /* ===================================================================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: "PingFang HK", "PingFang TC", "Microsoft JhengHei", "Noto Sans TC", -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: #0f172a;
+      color: #0f172a;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    #gameCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+      z-index: 1;
+      touch-action: none;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* ===================================================================== */
+    /* 2. START SCREEN OVERLAY (Compact Glass Card over School Exterior)     */
+    /* ===================================================================== */
+    #startScreenOverlay {
+      position: fixed;
+      inset: 0;
+      z-index: 30;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 16px 22px;
+      pointer-events: none;
+    }
+
+    .start-top-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      pointer-events: auto;
+    }
+
+    .school-crest-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      padding: 8px 16px;
+      border-radius: 18px;
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.16);
+      border: 1.5px solid rgba(186, 230, 253, 0.95);
+    }
+
+    .crest-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #0284c7, #1e3a8a);
+      color: #fde047;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      font-weight: 900;
+      box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.25);
+    }
+
+    .crest-sub {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: #0369a1;
+    }
+
+    .crest-main {
+      font-size: 17px;
+      font-weight: 900;
+      color: #0f172a;
+      line-height: 1.2;
+    }
+
+    .event-badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(250, 204, 21, 0.95);
+      color: #0f172a;
+      padding: 8px 16px;
+      border-radius: 16px;
+      font-size: 13px;
+      font-weight: 900;
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.15);
+      border: 1.5px solid #fef08a;
+    }
+
+    .start-card {
+      width: 100%;
+      max-width: 690px;
+      background: rgba(255, 255, 255, 0.90);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-radius: 24px;
+      padding: 18px 22px;
+      box-shadow: 0 20px 45px rgba(15, 23, 42, 0.28);
+      border: 2px solid rgba(186, 230, 253, 0.95);
+      pointer-events: auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .start-card-info {
+      flex: 1 1 360px;
+    }
+
+    .start-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: 999px;
+      background: #e0f2fe;
+      color: #0369a1;
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+
+    .start-title {
+      font-size: clamp(20px, 2.8vw, 27px);
+      font-weight: 900;
+      color: #0f172a;
+      line-height: 1.25;
+      margin-bottom: 6px;
+    }
+
+    .start-desc {
+      font-size: 13.5px;
+      color: #334155;
+      line-height: 1.55;
+    }
+
+    .start-desc strong {
+      color: #0369a1;
+    }
+
+    .start-action-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .btn-start-game {
+      cursor: pointer;
+      border: none;
+      outline: none;
+      padding: 14px 26px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #0284c7 0%, #2563eb 55%, #4338ca 100%);
+      color: #ffffff;
+      font-family: inherit;
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing: 0.02em;
+      box-shadow: 0 10px 24px rgba(37, 99, 235, 0.42), inset 0 1px 1px rgba(255, 255, 255, 0.35);
+      border-bottom: 4px solid #1e1b4b;
+      transition: transform 0.14s ease, box-shadow 0.14s ease, filter 0.14s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-start-game:hover {
+      filter: brightness(1.07);
+      transform: translateY(-2px);
+    }
+
+    .btn-start-game:active {
+      transform: translateY(2px);
+      border-bottom-width: 2px;
+    }
+
+    .start-hint-text {
+      font-size: 11px;
+      color: #475569;
+      font-weight: 600;
+    }
+
+    /* ===================================================================== */
+    /* 3. TOP HUD BAR (Floor Switcher, Mission Guide, Timer, 1-Click Reset)  */
+    /* ===================================================================== */
+    #gameHud {
+      position: fixed;
+      top: 12px;
+      left: 12px;
+      right: 12px;
+      z-index: 20;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      pointer-events: none;
+    }
+
+    .hud-group {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      pointer-events: auto;
+    }
+
+    .hud-panel {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 16px;
+      padding: 6px 10px;
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.18);
+      border: 1.5px solid #cbd5e1;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .floor-btn {
+      cursor: pointer;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 11px;
+      font-family: inherit;
+      font-size: 12.5px;
+      font-weight: 800;
+      background: #f1f5f9;
+      color: #334155;
+      transition: all 0.15s ease;
+    }
+
+    .floor-btn:hover {
+      background: #e0f2fe;
+      color: #0369a1;
+    }
+
+    .floor-btn.active {
+      background: linear-gradient(135deg, #0284c7, #1d4ed8);
+      color: #ffffff;
+      box-shadow: 0 3px 10px rgba(2, 132, 199, 0.35);
+    }
+
+    .mission-banner {
+      pointer-events: auto;
+      background: rgba(15, 23, 42, 0.93);
+      color: #f8fafc;
+      border: 1.5px solid #38bdf8;
+      border-radius: 16px;
+      padding: 7px 14px;
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.26);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      max-width: 530px;
+    }
+
+    .mission-icon {
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .mission-text-wrap {
+      font-size: 12.5px;
+      line-height: 1.35;
+    }
+
+    .mission-guide-label {
+      color: #fde047;
+      font-weight: 900;
+    }
+
+    .progress-pill {
+      background: #0284c7;
+      color: #ffffff;
+      font-size: 12px;
+      font-weight: 900;
+      padding: 4px 10px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    .hud-btn {
+      cursor: pointer;
+      border: none;
+      border-radius: 14px;
+      padding: 8px 13px;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 6px 16px rgba(15, 23, 42, 0.18);
+      transition: transform 0.12s ease, filter 0.12s ease;
+    }
+
+    .hud-btn:hover {
+      filter: brightness(1.06);
+      transform: translateY(-1px);
+    }
+
+    .hud-btn:active {
+      transform: translateY(1px);
+    }
+
+    .btn-quest-list {
+      background: #ffffff;
+      color: #0f172a;
+      border: 1.5px solid #cbd5e1;
+    }
+
+    .timer-pill {
+      background: #ffffff;
+      color: #0f172a;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 14px;
+      padding: 7px 13px;
+      font-size: 14.5px;
+      font-weight: 900;
+      font-variant-numeric: tabular-nums;
+      box-shadow: 0 6px 16px rgba(15, 23, 42, 0.16);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .timer-pill.warning {
+      background: #fef3c7;
+      border-color: #f59e0b;
+      color: #b45309;
+    }
+
+    .timer-pill.danger {
+      background: #fee2e2;
+      border-color: #ef4444;
+      color: #b91c1c;
+      animation: pulseAlert 1s infinite;
+    }
+
+    .btn-reset {
+      background: linear-gradient(135deg, #f97316, #dc2626);
+      color: #ffffff;
+      border-bottom: 3px solid #7f1d1d;
+    }
+
+    @keyframes pulseAlert {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.04); }
+    }
+
+    /* ===================================================================== */
+    /* 4. BOTTOM CONTROLS BAR & TOUCH D-PAD                                  */
+    /* ===================================================================== */
+    #bottomControlsBar {
+      position: fixed;
+      bottom: 14px;
+      left: 14px;
+      right: 14px;
+      z-index: 20;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      pointer-events: none;
+    }
+
+    .dpad-container {
+      pointer-events: auto;
+      display: grid;
+      grid-template-columns: repeat(3, 44px);
+      grid-template-rows: repeat(3, 44px);
+      gap: 4px;
+      background: rgba(15, 23, 42, 0.52);
+      padding: 6px;
+      border-radius: 20px;
+      border: 1.5px solid rgba(255, 255, 255, 0.25);
+    }
+
+    .dpad-btn {
+      cursor: pointer;
+      border: none;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.92);
+      color: #0f172a;
+      font-size: 17px;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+    }
+
+    .dpad-btn:active, .dpad-btn.pressed {
+      background: #38bdf8;
+      color: #ffffff;
+      transform: scale(0.94);
+    }
+
+    .controls-tip-pill {
+      pointer-events: auto;
+      background: rgba(15, 23, 42, 0.88);
+      color: #e2e8f0;
+      padding: 8px 14px;
+      border-radius: 14px;
+      font-size: 12px;
+      font-weight: 600;
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    #interactActionBtn {
+      pointer-events: auto;
+      cursor: pointer;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #facc15, #f59e0b);
+      color: #0f172a;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 900;
+      box-shadow: 0 10px 24px rgba(245, 158, 11, 0.45);
+      border-bottom: 3px solid #b45309;
+      animation: bounceSoft 1.2s infinite;
+    }
+
+    @keyframes bounceSoft {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
+    }
+
+    /* ===================================================================== */
+    /* 5. TOAST NOTIFICATION BANNER                                          */
+    /* ===================================================================== */
+    #toastBanner {
+      position: fixed;
+      top: 76px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 45;
+      background: rgba(15, 23, 42, 0.95);
+      color: #ffffff;
+      padding: 10px 20px;
+      border-radius: 999px;
+      font-size: 13.5px;
+      font-weight: 800;
+      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.35);
+      border: 1.5px solid #38bdf8;
+      pointer-events: none;
+      white-space: nowrap;
+      max-width: 92vw;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* ===================================================================== */
+    /* 6. MODALS (Quiz Modal, Quest List Modal, Victory & Time-Up Modals)    */
+    /* ===================================================================== */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      background: rgba(15, 23, 42, 0.72);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .modal-card {
+      width: 100%;
+      max-width: 600px;
+      max-height: 90vh;
+      overflow-y: auto;
+      background: #ffffff;
+      border-radius: 26px;
+      padding: 22px 24px;
+      box-shadow: 0 25px 60px rgba(15, 23, 42, 0.45);
+      border: 2px solid #e2e8f0;
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding-bottom: 14px;
+      border-bottom: 1.5px solid #f1f5f9;
+      margin-bottom: 16px;
+    }
+
+    .npc-header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .npc-avatar-box {
+      width: 52px;
+      height: 52px;
+      border-radius: 16px;
+      background: #e0f2fe;
+      border: 2px solid #7dd3fc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      flex-shrink: 0;
+    }
+
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 4px;
+    }
+
+    .subject-badge {
+      padding: 3px 10px;
+      border-radius: 8px;
+      font-size: 11.5px;
+      font-weight: 900;
+      background: #dbeafe;
+      color: #1e40af;
+    }
+
+    .level-badge {
+      padding: 3px 10px;
+      border-radius: 8px;
+      font-size: 11.5px;
+      font-weight: 800;
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .modal-title {
+      font-size: 18px;
+      font-weight: 900;
+      color: #0f172a;
+    }
+
+    .btn-close-modal {
+      cursor: pointer;
+      border: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 12px;
+      background: #f1f5f9;
+      color: #475569;
+      font-size: 18px;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .btn-close-modal:hover {
+      background: #e2e8f0;
+      color: #0f172a;
+    }
+
+    .question-box {
+      background: #f8fafc;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 18px;
+      padding: 16px 18px;
+      margin-bottom: 16px;
+    }
+
+    .question-step {
+      font-size: 12px;
+      font-weight: 800;
+      color: #0284c7;
+      margin-bottom: 6px;
+    }
+
+    .question-text {
+      font-size: 17px;
+      font-weight: 800;
+      color: #0f172a;
+      line-height: 1.55;
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .quiz-opt-btn {
+      cursor: pointer;
+      width: 100%;
+      text-align: left;
+      padding: 13px 16px;
+      border-radius: 16px;
+      border: 2px solid #cbd5e1;
+      background: #ffffff;
+      color: #0f172a;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: all 0.14s ease;
+    }
+
+    .quiz-opt-btn:hover:not(:disabled) {
+      background: #f0f9ff;
+      border-color: #0284c7;
+      transform: translateX(3px);
+    }
+
+    .quiz-opt-btn:disabled {
+      cursor: default;
+    }
+
+    .quiz-opt-btn.opt-correct {
+      background: #ecfdf5;
+      border-color: #10b981;
+      color: #065f46;
+    }
+
+    .quiz-opt-btn.opt-wrong {
+      background: #fff1f2;
+      border-color: #f43f5e;
+      color: #9f1239;
+      opacity: 0.75;
+    }
+
+    .opt-letter {
+      width: 30px;
+      height: 30px;
+      border-radius: 10px;
+      background: #e2e8f0;
+      color: #1e293b;
+      font-size: 14px;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .opt-correct .opt-letter {
+      background: #10b981;
+      color: #ffffff;
+    }
+
+    .opt-wrong .opt-letter {
+      background: #f43f5e;
+      color: #ffffff;
+    }
+
+    .feedback-box {
+      margin-top: 16px;
+      padding: 14px 16px;
+      border-radius: 16px;
+      border: 2px solid #cbd5e1;
+    }
+
+    .feedback-box.fb-success {
+      background: #ecfdf5;
+      border-color: #6ee7b7;
+    }
+
+    .feedback-box.fb-hint {
+      background: #fffbeb;
+      border-color: #fcd34d;
+    }
+
+    .feedback-title {
+      font-size: 15px;
+      font-weight: 900;
+      margin-bottom: 4px;
+    }
+
+    .fb-success .feedback-title {
+      color: #047857;
+    }
+
+    .fb-hint .feedback-title {
+      color: #b45309;
+    }
+
+    .feedback-tip {
+      font-size: 13.5px;
+      color: #334155;
+      line-height: 1.5;
+    }
+
+    .btn-next-q {
+      cursor: pointer;
+      margin-top: 12px;
+      width: 100%;
+      border: none;
+      padding: 12px 18px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #059669, #0284c7);
+      color: #ffffff;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 900;
+      box-shadow: 0 6px 16px rgba(5, 150, 105, 0.3);
+    }
+
+    /* Quest List Items */
+    .quest-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .quest-item {
+      padding: 12px 14px;
+      border-radius: 18px;
+      border: 2px solid #e2e8f0;
+      background: #f8fafc;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .quest-item.q-done {
+      background: #ecfdf5;
+      border-color: #6ee7b7;
+    }
+
+    .quest-item.q-active {
+      background: #fffbeb;
+      border-color: #f59e0b;
+    }
+
+    .quest-item-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .quest-floor-tag {
+      padding: 2px 8px;
+      border-radius: 6px;
+      background: #0f172a;
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    .btn-track-target {
+      cursor: pointer;
+      border: none;
+      padding: 7px 12px;
+      border-radius: 11px;
+      background: #e0f2fe;
+      color: #0369a1;
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .btn-track-target:hover {
+      background: #bae6fd;
+    }
+
+    .status-pill-done {
+      padding: 6px 11px;
+      border-radius: 11px;
+      background: #059669;
+      color: #ffffff;
+      font-size: 12px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .status-pill-tracking {
+      padding: 6px 11px;
+      border-radius: 11px;
+      background: #facc15;
+      color: #0f172a;
+      font-size: 12px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    /* Summary / Victory Modal */
+    .summary-hero {
+      text-align: center;
+      padding: 8px 0 16px;
+    }
+
+    .summary-trophy {
+      font-size: 56px;
+      margin-bottom: 8px;
+    }
+
+    .summary-title {
+      font-size: 24px;
+      font-weight: 900;
+      color: #0f172a;
+      margin-bottom: 6px;
+    }
+
+    .summary-subtitle {
+      font-size: 14px;
+      color: #475569;
+      line-height: 1.6;
+    }
+
+    .stamps-showcase {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      gap: 8px;
+      margin: 16px 0;
+    }
+
+    .stamp-card {
+      padding: 10px 8px;
+      border-radius: 16px;
+      text-align: center;
+      border: 2px solid #cbd5e1;
+      background: #f8fafc;
+    }
+
+    .stamp-card.earned {
+      border-color: #10b981;
+      background: #ecfdf5;
+    }
+
+    .btn-summary-reset {
+      cursor: pointer;
+      width: 100%;
+      border: none;
+      padding: 14px 20px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #0284c7, #2563eb);
+      color: #ffffff;
+      font-family: inherit;
+      font-size: 16px;
+      font-weight: 900;
+      box-shadow: 0 10px 24px rgba(37, 99, 235, 0.35);
+    }
+
+    /* Friendly Teacher Dialogue & Easter Egg Card Styling */
+    .talk-speech-box {
+      background: #f0f9ff;
+      border: 2px solid #bae6fd;
+      border-radius: 18px;
+      padding: 16px 18px;
+      font-size: 15px;
+      line-height: 1.65;
+      color: #0f172a;
+      margin-bottom: 14px;
+    }
+
+    .talk-speech-box.egg-box {
+      background: #faf5ff;
+      border-color: #d8b4fe;
+    }
+
+    .talk-tip-tag {
+      display: inline-block;
+      margin-top: 8px;
+      padding: 6px 12px;
+      border-radius: 12px;
+      background: #fef3c7;
+      color: #92400e;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    /* Mini Basketball Game Modal Styling */
+    .bball-stats-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      gap: 8px;
+      background: #f8fafc;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 10px 14px;
+      margin-bottom: 12px;
+    }
+
+    .bball-stat-item {
+      text-align: center;
+    }
+
+    .bball-stat-label {
+      font-size: 11px;
+      font-weight: 800;
+      color: #64748b;
+    }
+
+    .bball-stat-val {
+      font-size: 20px;
+      font-weight: 900;
+      color: #0f172a;
+    }
+
+    .bball-canvas-wrap {
+      width: 100%;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 2.5px solid #cbd5e1;
+      background: #bae6fd;
+      margin-bottom: 14px;
+    }
+
+    #bballCanvas {
+      display: block;
+      width: 100%;
+      height: auto;
+      cursor: pointer;
+    }
+
+    .btn-shoot-bball {
+      cursor: pointer;
+      width: 100%;
+      border: none;
+      padding: 14px 20px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #f97316, #ea580c);
+      color: #ffffff;
+      font-family: inherit;
+      font-size: 17px;
+      font-weight: 900;
+      box-shadow: 0 10px 22px rgba(234, 88, 12, 0.35);
+      border-bottom: 4px solid #9a3412;
+      transition: transform 0.1s ease;
+    }
+
+    .btn-shoot-bball:active {
+      transform: translateY(2px);
+      border-bottom-width: 2px;
+    }
+
+    @media (max-width: 640px) {
+      #startScreenOverlay {
+        padding: 12px;
+      }
+      .start-card {
+        padding: 15px;
+      }
+      .controls-tip-pill {
+        display: none;
+      }
+      .mission-banner {
+        order: 3;
+        width: 100%;
+        max-width: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Main 2D Campus & Exterior Canvas -->
+  <canvas id="gameCanvas"></canvas>
+
+  <!-- ===================================================================== -->
+  <!-- 1. START SCREEN OVERLAY (Displays over 2D School Exterior Canvas)     -->
+  <!-- ===================================================================== -->
+  <div id="startScreenOverlay">
+    <div class="start-top-bar">
+      <div class="school-crest-pill">
+        <div class="crest-icon">✝</div>
+        <div>
+          <div class="crest-sub">CCC KEI LONG COLLEGE • 識真理得自由以服務</div>
+          <div class="crest-main">中華基督教會基朗中學</div>
+        </div>
+      </div>
+
+      <div class="event-badge-pill">
+        <span>🎓 小學開放日特別企劃</span>
+        <span>• 5分鐘互動探索</span>
+      </div>
+    </div>
+
+    <div class="start-card">
+      <div class="start-card-info">
+        <div class="start-tag">🏫 2D 校園自由探索遊戲 • 三層校舍（G/F – 2/F）</div>
+        <h1 class="start-title">小學開放日・校園探索大冒險</h1>
+        <p class="start-desc">
+          歡迎來到<strong>中華基督教會基朗中學</strong>！請在 <strong>5 分鐘</strong>內自由穿梭三層校舍，尋找 <strong>5 位學科大使與老師</strong>，完成涵蓋<strong>數學、中文及 STEAM</strong>（初小至高小程度）的趣味挑戰！
+        </p>
+      </div>
+
+      <div class="start-action-col">
+        <button id="startGameBtn" type="button" class="btn-start-game">
+          <span>🚀 開始探索校園</span>
+        </button>
+        <span class="start-hint-text">點擊按鈕或按 Enter / 空白鍵開始</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- 2. IN-GAME TOP HUD BAR                                                -->
+  <!-- ===================================================================== -->
+  <div id="gameHud" class="hidden">
+    <!-- Left: Quick Floor Switcher -->
+    <div class="hud-group">
+      <div class="hud-panel" role="group" aria-label="樓層切換">
+        <button type="button" class="floor-btn active" data-floor="0">G/F 地下</button>
+        <button type="button" class="floor-btn" data-floor="1">1/F 一樓</button>
+        <button type="button" class="floor-btn" data-floor="2">2/F 二樓</button>
+      </div>
+    </div>
+
+    <!-- Center: Dynamic Mission Guide Banner -->
+    <div class="mission-banner">
+      <span class="mission-icon">🧭</span>
+      <div class="mission-text-wrap">
+        <span class="mission-guide-label">任務指引：</span>
+        <span id="missionGuideText">前往 G/F 尋找【數學科・羅老師】（初小數學）</span>
+      </div>
+      <span id="missionProgressPill" class="progress-pill">進度：0 / 5</span>
+      <span id="easterEggPill" class="progress-pill" style="background:#7c3aed;">🥚 彩蛋：0 / 3</span>
+    </div>
+
+    <!-- Right: Quest List, 5-Min Timer & One-Click Reset -->
+    <div class="hud-group">
+      <button id="openQuestListBtn" type="button" class="hud-btn btn-quest-list">
+        <span>📋 任務進度表</span>
+      </button>
+
+      <div id="timerPill" class="timer-pill">
+        <span>⏱</span>
+        <span id="timerText">05:00</span>
+      </div>
+
+      <button id="resetGameBtn" type="button" class="hud-btn btn-reset" title="立即重設遊戲並返回校舍主畫面">
+        <span>🔄 一鍵重設</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- 3. BOTTOM CONTROLS & TOUCH D-PAD                                      -->
+  <!-- ===================================================================== -->
+  <div id="bottomControlsBar" class="hidden">
+    <!-- On-Screen Touch / Mouse D-Pad -->
+    <div class="dpad-container" aria-label="方向控制鍵">
+      <div></div>
+      <button type="button" class="dpad-btn" data-dir="up">▲</button>
+      <div></div>
+      <button type="button" class="dpad-btn" data-dir="left">◀</button>
+      <div></div>
+      <button type="button" class="dpad-btn" data-dir="right">▶</button>
+      <div></div>
+      <button type="button" class="dpad-btn" data-dir="down">▼</button>
+      <div></div>
+    </div>
+
+    <!-- Contextual Interact Button (Appears when standing near an NPC) -->
+    <button id="interactActionBtn" type="button" class="hidden">
+      💬 按 E 鍵與老師對話
+    </button>
+
+    <!-- Desktop Controls Hint -->
+    <div class="controls-tip-pill">
+      <span>⌨️ 方向鍵 / WASD 移動</span>
+      <span>•</span>
+      <span>🖱️ 點擊地面自動行走</span>
+      <span>•</span>
+      <span>🔑 E / 空白鍵對話</span>
+    </div>
+  </div>
+
+  <!-- Toast Banner -->
+  <div id="toastBanner" class="hidden"></div>
+
+  <!-- ===================================================================== -->
+  <!-- 4. QUIZ MODAL (5 Primary School Stations: Math, Chinese, STEAM)       -->
+  <!-- ===================================================================== -->
+  <div id="quizModal" class="modal-backdrop hidden">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="npc-header-left">
+          <div id="quizNpcAvatar" class="npc-avatar-box">👩‍🏫</div>
+          <div>
+            <div class="badge-row">
+              <span id="quizSubjectBadge" class="subject-badge">數學科</span>
+              <span id="quizLevelBadge" class="level-badge">初小程度 (P1–P2)</span>
+            </div>
+            <div id="quizNpcName" class="modal-title">數學科・陳老師</div>
+          </div>
+        </div>
+        <button id="closeQuizModalBtn" type="button" class="btn-close-modal" aria-label="關閉">✕</button>
+      </div>
+
+      <div class="question-box">
+        <div id="quizStepText" class="question-step">第 1 / 2 題</div>
+        <div id="quizQuestionText" class="question-text">題目載入中...</div>
+      </div>
+
+      <div id="quizOptionsContainer" class="options-grid"></div>
+
+      <div id="quizFeedbackBox" class="feedback-box hidden">
+        <div id="quizFeedbackTitle" class="feedback-title"></div>
+        <div id="quizExplanationText" class="feedback-tip"></div>
+        <button id="nextQuestionBtn" type="button" class="btn-next-q hidden">下一題 ➜</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- 5. QUEST LIST / PROGRESS MODAL                                        -->
+  <!-- ===================================================================== -->
+  <div id="questListModal" class="modal-backdrop hidden">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div>
+          <div class="badge-row">
+            <span class="subject-badge">中華基督教會基朗中學・開放日</span>
+          </div>
+          <div class="modal-title">📋 校園探索任務進度表（5 大學科關卡）</div>
+        </div>
+        <button id="closeQuestListBtn" type="button" class="btn-close-modal" aria-label="關閉">✕</button>
+      </div>
+
+      <div id="questListContainer" class="quest-list"></div>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- 6. VICTORY / TIME-UP SUMMARY MODAL                                    -->
+  <!-- ===================================================================== -->
+  <div id="summaryModal" class="modal-backdrop hidden">
+    <div class="modal-card">
+      <div class="summary-hero">
+        <div id="summaryEmoji" class="summary-trophy">🏆</div>
+        <h2 id="summaryTitle" class="summary-title">恭喜完成基朗中學開放日大冒險！</h2>
+        <p id="summarySubtitle" class="summary-subtitle">
+          你已成功探索三層校舍並完成全部 5 個學科挑戰！
+        </p>
+      </div>
+
+      <div id="summaryStampsGrid" class="stamps-showcase"></div>
+
+      <button id="summaryResetBtn" type="button" class="btn-summary-reset">
+        🔄 再次體驗 / 一鍵重設（供下一位同學遊玩）
+      </button>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- 7. FRIENDLY TEACHER & EASTER EGG DIALOGUE MODAL                       -->
+  <!-- ===================================================================== -->
+  <div id="npcTalkModal" class="modal-backdrop hidden">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="npc-header-left">
+          <div id="talkNpcAvatar" class="npc-avatar-box">👨‍💼</div>
+          <div>
+            <div class="badge-row">
+              <span id="talkRoleBadge" class="subject-badge">校園導賞老師</span>
+              <span id="talkFloorBadge" class="level-badge">G/F 地下</span>
+            </div>
+            <div id="talkNpcName" class="modal-title">副校長・周老師</div>
+          </div>
+        </div>
+        <button id="closeTalkModalBtn" type="button" class="btn-close-modal" aria-label="關閉">✕</button>
+      </div>
+
+      <div id="talkSpeechBox" class="talk-speech-box">
+        <div id="talkMessageText">歡迎來到中華基督教會基朗中學！</div>
+        <div id="talkHintTag" class="talk-tip-tag">💡 校園小貼士</div>
+      </div>
+
+      <button id="confirmTalkBtn" type="button" class="btn-next-q">知道啦，繼續探索！ ➜</button>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- 8. G/F MINI BASKETBALL SHOOTING GAME MODAL                            -->
+  <!-- ===================================================================== -->
+  <div id="basketballModal" class="modal-backdrop hidden">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="npc-header-left">
+          <div class="npc-avatar-box" style="background:#ffedd5;border-color:#fdba74;">🏀</div>
+          <div>
+            <div class="badge-row">
+              <span class="subject-badge" style="background:#ffedd5;color:#9a3412;">G/F 地下籃球場</span>
+              <span class="level-badge">開放日趣味體驗</span>
+            </div>
+            <div class="modal-title">基朗迷你投籃挑戰賽</div>
+          </div>
+        </div>
+        <button id="closeBasketballBtn" type="button" class="btn-close-modal" aria-label="關閉">✕</button>
+      </div>
+
+      <div class="bball-stats-bar">
+        <div class="bball-stat-item">
+          <div class="bball-stat-label">本局入球</div>
+          <div id="bballScoreVal" class="bball-stat-val" style="color:#ea580c;">0</div>
+        </div>
+        <div class="bball-stat-item">
+          <div class="bball-stat-label">連續命中</div>
+          <div id="bballStreakVal" class="bball-stat-val" style="color:#0284c7;">0</div>
+        </div>
+        <div class="bball-stat-item">
+          <div class="bball-stat-label">最高紀錄</div>
+          <div id="bballBestVal" class="bball-stat-val" style="color:#059669;">0</div>
+        </div>
+      </div>
+
+      <div class="bball-canvas-wrap">
+        <canvas id="bballCanvas" width="520" height="270"></canvas>
+      </div>
+
+      <button id="shootBballBtn" type="button" class="btn-shoot-bball">
+        🏀 瞄準力度並投籃！（或按空白鍵）
+      </button>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- 9. COMPLETE GAME ENGINE & HIGH-DETAIL 2D RENDERER SCRIPT              -->
+  <!-- ===================================================================== -->
+  <script>
+    (function () {
+      'use strict';
+
+      // =====================================================================
+      // A. CROSS-BROWSER ROUNDED RECTANGLE PATH HELPER (100% Compatible)
+      // =====================================================================
+      function roundRectPath(ctx, x, y, w, h, r) {
+        let tl = 0, tr = 0, br = 0, bl = 0;
+        if (typeof r === 'number') {
+          tl = tr = br = bl = r;
+        } else if (Array.isArray(r)) {
+          tl = r[0] || 0;
+          tr = r[1] || 0;
+          br = r[2] || 0;
+          bl = r[3] || 0;
+        }
+        const maxR = Math.max(0, Math.min(w * 0.5, h * 0.5));
+        tl = Math.max(0, Math.min(tl, maxR));
+        tr = Math.max(0, Math.min(tr, maxR));
+        br = Math.max(0, Math.min(br, maxR));
+        bl = Math.max(0, Math.min(bl, maxR));
+
+        ctx.beginPath();
+        ctx.moveTo(x + tl, y);
+        ctx.lineTo(x + w - tr, y);
+        ctx.quadraticCurveTo(x + w, y, x + w, y + tr);
+        ctx.lineTo(x + w, y + h - br);
+        ctx.quadraticCurveTo(x + w, y + h, x + w - br, y + h);
+        ctx.lineTo(x + bl, y + h);
+        ctx.quadraticCurveTo(x, y + h, x, y + h - bl);
+        ctx.lineTo(x, y + tl);
+        ctx.quadraticCurveTo(x, y, x + tl, y);
+        ctx.closePath();
+      }
+
+      // =====================================================================
+      // B. WEB AUDIO SYNTHESIZER (Self-Contained Sound Effects, No External MP3)
+      // =====================================================================
+      class SoundFX {
+        constructor() {
+          this.ctx = null;
+        }
+        ensureContext() {
+          if (!this.ctx) {
+            const AudioCtx = window.AudioContext || window.webkitAudioContext;
+            if (AudioCtx) {
+              this.ctx = new AudioCtx();
+            }
+          }
+          if (this.ctx && this.ctx.state === 'suspended') {
+            this.ctx.resume().catch(function () {});
+          }
+        }
+        playTone(freq, type, duration, delay, gainVal) {
+          try {
+            this.ensureContext();
+            if (!this.ctx) return;
+            const now = this.ctx.currentTime + (delay || 0);
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+            osc.type = type || 'sine';
+            osc.frequency.setValueAtTime(freq, now);
+            gain.gain.setValueAtTime(gainVal || 0.12, now);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + duration);
+            osc.connect(gain);
+            gain.connect(this.ctx.destination);
+            osc.start(now);
+            osc.stop(now + duration);
+          } catch (e) {}
+        }
+        playClick() {
+          this.playTone(660, 'triangle', 0.08, 0, 0.1);
+        }
+        playFloorChange() {
+          this.playTone(440, 'sine', 0.12, 0, 0.1);
+          this.playTone(587.33, 'sine', 0.18, 0.08, 0.12);
+        }
+        playCorrect() {
+          this.playTone(523.25, 'triangle', 0.14, 0, 0.14);
+          this.playTone(659.25, 'triangle', 0.14, 0.09, 0.14);
+          this.playTone(783.99, 'triangle', 0.24, 0.18, 0.16);
+        }
+        playWrong() {
+          this.playTone(280, 'sawtooth', 0.16, 0, 0.08);
+          this.playTone(230, 'sawtooth', 0.22, 0.12, 0.08);
+        }
+        playVictory() {
+          const notes = [523.25, 659.25, 783.99, 1046.5];
+          notes.forEach((n, idx) => {
+            this.playTone(n, 'triangle', 0.28, idx * 0.11, 0.16);
+          });
+        }
+      }
+      const sfx = new SoundFX();
+
+      // =====================================================================
+      // C. QUESTION BANK (5 Stations: Math, Chinese, STEAM across Primary Levels)
+      // =====================================================================
+      const STATION_BLUEPRINTS = [
+        {
+          id: 'st_math_junior',
+          floor: 0,
+          floorName: 'G/F 地下',
+          locationLabel: '創夢大堂・校史展板旁',
+          x: 680,
+          y: 350,
+          npcName: '數學科・羅老師',
+          avatar: '👩‍🏫',
+          subject: '數學科',
+          level: '初小程度 (P1–P2)',
+          stampIcon: '🔢',
+          questionPool: [
+            {
+              q: '基朗中學開放日派發紀念貼紙，小明先拿了 18 張，後來老師又獎勵他 15 張，他現在一共有多少張貼紙？',
+              options: ['23 張', '33 張', '35 張', '43 張'],
+              answer: 1,
+              tip: '先算個位：8 + 5 = 13，向十位進 1；再算十位：10 + 10 + 10 = 30，合起來是 33 張！'
+            },
+            {
+              q: '觀察數列的規律：5、10、15、（ ？ ）、25、30，括號裡應該填上哪個數字？',
+              options: ['16', '18', '20', '22'],
+              answer: 2,
+              tip: '每個數字都比前一個多 5（5 個一數），15 + 5 = 20！'
+            },
+            {
+              q: '開放日攤位遊戲在上午 10 時 30 分開始，玩了 30 分鐘後結束，結束時間是上午幾時幾分？',
+              options: ['10 時 50 分', '11 時正', '11 時 30 分', '12 時正'],
+              answer: 1,
+              tip: '30 分鐘 + 30 分鐘 = 60 分鐘（即 1 小時），所以 10 時 30 分過了 30 分鐘就是 11 時正！'
+            }
+          ]
+        },
+        {
+          id: 'st_chi_mid',
+          floor: 1,
+          floorName: '1/F 一樓',
+          locationLabel: '基朗閱讀角・書架旁',
+          x: 330,
+          y: 355,
+          npcName: '中文科・許老師',
+          avatar: '👨‍🏫',
+          subject: '中文科',
+          level: '中小程度 (P3–P4)',
+          stampIcon: '📖',
+          questionPool: [
+            {
+              q: '下列哪一個成語最適合用來形容「同學們在圖書館裡非常專心、安靜地看書」？',
+              options: ['手舞足蹈', '專心致志', '人山人海', '畫蛇添足'],
+              answer: 1,
+              tip: '「專心致志」形容一心一意、非常專注地做事或學習，最適合形容專心看書！'
+            },
+            {
+              q: '請找出下列句子中的錯別字：「我們要愛惜公物，保持校園環境整潔，做一個負責任的好學生。」（若無錯字請選 D）',
+              options: ['「愛惜」應為「愛昔」', '「保持」應為「保時」', '「整潔」應為「整結」', '全部用字正確，沒有錯別字'],
+              answer: 3,
+              tip: '這句話的「愛惜」、「保持」、「整潔」、「負責」全部用字正確呢！'
+            },
+            {
+              q: '「春風輕輕地撫摸著校園裡的小樹苗。」這句話運用了哪一種修辭手法？',
+              options: ['擬人法', '反問法', '誇張法', '對偶法'],
+              answer: 0,
+              tip: '把「春風」寫得像人一樣會「輕輕地撫摸」，賦予事物人的動作，這就是「擬人法」！'
+            }
+          ]
+        },
+        {
+          id: 'st_math_senior',
+          floor: 1,
+          floorName: '1/F 一樓',
+          locationLabel: '數理思維廊・課室門前',
+          x: 790,
+          y: 440,
+          npcName: '數學科・溫老師',
+          avatar: '👨‍🏫',
+          subject: '數學科',
+          level: '高小程度 (P5–P6)',
+          stampIcon: '📐',
+          questionPool: [
+            {
+              q: '一個長方形花槽的長是 8 米，闊是 5 米。如果要在花槽四邊圍上一圈裝飾彩帶，至少需要多長的彩帶？',
+              options: ['13 米', '26 米', '40 米', '80 米'],
+              answer: 1,
+              tip: '四邊一圈的長度是「周界」！長方形周界 = (長 + 闊) × 2 = (8 + 5) × 2 = 26 米。'
+            },
+            {
+              q: '基朗中學籃球隊有 20 名隊員，其中 25% 是六年級同學，請問六年級隊員有多少人？',
+              options: ['4 人', '5 人', '8 人', '15 人'],
+              answer: 1,
+              tip: '25% 等於四分之一（1/4），20 × 25% = 20 ÷ 4 = 5 人！'
+            },
+            {
+              q: '一本故事書共有 120 頁，志明第一天看了全書的 1/3，第二天看了 30 頁，他還剩下多少頁未看？',
+              options: ['40 頁', '50 頁', '70 頁', '90 頁'],
+              answer: 1,
+              tip: '第一天看了 120 × 1/3 = 40 頁，兩天共看了 40 + 30 = 70 頁，剩下 120 - 70 = 50 頁！'
+            }
+          ]
+        },
+        {
+          id: 'st_steam_mid',
+          floor: 2,
+          floorName: '2/F 二樓',
+          locationLabel: '電腦室・編程實驗桌',
+          x: 360,
+          y: 350,
+          npcName: '科學科・李老師',
+          avatar: '👩‍🔬',
+          subject: 'STEAM 電腦與科學',
+          level: '中小程度 (P3–P4)',
+          stampIcon: '🔬',
+          questionPool: [
+            {
+              q: '在電腦室使用編程積木（例如 Scratch）控制角色向前移動時，我們通常會用到哪一類指令積木？',
+              options: ['動作類指令（移動步數）', '關機指令', '調整螢幕亮度', '刪除檔案指令'],
+              answer: 0,
+              tip: '「動作類指令」負責控制角色在舞台上的移動步數、旋轉角度與座標位置！'
+            },
+            {
+              q: '在我們的太陽能與風力發電實驗中，太陽能電池板主要把哪一種能量轉換成電能？',
+              options: ['光能（太陽能）', '聲音能量', '磁力能量', '化學食物能量'],
+              answer: 0,
+              tip: '太陽能電池板吸收陽光中的「光能」，並將其直接轉換成清潔的「電能」！'
+            },
+            {
+              q: '把一杯液態的水放進冰箱的冰格（0°C 以下）後，水會變成固態的冰，這個物態變化過程稱為什麼？',
+              options: ['蒸發', '凝固（結冰）', '融化', '凝結'],
+              answer: 1,
+              tip: '液體遇冷變成固體的過程稱為「凝固」（水結成冰），相反冰變成水則是「融化」。'
+            },
+            {
+              q: '磁鐵有南極（S 極）和北極（N 極），當兩塊磁鐵的 N 極與 N 極互相靠近時，會發生什麼現象？',
+              options: ['互相吸引黏在一起', '互相排斥推開', '變成沒有磁力', '發出亮光'],
+              answer: 1,
+              tip: '磁鐵的特性是「同極相斥、異極相吸」，所以兩個 N 極靠近時會互相排斥推開！'
+            }
+          ]
+        },
+        {
+          id: 'st_steam_senior',
+          floor: 2,
+          floorName: '2/F 二樓',
+          locationLabel: '機械人與創科競技場',
+          x: 820,
+          y: 420,
+          npcName: '科創隊長・文同學',
+          avatar: '🤖',
+          subject: 'STEAM 綜合',
+          level: '高小程度 (P5–P6)',
+          stampIcon: '⚙️',
+          questionPool: [
+            {
+              q: '在編寫機械人巡線程式時，如果我們想讓機械人「一直重複偵測黑線直到到達終點」，應該使用哪種程式結構？',
+              options: ['迴圈結構（Loop）', '單次顯示文字', '關機指令', '音量調大指令'],
+              answer: 0,
+              tip: '「迴圈結構（Loop）」可以讓程式重複執行感測與判斷動作，直到滿足終點條件為止！'
+            },
+            {
+              q: '工程師設計橋樑時，經常在支架中加入「三角形」結構，主要是因為三角形具有什麼特性？',
+              options: ['顏色最鮮豔', '形狀最容易畫', '結構最穩固、不易變形', '重量最輕不會下沉'],
+              answer: 2,
+              tip: '三角形在受力時三條邊互相支撐，幾何形狀不會輕易改變，因此是最穩固的工程結構！'
+            },
+            {
+              q: '使用槓桿原理（如蹺蹺板或撬棍）抬起重物時，支點距離重物越近、距離施力點越遠，會產生什麼效果？',
+              options: ['更加省力', '更加費力', '完全不能移動', '重物會變重'],
+              answer: 0,
+              tip: '當「動力臂」大於「阻力臂」時，槓桿就能幫我們用較小的力氣抬起較重的物體，達到省力效果！'
+            }
+          ]
+        }
+      ];
+
+      // Extra Friendly Teachers across all 3 floors (Non-blocking flavor & guidance NPCs)
+      const EXTRA_TEACHERS = [
+        {
+          id: 'npc_vp_chow',
+          floor: 0,
+          floorName: 'G/F 地下',
+          x: 120,
+          y: 285,
+          npcName: '副校長・陳老師',
+          avatar: '👨‍💼',
+          role: '校園迎新導賞',
+          shirtColor: '#0f766e',
+          message: '歡迎各位小學同學同家長來到中華基督教會基朗中學！我們學校秉持「識真理、得自由、以服務」的校訓，希望你們在今天的小學開放日玩得開心、學得精彩！',
+          tip: '💡 小貼士：地下左下方還有「迷你投籃區」，走過去按 E 鍵就可以體驗投籃樂趣！'
+        },
+        {
+          id: 'npc_pe_ho',
+          floor: 0,
+          floorName: 'G/F 地下',
+          x: 345,
+          y: 525,
+          npcName: '體育科・何老師',
+          avatar: '🏃‍♂️',
+          role: '體育與籃球大使',
+          shirtColor: '#ea580c',
+          message: '基朗中學擁有寬敞的室外籃球場，籃球隊同學平時都在這裡熱血訓練！你想不想試試身手，挑戰連續入球呢？',
+          tip: '🏀 提示：走到旁邊的橘色籃球架前，就可以開啟「基朗迷你投籃挑戰賽」！'
+        },
+        {
+          id: 'npc_eng_wong',
+          floor: 1,
+          floorName: '1/F 一樓',
+          x: 545,
+          y: 295,
+          npcName: '英文科・Ms Dan',
+          avatar: '👩‍💼',
+          role: '英語學習廊大使',
+          shirtColor: '#7c3aed',
+          message: 'Welcome to CCC Kei Long College! 一樓設有溫馨的「基朗閱讀角」與「數理思維廊」，同學們可以在這裡享受閱讀與解難的樂趣！',
+          tip: '✨ 悄悄話：聽說「基朗閱讀角書櫃」附近藏著一枚發光的黃金書籤小彩蛋喔！'
+        },
+        {
+          id: 'npc_it_chan',
+          floor: 2,
+          floorName: '2/F 二樓',
+          x: 205,
+          y: 350,
+          npcName: '資訊科技科・唐老師',
+          avatar: '👨‍💻',
+          role: '電腦室創科導師',
+          shirtColor: '#0284c7',
+          message: '歡迎參觀二樓全新升級的「電腦室」！同學們在這裡學習程式設計、AI 人工智慧應用以及 3D 建模，把創意變成現實！',
+          tip: '💻 彩蛋線索：電腦室最右邊的綠色終端機螢幕似乎閃爍著「1982」神秘代碼，去看看吧！'
+        },
+        {
+          id: 'npc_va_ng',
+          floor: 2,
+          floorName: '2/F 二樓',
+          x: 635,
+          y: 280,
+          npcName: '視藝與設計・李老師',
+          avatar: '🎨',
+          role: '3D 打印創客導師',
+          shirtColor: '#db2777',
+          message: '看看這些由基朗同學親手設計並用 3D 打印機製作的校舍模型與環保小擺設，藝術與科技結合就能創造無限可能！',
+          tip: '🤖 提示：右邊的「機械人巡線競技場」有兩台自動巡線小車正在測試呢！'
+        }
+      ];
+
+      // 3 Hidden Easter Eggs across the 3 floors
+      const EASTER_EGGS = [
+        {
+          id: 'egg_gf_motto',
+          floor: 0,
+          floorName: 'G/F 地下',
+          x: 562,
+          y: 222,
+          title: '彩蛋 ①：基朗創校校訓密碼',
+          avatar: '📜',
+          message: '你細心觀察了校史與校訓展板！中華基督教會基朗中學創校於 1982 年，位於元朗鳳攸南街，校訓「識真理、得自由、以服務」源自《聖經》約翰福音，勉勵每位基朗人追求真知、服務社群！',
+          tip: '🎉 恭喜發現第 1 個校園隱藏彩蛋！獲得「基朗校史小達人」稱號！'
+        },
+        {
+          id: 'egg_1f_bookmark',
+          floor: 1,
+          floorName: '1/F 一樓',
+          x: 245,
+          y: 235,
+          title: '彩蛋 ②：閱讀角的黃金書籤',
+          avatar: '🔖',
+          message: '你在閱讀角書櫃的《基朗文集》裡發現了一枚閃閃發光的黃金書籤！書籤背面寫著：「書山有路勤為徑，學海無涯樂作舟。祝願每位小六同學升中順利、前程錦繡！」',
+          tip: '🎉 恭喜發現第 2 個校園隱藏彩蛋！獲得「博學小書蟲」祝福！'
+        },
+        {
+          id: 'egg_2f_terminal',
+          floor: 2,
+          floorName: '2/F 二樓',
+          x: 465,
+          y: 248,
+          title: '彩蛋 ③：電腦室神秘代碼 1982',
+          avatar: '💾',
+          message: 'BEEP! 你啟動了電腦室的隱藏創科終端機，成功輸入創校年份密碼「1982」！實驗室的兩台巡線機械人立刻進入「超頻加速模式」為你歡呼慶祝！',
+          tip: '🎉 恭喜發現第 3 個校園隱藏彩蛋！機械人已啟動加速模式！'
+        }
+      ];
+
+      // =====================================================================
+      // D. FLOOR ARCHITECTURAL DEFINITIONS & COLLISION OBSTACLES
+      // =====================================================================
+      const WORLD_W = 1140;
+      const WORLD_H = 660;
+
+      const FLOORS = [
+        {
+          id: 0,
+          code: 'G/F',
+          title: 'G/F 地下 — 創夢大堂與校史廊',
+          floorColor: '#f5efe6',
+          tileAccent: '#e7dec8',
+          wallColor: '#1e3a5f',
+          obstacles: [
+            { x: 170, y: 190, w: 230, h: 68, label: '開放日接待處', color: '#0284c7' },
+            { x: 470, y: 155, w: 185, h: 48, label: '校史與校訓展板', color: '#b45309' },
+            { x: 750, y: 155, w: 165, h: 52, label: '榮譽獎盃櫃', color: '#d97706' },
+            { x: 470, y: 425, w: 150, h: 56, label: '校園綠化休憩區', color: '#15803d' },
+            { x: 115, y: 475, w: 195, h: 110, label: '基朗迷你投籃區', color: '#ea580c', isBasketball: true }
+          ],
+          stairs: [
+            {
+              x: 960,
+              y: 230,
+              w: 115,
+              h: 165,
+              targetFloor: 1,
+              spawnX: 910,
+              spawnY: 315,
+              label: '樓梯上 1/F ▲',
+              direction: 'up'
+            }
+          ]
+        },
+        {
+          id: 1,
+          code: '1/F',
+          title: '1/F 一樓 — 語文與數理學習廊',
+          floorColor: '#eef6fb',
+          tileAccent: '#dcebf5',
+          wallColor: '#1e3a5f',
+          obstacles: [
+            { x: 230, y: 165, w: 210, h: 52, label: '基朗閱讀角書櫃', color: '#7c2d12' },
+            { x: 650, y: 165, w: 215, h: 52, label: '數理思維互動牆', color: '#1d4ed8' },
+            { x: 470, y: 430, w: 170, h: 56, label: '小組研習閱讀桌', color: '#0369a1' }
+          ],
+          stairs: [
+            {
+              x: 960,
+              y: 230,
+              w: 115,
+              h: 165,
+              targetFloor: 0,
+              spawnX: 910,
+              spawnY: 315,
+              label: '樓梯落 G/F ▼',
+              direction: 'down'
+            },
+            {
+              x: 65,
+              y: 230,
+              w: 115,
+              h: 165,
+              targetFloor: 2,
+              spawnX: 225,
+              spawnY: 315,
+              label: '樓梯上 2/F ▲',
+              direction: 'up'
+            }
+          ]
+        },
+        {
+          id: 2,
+          code: '2/F',
+          title: '2/F 二樓 — STEAM 創科與電腦室',
+          floorColor: '#eef2ff',
+          tileAccent: '#dfe7fd',
+          wallColor: '#1e293b',
+          obstacles: [
+            { x: 240, y: 165, w: 245, h: 66, label: '電腦室・編程與創科區', color: '#0284c7', isComputerRoom: true },
+            { x: 545, y: 170, w: 185, h: 56, label: '3D 打印創客站', color: '#4f46e5' },
+            { x: 785, y: 185, w: 230, h: 115, label: '機械人巡線競技場', color: '#0f172a', isArena: true }
+          ],
+          stairs: [
+            {
+              x: 65,
+              y: 230,
+              w: 115,
+              h: 165,
+              targetFloor: 1,
+              spawnX: 225,
+              spawnY: 315,
+              label: '樓梯落 1/F ▼',
+              direction: 'down'
+            }
+          ]
+        }
+      ];
+
+      // =====================================================================
+      // E. GAME STATE & DOM REFERENCES
+      // =====================================================================
+      const canvas = document.getElementById('gameCanvas');
+      const ctx = canvas.getContext('2d');
+
+      const state = {
+        mode: 'START', // 'START' | 'PLAYING'
+        currentFloor: 0,
+        trackedStationId: null,
+        remainingSeconds: 300, // 5 minutes = 300s
+        lastTimestamp: 0,
+        stairCooldown: 0,
+        player: {
+          x: 240,
+          y: 380,
+          radius: 19,
+          speed: 265,
+          dir: 'right',
+          walkPhase: 0,
+          targetPoint: null
+        },
+        keys: {},
+        dpad: { up: false, down: false, left: false, right: false },
+        stations: [],
+        activeQuiz: null,
+        nearbyStation: null,
+        nearbyTeacher: null,
+        nearbyEgg: null,
+        nearbyBasketball: false,
+        foundEggs: {},
+        bballScore: 0,
+        bballBest: 0,
+        robotTurboTimer: 0,
+        confetti: [],
+        clouds: [
+          { x: 140, y: 85, s: 1.05, v: 12 },
+          { x: 460, y: 65, s: 0.85, v: 9 },
+          { x: 820, y: 95, s: 1.15, v: 14 },
+          { x: 1150, y: 72, s: 0.9, v: 10 }
+        ],
+        birds: [
+          { x: 260, y: 135, phase: 0 },
+          { x: 282, y: 145, phase: 1.4 },
+          { x: 720, y: 115, phase: 2.5 }
+        ],
+        miniRobots: [
+          { x: 830, y: 225, vx: 45, minX: 805, maxX: 985, color: '#38bdf8' },
+          { x: 950, y: 265, vx: -38, minX: 805, maxX: 985, color: '#facc15' }
+        ]
+      };
+
+      function getViewportSize() {
+        const w = window.innerWidth || document.documentElement.clientWidth || 1280;
+        const h = window.innerHeight || document.documentElement.clientHeight || 720;
+        return { w: Math.max(320, w), h: Math.max(240, h) };
+      }
+
+      function pickRandomQuestions(pool, count) {
+        const copy = pool.slice();
+        for (let i = copy.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          const temp = copy[i];
+          copy[i] = copy[j];
+          copy[j] = temp;
+        }
+        return copy.slice(0, count);
+      }
+
+      function buildFreshStations() {
+        return STATION_BLUEPRINTS.map(bp => ({
+          id: bp.id,
+          floor: bp.floor,
+          floorName: bp.floorName,
+          locationLabel: bp.locationLabel,
+          x: bp.x,
+          y: bp.y,
+          npcName: bp.npcName,
+          avatar: bp.avatar,
+          subject: bp.subject,
+          level: bp.level,
+          stampIcon: bp.stampIcon,
+          completed: false,
+          questions: pickRandomQuestions(bp.questionPool, 2)
+        }));
+      }
+
+      // =====================================================================
+      // F. TOAST & CONFETTI HELPERS
+      // =====================================================================
+      let toastTimeoutId = null;
+      function showToast(msg) {
+        const banner = document.getElementById('toastBanner');
+        if (!banner) return;
+        banner.textContent = msg;
+        banner.classList.remove('hidden');
+        if (toastTimeoutId) clearTimeout(toastTimeoutId);
+        toastTimeoutId = setTimeout(() => {
+          banner.classList.add('hidden');
+        }, 3200);
+      }
+
+      function spawnConfettiBurst(wx, wy, count) {
+        const colors = ['#facc15', '#38bdf8', '#10b981', '#f43f5e', '#a855f7'];
+        for (let i = 0; i < count; i++) {
+          const angle = Math.random() * Math.PI * 2;
+          const speed = 70 + Math.random() * 180;
+          state.confetti.push({
+            x: wx,
+            y: wy,
+            vx: Math.cos(angle) * speed,
+            vy: Math.sin(angle) * speed - 90,
+            size: 5 + Math.random() * 5,
+            color: colors[i % colors.length],
+            life: 1.1 + Math.random() * 0.7
+          });
+        }
+      }
+
+      // =====================================================================
+      // G. CORE STATE RESET & HUD UPDATER
+      // =====================================================================
+      function resetGameState(returnToStart) {
+        state.mode = returnToStart ? 'START' : 'PLAYING';
+        state.currentFloor = 0;
+        state.trackedStationId = null;
+        state.remainingSeconds = 300;
+        state.lastTimestamp = performance.now();
+        state.stairCooldown = 0;
+        state.activeQuiz = null;
+        state.nearbyStation = null;
+        state.nearbyTeacher = null;
+        state.nearbyEgg = null;
+        state.nearbyBasketball = false;
+        state.foundEggs = {};
+        state.bballScore = 0;
+        state.robotTurboTimer = 0;
+        state.confetti = [];
+
+        state.player.x = 240;
+        state.player.y = 380;
+        state.player.dir = 'right';
+        state.player.walkPhase = 0;
+        state.player.targetPoint = null;
+
+        state.keys = {};
+        state.dpad = { up: false, down: false, left: false, right: false };
+        state.stations = buildFreshStations();
+
+        // Hide all modals
+        document.getElementById('quizModal').classList.add('hidden');
+        document.getElementById('questListModal').classList.add('hidden');
+        document.getElementById('summaryModal').classList.add('hidden');
+        document.getElementById('npcTalkModal').classList.add('hidden');
+        document.getElementById('basketballModal').classList.add('hidden');
+
+        if (returnToStart) {
+          document.getElementById('startScreenOverlay').classList.remove('hidden');
+          document.getElementById('gameHud').classList.add('hidden');
+          document.getElementById('bottomControlsBar').classList.add('hidden');
+        } else {
+          document.getElementById('startScreenOverlay').classList.add('hidden');
+          document.getElementById('gameHud').classList.remove('hidden');
+          document.getElementById('bottomControlsBar').classList.remove('hidden');
+        }
+
+        updateFloorButtons();
+        updateHud();
+        updateTimerDisplay();
+      }
+
+      function getActiveTargetStation() {
+        if (state.trackedStationId) {
+          const found = state.stations.find(s => s.id === state.trackedStationId && !s.completed);
+          if (found) return found;
+          state.trackedStationId = null;
+        }
+        return state.stations.find(s => !s.completed) || null;
+      }
+
+      function updateFloorButtons() {
+        const btns = document.querySelectorAll('.floor-btn');
+        btns.forEach(btn => {
+          const f = Number(btn.getAttribute('data-floor'));
+          if (f === state.currentFloor) {
+            btn.classList.add('active');
+          } else {
+            btn.classList.remove('active');
+          }
+        });
+      }
+
+      function updateHud() {
+        const completedCount = state.stations.filter(s => s.completed).length;
+        document.getElementById('missionProgressPill').textContent = `進度：${completedCount} / ${state.stations.length}`;
+
+        const eggCount = Object.keys(state.foundEggs).length;
+        const eggPill = document.getElementById('easterEggPill');
+        if (eggPill) {
+          eggPill.textContent = `🥚 彩蛋：${eggCount} / ${EASTER_EGGS.length}`;
+        }
+
+        const guideEl = document.getElementById('missionGuideText');
+        const nextSt = getActiveTargetStation();
+        if (!nextSt) {
+          guideEl.textContent = '🎉 全部 5 個關卡已完成！恭喜你！';
+        } else if (nextSt.floor === state.currentFloor) {
+          guideEl.textContent = `本層目標 ➜ 尋找【${nextSt.npcName}】（${nextSt.subject}・${nextSt.level}）`;
+        } else {
+          guideEl.textContent = `請搭乘樓梯前往 ${nextSt.floorName} 尋找【${nextSt.npcName}】（${nextSt.subject}）`;
+        }
+      }
+
+      function updateTimerDisplay() {
+        const secs = Math.max(0, Math.ceil(state.remainingSeconds));
+        const m = String(Math.floor(secs / 60)).padStart(2, '0');
+        const s = String(secs % 60).padStart(2, '0');
+        const timerEl = document.getElementById('timerText');
+        if (timerEl) timerEl.textContent = `${m}:${s}`;
+
+        const pill = document.getElementById('timerPill');
+        if (pill) {
+          pill.classList.remove('warning', 'danger');
+          if (secs <= 30) {
+            pill.classList.add('danger');
+          } else if (secs <= 60) {
+            pill.classList.add('warning');
+          }
+        }
+      }
+
+      function switchFloor(targetFloor, spawnX, spawnY, silent) {
+        if (targetFloor < 0 || targetFloor >= FLOORS.length) return;
+        state.currentFloor = targetFloor;
+        state.player.targetPoint = null;
+        if (typeof spawnX === 'number') state.player.x = spawnX;
+        if (typeof spawnY === 'number') state.player.y = spawnY;
+        state.stairCooldown = 0.75;
+        updateFloorButtons();
+        updateHud();
+        if (!silent) {
+          sfx.playFloorChange();
+          showToast(`已抵達 ${FLOORS[targetFloor].title}`);
+        }
+      }
+
+      // =====================================================================
+      // H. CANVAS RESIZE & COORDINATE MAPPING
+      // =====================================================================
+      function resizeCanvas() {
+        const vp = getViewportSize();
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        const targetW = Math.floor(vp.w * dpr);
+        const targetH = Math.floor(vp.h * dpr);
+        if (canvas.width !== targetW || canvas.height !== targetH) {
+          canvas.width = targetW;
+          canvas.height = targetH;
+        }
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+
+      function getInteriorTransform() {
+        const vp = getViewportSize();
+        const padTop = 64;
+        const padBottom = 24;
+        const availW = Math.max(280, vp.w - 24);
+        const availH = Math.max(200, vp.h - padTop - padBottom);
+        const scale = Math.min(availW / WORLD_W, availH / WORLD_H, 1.25);
+        const offsetX = (vp.w - WORLD_W * scale) * 0.5;
+        const offsetY = padTop + (availH - WORLD_H * scale) * 0.5;
+        return { scale, offsetX, offsetY };
+      }
+
+      function screenToWorld(clientX, clientY) {
+        const t = getInteriorTransform();
+        return {
+          x: (clientX - t.offsetX) / t.scale,
+          y: (clientY - t.offsetY) / t.scale
+        };
+      }
+
+      // =====================================================================
+      // I. HIGH-DETAIL 2D SCHOOL EXTERIOR RENDERER (中華基督教會基朗中學)
+      // =====================================================================
+      function drawSchoolExterior(w, h, dt, timeSec) {
+        // Animate clouds & birds gently
+        state.clouds.forEach(c => {
+          c.x += c.v * dt;
+          if (c.x > w + 220) c.x = -220;
+        });
+        state.birds.forEach(b => {
+          b.x += 22 * dt;
+          b.phase += dt * 5.5;
+          if (b.x > w + 80) b.x = -80;
+        });
+
+        // 1. Bright Hong Kong Daytime Sky Gradient
+        const skyGrad = ctx.createLinearGradient(0, 0, 0, h * 0.85);
+        skyGrad.addColorStop(0, '#498ed3');
+        skyGrad.addColorStop(0.55, '#89bfe9');
+        skyGrad.addColorStop(1, '#cbe5f9');
+        ctx.fillStyle = skyGrad;
+        ctx.fillRect(0, 0, w, h);
+
+        // Soft Fluffy Cumulus Clouds
+        state.clouds.forEach(c => drawCloud(c.x, c.y, c.s));
+
+        // Subtle Flying Birds
+        ctx.strokeStyle = 'rgba(30, 58, 138, 0.45)';
+        ctx.lineWidth = 1.8;
+        state.birds.forEach(b => {
+          const flap = Math.sin(b.phase) * 3.5;
+          ctx.beginPath();
+          ctx.moveTo(b.x - 7, b.y + flap);
+          ctx.quadraticCurveTo(b.x - 3, b.y - 4, b.x, b.y);
+          ctx.quadraticCurveTo(b.x + 3, b.y - 4, b.x + 7, b.y + flap);
+          ctx.stroke();
+        });
+
+        const horizonY = h * 0.835;
+
+        // 2. Distant Hong Kong Residential Towers
+        drawDistantResidentialTowers(w, horizonY);
+
+        // 3. Far-Left Neighboring Sage-Grey Corridor Block
+        drawFarLeftNeighborBlock(w, horizonY);
+
+        // 4. Foreground Green Outdoor Basketball Court + Blue Center Circle + Hoop
+        drawBasketballCourtForeground(w, h, horizonY, timeSec);
+
+        // 5. Left Wing Building with Royal-Blue Vertical Fins & Cantilevered Balcony
+        drawLeftBlueRibbedBuilding(w, horizonY);
+
+        // 6. Central 7-Story Main Building + Golden Cross + 直書「基朗中學」 + Stairwell Tower
+        drawMainKeiLongBuilding(w, horizonY);
+
+        // 7. White Steel-Mesh Security Fence & Parked School Van / Cars
+        drawCourtyardFenceAndCars(w, horizonY);
+
+        // 8. Five White Planter Boxes with Lush Green Bushes along Building Base
+        drawFrontPlanters(w, horizonY);
+      }
+
+      function drawCloud(x, y, scale) {
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.scale(scale, scale);
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.55)';
+        ctx.beginPath();
+        ctx.ellipse(26, 14, 64, 15, 0, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.84)';
+        ctx.beginPath();
+        ctx.arc(-8, 4, 24, 0, Math.PI * 2);
+        ctx.arc(18, -5, 32, 0, Math.PI * 2);
+        ctx.arc(48, 0, 26, 0, Math.PI * 2);
+        ctx.arc(72, 7, 19, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+
+      function drawDistantResidentialTowers(w, horizonY) {
+        const peekX = w * 0.01;
+        const peekW = w * 0.055;
+        const peekH = horizonY * 0.42;
+        ctx.fillStyle = '#9aa8b8';
+        ctx.fillRect(peekX, horizonY * 0.20, peekW, peekH);
+        ctx.fillStyle = 'rgba(30, 41, 59, 0.25)';
+        for (let r = 0; r < 8; r++) {
+          for (let c = 0; c < 4; c++) {
+            ctx.fillRect(peekX + 5 + c * (peekW / 4.5), horizonY * 0.22 + r * 11, 6, 6);
+          }
+        }
+
+        const towers = [
+          { x: w * 0.838, w: w * 0.048, h: horizonY * 0.51, color: '#5c4640' },
+          { x: w * 0.884, w: w * 0.056, h: horizonY * 0.47, color: '#6b534c' },
+          { x: w * 0.942, w: w * 0.062, h: horizonY * 0.54, color: '#4d3b36' }
+        ];
+        towers.forEach(t => {
+          const topY = horizonY - t.h;
+          ctx.fillStyle = t.color;
+          ctx.fillRect(t.x, topY, t.w, t.h);
+
+          ctx.fillStyle = 'rgba(15, 23, 42, 0.35)';
+          ctx.fillRect(t.x + t.w * 0.46, topY + 6, t.w * 0.1, t.h - 6);
+
+          const cols = 4;
+          const rows = 18;
+          const padX = t.w / (cols + 1);
+          const padY = (t.h - 35) / (rows + 1);
+          for (let r = 1; r <= rows; r++) {
+            for (let c = 1; c <= cols; c++) {
+              ctx.fillStyle = (r + c) % 5 === 0 ? 'rgba(254, 243, 199, 0.35)' : 'rgba(255, 255, 255, 0.22)';
+              ctx.fillRect(t.x + c * padX - 2.5, topY + r * padY, 5, 6);
+            }
+          }
+        });
+
+        ctx.fillStyle = '#1e293b';
+        ctx.fillRect(w * 0.86, horizonY - 36, w * 0.14, 36);
+        ctx.fillStyle = '#475569';
+        ctx.fillRect(w * 0.86, horizonY - 40, w * 0.14, 4);
+      }
+
+      function drawFarLeftNeighborBlock(w, horizonY) {
+        const edgeX = w * 0.065;
+        const topY = horizonY * 0.34;
+        ctx.fillStyle = '#738276';
+        ctx.fillRect(0, topY, edgeX, horizonY - topY);
+
+        const levels = 5;
+        const lvH = (horizonY - topY) / levels;
+        for (let i = 0; i < levels; i++) {
+          const y = topY + i * lvH;
+          ctx.fillStyle = '#1e2923';
+          ctx.fillRect(0, y + 6, edgeX - 4, lvH * 0.56);
+          ctx.fillStyle = '#a7b8a8';
+          ctx.fillRect(0, y + lvH * 0.62, edgeX, lvH * 0.38);
+          ctx.strokeStyle = '#334155';
+          ctx.lineWidth = 1.2;
+          ctx.beginPath();
+          ctx.moveTo(0, y + lvH * 0.45);
+          ctx.lineTo(edgeX - 2, y + lvH * 0.45);
+          ctx.stroke();
+        }
+      }
+
+      function drawBasketballCourtForeground(w, h, horizonY, timeSec) {
+        const courtGrad = ctx.createLinearGradient(0, horizonY, 0, h);
+        courtGrad.addColorStop(0, '#2ea86f');
+        courtGrad.addColorStop(0.55, '#228e5c');
+        courtGrad.addColorStop(1, '#18754a');
+        ctx.fillStyle = courtGrad;
+        ctx.fillRect(0, horizonY, w, h - horizonY);
+
+        // White perspective basketball court lines
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.9)';
+        ctx.lineWidth = 2.6;
+        ctx.beginPath();
+        ctx.moveTo(0, horizonY + (h - horizonY) * 0.28);
+        ctx.lineTo(w, horizonY + (h - horizonY) * 0.13);
+        ctx.moveTo(w * 0.14, h);
+        ctx.lineTo(w * 0.63, horizonY + (h - horizonY) * 0.17);
+        ctx.moveTo(w * 0.72, horizonY + (h - horizonY) * 0.16);
+        ctx.lineTo(w * 0.96, h * 0.94);
+        ctx.stroke();
+
+        // Royal-Blue Center Circle (#1d70d1)
+        const cx = w * 0.725;
+        const cy = horizonY + (h - horizonY) * 0.56;
+        const rx = Math.max(54, w * 0.082);
+        const ry = Math.max(13, (h - horizonY) * 0.135);
+
+        ctx.fillStyle = '#1d70d1';
+        ctx.beginPath();
+        ctx.ellipse(cx, cy, rx, ry, 0, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 2.8;
+        ctx.stroke();
+
+        // Right Restricted Key Area
+        const keyX = w * 0.86;
+        const keyY = horizonY + (h - horizonY) * 0.24;
+        ctx.fillStyle = '#1d70d1';
+        ctx.beginPath();
+        ctx.moveTo(keyX - 55, keyY + 22);
+        ctx.lineTo(w, keyY + 11);
+        ctx.lineTo(w, keyY - 6);
+        ctx.lineTo(keyX - 30, keyY - 1);
+        ctx.closePath();
+        ctx.fill();
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 2.2;
+        ctx.stroke();
+
+        // Tall White Flagpole & Waving School Flag next to right stairwell tower
+        const flagX = w * 0.872;
+        const flagTopY = horizonY * 0.42;
+        ctx.strokeStyle = '#f8fafc';
+        ctx.lineWidth = 2.8;
+        ctx.beginPath();
+        ctx.moveTo(flagX, horizonY + 4);
+        ctx.lineTo(flagX - 10, flagTopY);
+        ctx.stroke();
+
+        const wave = Math.sin((timeSec || 0) * 4) * 3;
+        ctx.fillStyle = '#dc2626';
+        ctx.beginPath();
+        ctx.moveTo(flagX - 10, flagTopY + 2);
+        ctx.quadraticCurveTo(flagX + 8, flagTopY + wave, flagX + 24, flagTopY + 5 + wave);
+        ctx.lineTo(flagX + 22, flagTopY + 18 + wave);
+        ctx.quadraticCurveTo(flagX + 6, flagTopY + 14 + wave, flagX - 9, flagTopY + 16);
+        ctx.closePath();
+        ctx.fill();
+
+        // Triple-Pole Basketball Hoop on Far Right
+        const hoopX = w * 0.925;
+        const hoopBaseY = horizonY + (h - horizonY) * 0.14;
+
+        ctx.fillStyle = '#0f172a';
+        ctx.fillRect(hoopX - 8, hoopBaseY - 2, 34, 6);
+
+        ctx.strokeStyle = '#0f172a';
+        ctx.lineWidth = 4;
+        ctx.beginPath();
+        ctx.moveTo(hoopX - 2, hoopBaseY);
+        ctx.lineTo(hoopX - 2, hoopBaseY - 78);
+        ctx.moveTo(hoopX + 10, hoopBaseY + 2);
+        ctx.lineTo(hoopX + 10, hoopBaseY - 82);
+        ctx.moveTo(hoopX + 22, hoopBaseY + 2);
+        ctx.lineTo(hoopX + 22, hoopBaseY - 76);
+        ctx.stroke();
+
+        const bbX = hoopX - 26;
+        const bbY = hoopBaseY - 108;
+        const bbW = 58;
+        const bbH = 36;
+
+        ctx.fillStyle = 'rgba(248, 250, 252, 0.93)';
+        ctx.strokeStyle = '#1e293b';
+        ctx.lineWidth = 2.4;
+        ctx.fillRect(bbX, bbY, bbW, bbH);
+        ctx.strokeRect(bbX, bbY, bbW, bbH);
+
+        ctx.strokeStyle = '#334155';
+        ctx.lineWidth = 1.6;
+        ctx.strokeRect(bbX + 19, bbY + 14, 20, 14);
+
+        // Orange Rim & White Net
+        ctx.strokeStyle = '#ea580c';
+        ctx.lineWidth = 3.2;
+        ctx.beginPath();
+        ctx.moveTo(bbX + 18, bbY + 28);
+        ctx.lineTo(bbX + 39, bbY + 28);
+        ctx.stroke();
+
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.85)';
+        ctx.lineWidth = 1.2;
+        ctx.beginPath();
+        ctx.moveTo(bbX + 20, bbY + 29);
+        ctx.lineTo(bbX + 23, bbY + 41);
+        ctx.lineTo(bbX + 34, bbY + 41);
+        ctx.lineTo(bbX + 37, bbY + 29);
+        ctx.stroke();
+      }
+
+      function drawLeftBlueRibbedBuilding(w, horizonY) {
+        const leftX = w * 0.048;
+        const midX = w * 0.112;
+        const rightX = w * 0.372;
+
+        const topLeftY = horizonY * 0.365;
+        const topMidY = horizonY * 0.278;
+        const topRightY = horizonY * 0.405;
+
+        // Sunlit side wall
+        ctx.fillStyle = '#a4cee8';
+        ctx.beginPath();
+        ctx.moveTo(leftX, topLeftY);
+        ctx.lineTo(midX, topMidY);
+        ctx.lineTo(midX, horizonY);
+        ctx.lineTo(leftX, horizonY);
+        ctx.closePath();
+        ctx.fill();
+
+        // Main angled facade
+        const wingGrad = ctx.createLinearGradient(midX, topMidY, rightX, horizonY);
+        wingGrad.addColorStop(0, '#85bee2');
+        wingGrad.addColorStop(1, '#68a6d1');
+        ctx.fillStyle = wingGrad;
+        ctx.beginPath();
+        ctx.moveTo(midX, topMidY);
+        ctx.lineTo(rightX, topRightY);
+        ctx.lineTo(rightX, horizonY);
+        ctx.lineTo(midX, horizonY);
+        ctx.closePath();
+        ctx.fill();
+
+        // Royal-blue parapet trim
+        ctx.strokeStyle = '#184e9e';
+        ctx.lineWidth = 4;
+        ctx.beginPath();
+        ctx.moveTo(leftX, topLeftY);
+        ctx.lineTo(midX, topMidY);
+        ctx.lineTo(rightX, topRightY);
+        ctx.stroke();
+
+        // Large Dark Gridded Glass Curtain Wall
+        const gwX1 = midX + (rightX - midX) * 0.41;
+        const gwX2 = midX + (rightX - midX) * 0.87;
+        const gwY1Top = topMidY + (topRightY - topMidY) * 0.41 + 26;
+        const gwY2Top = topMidY + (topRightY - topMidY) * 0.87 + 26;
+        const gwYBot = horizonY - 58;
+
+        ctx.fillStyle = '#172334';
+        ctx.beginPath();
+        ctx.moveTo(gwX1, gwY1Top);
+        ctx.lineTo(gwX2, gwY2Top);
+        ctx.lineTo(gwX2, gwYBot);
+        ctx.lineTo(gwX1, gwYBot);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.strokeStyle = '#64748b';
+        ctx.lineWidth = 1.2;
+        const gCols = 14;
+        for (let c = 1; c < gCols; c++) {
+          const t = c / gCols;
+          const gx = gwX1 + (gwX2 - gwX1) * t;
+          const gy = gwY1Top + (gwY2Top - gwY1Top) * t;
+          ctx.beginPath();
+          ctx.moveTo(gx, gy);
+          ctx.lineTo(gx, gwYBot);
+          ctx.stroke();
+        }
+        const gRows = 5;
+        for (let r = 1; r < gRows; r++) {
+          const rt = r / gRows;
+          const ry1 = gwY1Top + (gwYBot - gwY1Top) * rt;
+          const ry2 = gwY2Top + (gwYBot - gwY2Top) * rt;
+          ctx.beginPath();
+          ctx.moveTo(gwX1, ry1);
+          ctx.lineTo(gwX2, ry2);
+          ctx.stroke();
+        }
+
+        // 11 Vertical Royal-Blue Structural Fins
+        const numFins = 11;
+        for (let i = 0; i < numFins; i++) {
+          const t = i / (numFins - 1);
+          const fx = midX + (rightX - midX) * t;
+          const fyTop = topMidY + (topRightY - topMidY) * t;
+          const finH = (horizonY - fyTop) * (i < 4 ? 0.88 : 0.25);
+
+          ctx.fillStyle = '#184e9e';
+          ctx.fillRect(fx - 4.5, fyTop, 8, finH);
+          ctx.fillStyle = '#3174c4';
+          ctx.fillRect(fx + 3.5, fyTop + 2, 4.5, finH - 2);
+          ctx.fillStyle = '#0f336b';
+          ctx.fillRect(fx - 6, fyTop + 2, 1.5, finH - 2);
+        }
+
+        // Protruding Blue & Warm-Orange Balcony Feature
+        const bx = midX + (rightX - midX) * 0.255;
+        const by = topMidY + (horizonY - topMidY) * 0.43;
+
+        ctx.fillStyle = '#d98a2b';
+        ctx.fillRect(bx + 7, by - 25, 17, 25);
+        ctx.fillStyle = '#f3b356';
+        ctx.fillRect(bx + 7, by - 25, 6, 25);
+
+        ctx.fillStyle = '#1d5ba6';
+        ctx.beginPath();
+        ctx.moveTo(bx - 16, by);
+        ctx.lineTo(bx + 36, by);
+        ctx.lineTo(bx + 26, by + 20);
+        ctx.lineTo(bx - 6, by + 20);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.fillStyle = '#0f356e';
+        ctx.beginPath();
+        ctx.moveTo(bx - 6, by + 20);
+        ctx.lineTo(bx + 26, by + 20);
+        ctx.lineTo(bx + 20, by + 31);
+        ctx.lineTo(bx + 2, by + 31);
+        ctx.closePath();
+        ctx.fill();
+      }
+
+      function drawMainKeiLongBuilding(w, horizonY) {
+        const xLeft = w * 0.354;
+        const xCorner = w * 0.618;
+        const xSideEnd = w * 0.746;
+        const xTowerEnd = w * 0.858;
+
+        const yTopLeft = horizonY * 0.298;
+        const yTopCorner = horizonY * 0.062;
+        const yTopSide = horizonY * 0.168;
+        const yTowerTop = horizonY * 0.152;
+
+        // A. Far-Right Royal-Blue 5-Story Open Stairwell Tower (#2368c9)
+        ctx.fillStyle = '#2368c9';
+        ctx.beginPath();
+        ctx.moveTo(xSideEnd - 14, yTowerTop);
+        ctx.lineTo(xTowerEnd - 22, yTowerTop + 5);
+        ctx.lineTo(xTowerEnd + 2, horizonY);
+        ctx.lineTo(xSideEnd - 14, horizonY);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.fillStyle = '#68a6d8';
+        ctx.beginPath();
+        ctx.moveTo(xTowerEnd - 22, yTowerTop + 5);
+        ctx.lineTo(xTowerEnd - 4, yTowerTop + 15);
+        ctx.lineTo(xTowerEnd + 10, horizonY);
+        ctx.lineTo(xTowerEnd + 2, horizonY);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.strokeStyle = '#bae6fd';
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.moveTo(xSideEnd - 10, yTowerTop - 8);
+        ctx.lineTo(xTowerEnd - 22, yTowerTop - 3);
+        ctx.stroke();
+
+        // 5 Open Stairwell Landings with Dark Shadow Openings
+        for (let lv = 1; lv <= 5; lv++) {
+          const t = 0.15 + lv * 0.135;
+          const ly = yTowerTop + (horizonY - yTowerTop) * t;
+          const lx = xSideEnd + 14 + lv * 2.4;
+          const boxW = 28;
+          const boxH = 18;
+
+          ctx.fillStyle = '#0c1f3a';
+          ctx.fillRect(lx, ly - boxH, boxW, boxH);
+
+          ctx.fillStyle = '#2b74d8';
+          ctx.fillRect(lx - 5, ly - boxH - 6, boxW + 7, 7);
+          ctx.fillStyle = '#173f82';
+          ctx.fillRect(lx - 5, ly - boxH + 1, boxW + 7, 3);
+        }
+
+        // B. Right-Side Perspective Face (#86b9d6 / #9ad0ec) with Golden Cross & 直書「基朗中學」
+        const sideGrad = ctx.createLinearGradient(xCorner, yTopCorner, xSideEnd, horizonY);
+        sideGrad.addColorStop(0, '#9ad0ec');
+        sideGrad.addColorStop(1, '#86b9d6');
+        ctx.fillStyle = sideGrad;
+        ctx.beginPath();
+        ctx.moveTo(xCorner, yTopCorner);
+        ctx.lineTo(xSideEnd, yTopSide);
+        ctx.lineTo(xSideEnd, horizonY);
+        ctx.lineTo(xCorner, horizonY);
+        ctx.closePath();
+        ctx.fill();
+
+        // Side Wall Windows, Blue & Yellow Sunshades & AC Units
+        for (let fl = 0; fl < 6; fl++) {
+          const t = 0.175 + fl * 0.115;
+          const wy = yTopCorner + (horizonY - yTopCorner) * t;
+          const wx = xCorner + (xSideEnd - xCorner) * 0.34;
+          const winW = (xSideEnd - xCorner) * 0.29;
+          const winH = 15;
+
+          ctx.fillStyle = '#152232';
+          ctx.beginPath();
+          ctx.moveTo(wx, wy);
+          ctx.lineTo(wx + winW, wy + winW * 0.36);
+          ctx.lineTo(wx + winW, wy + winW * 0.36 + winH);
+          ctx.lineTo(wx, wy + winH);
+          ctx.closePath();
+          ctx.fill();
+
+          // Alternating Blue & Warm Yellow Sunshade Awnings
+          ctx.fillStyle = fl === 1 ? '#eab308' : '#1d5ba6';
+          ctx.beginPath();
+          ctx.moveTo(wx - 2, wy - 3);
+          ctx.lineTo(wx + winW + 2, wy + winW * 0.36 - 3);
+          ctx.lineTo(wx + winW + 4, wy + winW * 0.36 + 5);
+          ctx.lineTo(wx - 2, wy + 5);
+          ctx.closePath();
+          ctx.fill();
+
+          if (fl % 2 === 1) {
+            ctx.fillStyle = '#e2e8f0';
+            ctx.fillRect(wx + winW - 8, wy + winW * 0.36 + winH - 6, 10, 7);
+            ctx.fillStyle = '#64748b';
+            ctx.fillRect(wx + winW - 6, wy + winW * 0.36 + winH - 4, 6, 3);
+          }
+        }
+
+        // Security Cage Grille Window on Lower Side Wall
+        const cageX = xCorner + (xSideEnd - xCorner) * 0.38;
+        const cageY = horizonY - 82;
+        ctx.strokeStyle = '#cbd5e1';
+        ctx.lineWidth = 1.5;
+        ctx.strokeRect(cageX, cageY, 34, 24);
+        for (let gx = cageX + 6; gx < cageX + 34; gx += 6) {
+          ctx.beginPath();
+          ctx.moveTo(gx, cageY);
+          ctx.lineTo(gx, cageY + 24);
+          ctx.stroke();
+        }
+
+        // White Exterior Staircase with Handrail at Bottom Right
+        const extStairX = xSideEnd - 2;
+        const extStairY = horizonY - 34;
+        ctx.strokeStyle = '#f8fafc';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(extStairX, extStairY);
+        ctx.lineTo(extStairX + 34, horizonY - 2);
+        ctx.moveTo(extStairX, extStairY - 12);
+        ctx.lineTo(extStairX + 34, horizonY - 14);
+        ctx.moveTo(extStairX, extStairY);
+        ctx.lineTo(extStairX, extStairY - 12);
+        ctx.moveTo(extStairX + 34, horizonY - 2);
+        ctx.lineTo(extStairX + 34, horizonY - 14);
+        ctx.stroke();
+
+        // Tall Golden Christian Cross (#eab308) on Upper-Left of Side Wall
+        const crossX = xCorner + (xSideEnd - xCorner) * 0.185;
+        const crossY = yTopCorner + (horizonY - yTopCorner) * 0.145;
+        ctx.fillStyle = '#eab308';
+        ctx.fillRect(crossX - 2.5, crossY, 5, 44);
+        ctx.fillRect(crossX - 11, crossY + 11, 22, 4.5);
+        ctx.fillStyle = '#fef08a';
+        ctx.fillRect(crossX - 1.5, crossY, 2, 44);
+
+        // Vertical Dark Chinese Lettering 「基朗中學」
+        const mottoX = xCorner + (xSideEnd - xCorner) * 0.76;
+        const mottoStartY = yTopSide + 44;
+        const verticalChars = ['基', '朗', '中', '學'];
+        const charStep = Math.max(17, (horizonY - yTopSide) * 0.055);
+        ctx.fillStyle = '#172e4d';
+        ctx.font = `900 ${Math.max(12, Math.round(w * 0.0115))}px sans-serif`;
+        ctx.textAlign = 'center';
+        verticalChars.forEach((ch, idx) => {
+          ctx.fillText(ch, mottoX, mottoStartY + idx * charStep);
+        });
+
+        // Small Vertical School Motto Plaques beside 「基朗中學」
+        const plaqueX = xCorner + (xSideEnd - xCorner) * 0.88;
+        for (let p = 0; p < 4; p++) {
+          ctx.fillStyle = '#f8fafc';
+          ctx.strokeStyle = '#1d5ba6';
+          ctx.lineWidth = 1;
+          ctx.fillRect(plaqueX - 3, mottoStartY - 8 + p * (charStep * 0.9), 6, 11);
+          ctx.strokeRect(plaqueX - 3, mottoStartY - 8 + p * (charStep * 0.9), 6, 11);
+        }
+
+        // C. Front-Left Light Sky-Blue Main Facade (#9ccbe4)
+        const frontGrad = ctx.createLinearGradient(xLeft, yTopLeft, xCorner, horizonY);
+        frontGrad.addColorStop(0, '#9ccbe4');
+        frontGrad.addColorStop(1, '#7eb7da');
+        ctx.fillStyle = frontGrad;
+        ctx.beginPath();
+        ctx.moveTo(xLeft, yTopLeft);
+        ctx.lineTo(xCorner, yTopCorner);
+        ctx.lineTo(xCorner, horizonY);
+        ctx.lineTo(xLeft, horizonY);
+        ctx.closePath();
+        ctx.fill();
+
+        // Roof parapet edge & lightning rods
+        ctx.strokeStyle = '#e0f2fe';
+        ctx.lineWidth = 2.5;
+        ctx.beginPath();
+        ctx.moveTo(xLeft, yTopLeft);
+        ctx.lineTo(xCorner, yTopCorner);
+        ctx.stroke();
+
+        ctx.strokeStyle = '#334155';
+        ctx.lineWidth = 1.4;
+        [0.25, 0.48, 0.72].forEach(rt => {
+          const rx = xLeft + (xCorner - xLeft) * rt;
+          const ry = yTopLeft + (yTopCorner - yTopLeft) * rt;
+          ctx.beginPath();
+          ctx.moveTo(rx, ry);
+          ctx.lineTo(rx, ry - 18);
+          ctx.stroke();
+        });
+
+        // Vertical structural column lines
+        const numCols = 9;
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.22)';
+        ctx.lineWidth = 1.2;
+        for (let c = 1; c < numCols; c++) {
+          const t = c / numCols;
+          const cx = xLeft + (xCorner - xLeft) * t;
+          const cyTop = yTopLeft + (yTopCorner - yTopLeft) * t;
+          ctx.beginPath();
+          ctx.moveTo(cx, cyTop);
+          ctx.lineTo(cx, horizonY);
+          ctx.stroke();
+        }
+
+        // 6 Rows of Detailed Classroom Windows, Sunshades & AC Units
+        const numFloors = 6;
+        for (let f = 0; f < numFloors; f++) {
+          const rowT = 0.145 + f * 0.118;
+          const yL = yTopLeft + (horizonY - yTopLeft) * rowT;
+          const yR = yTopCorner + (horizonY - yTopCorner) * rowT;
+          const bandH = Math.max(13, (horizonY - yTopCorner) * 0.052);
+
+          ctx.fillStyle = '#132131';
+          ctx.beginPath();
+          ctx.moveTo(xLeft + 8, yL);
+          ctx.lineTo(xCorner - 7, yR);
+          ctx.lineTo(xCorner - 7, yR + bandH);
+          ctx.lineTo(xLeft + 8, yL + bandH);
+          ctx.closePath();
+          ctx.fill();
+
+          const segs = 14;
+          for (let s = 0; s < segs; s++) {
+            const st1 = s / segs;
+            const st2 = (s + 0.86) / segs;
+            const sx1 = xLeft + 8 + (xCorner - xLeft - 15) * st1;
+            const sx2 = xLeft + 8 + (xCorner - xLeft - 15) * st2;
+            const sy1 = yL + (yR - yL) * st1;
+            const sy2 = yL + (yR - yL) * st2;
+
+            // Glass reflection sheen
+            ctx.fillStyle = 'rgba(224, 242, 254, 0.18)';
+            ctx.beginPath();
+            ctx.moveTo(sx1 + 1, sy1 + 2);
+            ctx.lineTo(sx2 - 1, sy2 + 2);
+            ctx.lineTo(sx2 - 1, sy2 + bandH * 0.55);
+            ctx.lineTo(sx1 + 1, sy1 + bandH * 0.55);
+            ctx.closePath();
+            ctx.fill();
+
+            // Blue & Warm Yellow Sunshades
+            if (f === 0 || f === 2) {
+              ctx.fillStyle = f === 0 ? '#184e9e' : '#eab308';
+              ctx.beginPath();
+              ctx.moveTo(sx1, sy1 - 2);
+              ctx.lineTo(sx2, sy2 - 2);
+              ctx.lineTo(sx2, sy2 + 5);
+              ctx.lineTo(sx1, sy1 + 5);
+              ctx.closePath();
+              ctx.fill();
+            }
+
+            // Window-Mounted Air Conditioners (冷氣機)
+            if ((f * 3 + s) % 3 !== 1) {
+              const acW = Math.max(7, (sx2 - sx1) * 0.55);
+              const acH = Math.max(5, bandH * 0.44);
+              const acX = sx1 + 1.5;
+              const acY = sy1 + bandH - acH + 1;
+
+              ctx.fillStyle = 'rgba(15, 23, 42, 0.35)';
+              ctx.fillRect(acX + 1, acY + 2, acW, acH);
+
+              ctx.fillStyle = '#e2e8f0';
+              ctx.fillRect(acX, acY, acW, acH);
+
+              ctx.fillStyle = '#475569';
+              ctx.fillRect(acX + 1.5, acY + 1.5, acW * 0.45, acH - 3);
+            }
+          }
+        }
+
+        // D. Dark Metallic 3D School Name: 「中華基督教會基朗中學」
+        ctx.save();
+        const angle = Math.atan2(yTopCorner - yTopLeft, xCorner - xLeft);
+        const signMidX = (xLeft + xCorner) * 0.5;
+        const signMidY = (yTopLeft + yTopCorner) * 0.5 + Math.max(16, horizonY * 0.031);
+        ctx.translate(signMidX, signMidY);
+        ctx.rotate(angle);
+
+        const fontSize = Math.max(13, Math.min(25, Math.round((xCorner - xLeft) * 0.08)));
+        ctx.font = `900 ${fontSize}px sans-serif`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.42)';
+        ctx.fillText('中華基督教會基朗中學', 1.2, 1.8);
+        ctx.fillStyle = '#0f233d';
+        ctx.fillText('中華基督教會基朗中學', 0, 0);
+        ctx.restore();
+
+        // E. Ground Floor Covered Entrance & Parking Bay
+        const baseX = xLeft + (xCorner - xLeft) * 0.26;
+        const baseW = (xCorner - xLeft) * 0.68;
+        const baseH = Math.max(28, (horizonY - yTopCorner) * 0.092);
+
+        ctx.fillStyle = '#cbd5e1';
+        ctx.fillRect(baseX, horizonY - baseH, baseW, baseH);
+        ctx.fillStyle = '#293548';
+        ctx.fillRect(baseX + 10, horizonY - baseH + 6, baseW - 20, baseH - 6);
+        ctx.fillStyle = '#f8fafc';
+        ctx.fillRect(baseX + baseW * 0.32, horizonY - baseH + 4, 6, baseH - 4);
+        ctx.fillRect(baseX + baseW * 0.68, horizonY - baseH + 4, 6, baseH - 4);
+      }
+
+      function drawCourtyardFenceAndCars(w, horizonY) {
+        const carBaseY = horizonY - 2;
+
+        // Dark cars on left (using roundRectPath)
+        ctx.fillStyle = '#1e293b';
+        roundRectPath(ctx, w * 0.245, carBaseY - 23, 48, 23, 6);
+        ctx.fill();
+        roundRectPath(ctx, w * 0.315, carBaseY - 25, 52, 25, 6);
+        ctx.fill();
+        roundRectPath(ctx, w * 0.375, carBaseY - 22, 46, 22, 5);
+        ctx.fill();
+
+        // Silver School Van in center bay
+        ctx.fillStyle = '#e2e8f0';
+        roundRectPath(ctx, w * 0.478, carBaseY - 27, 62, 27, 6);
+        ctx.fill();
+
+        ctx.fillStyle = '#334155';
+        ctx.fillRect(w * 0.486, carBaseY - 23, 17, 10);
+        ctx.fillRect(w * 0.512, carBaseY - 23, 22, 10);
+        ctx.fillStyle = '#0f172a';
+        ctx.beginPath();
+        ctx.arc(w * 0.495, carBaseY, 5, 0, Math.PI * 2);
+        ctx.arc(w * 0.542, carBaseY, 5, 0, Math.PI * 2);
+        ctx.fill();
+
+        // White Metal Grid Security Fence on Left
+        const midBreak = w * 0.242;
+        const fenceEndX = w * 0.432;
+        const fenceTopHigh = horizonY - 82;
+        const fenceTopLow = horizonY - 35;
+
+        ctx.fillStyle = '#cbd5e1';
+        ctx.fillRect(0, horizonY - 4, midBreak, 22);
+
+        ctx.fillStyle = 'rgba(226, 232, 240, 0.22)';
+        ctx.fillRect(0, fenceTopHigh, midBreak, horizonY - fenceTopHigh - 4);
+
+        ctx.strokeStyle = 'rgba(241, 245, 249, 0.48)';
+        ctx.lineWidth = 1;
+        for (let fx = 12; fx < midBreak; fx += 14) {
+          ctx.beginPath();
+          ctx.moveTo(fx, fenceTopHigh);
+          ctx.lineTo(fx, horizonY - 4);
+          ctx.stroke();
+        }
+        for (let fy = fenceTopHigh + 12; fy < horizonY - 4; fy += 14) {
+          ctx.beginPath();
+          ctx.moveTo(0, fy);
+          ctx.lineTo(midBreak, fy);
+          ctx.stroke();
+        }
+
+        ctx.strokeStyle = '#f1f5f9';
+        ctx.lineWidth = 3.5;
+        ctx.strokeRect(0, fenceTopHigh, midBreak, horizonY - fenceTopHigh - 4);
+        ctx.beginPath();
+        ctx.moveTo(0, (fenceTopHigh + horizonY) * 0.5);
+        ctx.lineTo(midBreak, (fenceTopHigh + horizonY) * 0.5);
+        ctx.moveTo(midBreak * 0.5, fenceTopHigh);
+        ctx.lineTo(midBreak * 0.5, horizonY + 16);
+        ctx.moveTo(midBreak, fenceTopHigh);
+        ctx.lineTo(midBreak, horizonY + 18);
+        ctx.stroke();
+
+        // Lower White Gate
+        ctx.strokeStyle = '#f8fafc';
+        ctx.lineWidth = 2.6;
+        ctx.strokeRect(midBreak, fenceTopLow, fenceEndX - midBreak, horizonY - fenceTopLow + 14);
+        ctx.lineWidth = 1.3;
+        for (let fx = midBreak + 9; fx < fenceEndX; fx += 11) {
+          ctx.beginPath();
+          ctx.moveTo(fx, fenceTopLow);
+          ctx.lineTo(fx, horizonY + 14);
+          ctx.stroke();
+        }
+      }
+
+      function drawFrontPlanters(w, horizonY) {
+        const startX = w * 0.388;
+        const spacing = w * 0.052;
+        for (let i = 0; i < 5; i++) {
+          const px = startX + i * spacing;
+          const py = horizonY + 2 - i * 2;
+          const boxW = Math.max(28, w * 0.038);
+          const boxH = 14;
+
+          ctx.fillStyle = '#3f6212';
+          ctx.beginPath();
+          ctx.arc(px + boxW * 0.28, py - 4, boxW * 0.29, 0, Math.PI * 2);
+          ctx.arc(px + boxW * 0.72, py - 4, boxW * 0.29, 0, Math.PI * 2);
+          ctx.fill();
+
+          ctx.fillStyle = '#84cc16';
+          ctx.beginPath();
+          ctx.arc(px + boxW * 0.25, py - 7, boxW * 0.22, 0, Math.PI * 2);
+          ctx.arc(px + boxW * 0.70, py - 7, boxW * 0.22, 0, Math.PI * 2);
+          ctx.fill();
+
+          ctx.fillStyle = '#f8fafc';
+          ctx.strokeStyle = '#cbd5e1';
+          ctx.lineWidth = 1.5;
+          ctx.fillRect(px, py, boxW, boxH);
+          ctx.strokeRect(px, py, boxW, boxH);
+          ctx.fillStyle = '#e2e8f0';
+          ctx.fillRect(px + boxW * 0.65, py + 1, boxW * 0.34, boxH - 2);
+        }
+      }
+
+      // =====================================================================
+      // J. 3-FLOOR CAMPUS INTERIOR RENDERER (G/F, 1/F, 2/F)
+      // =====================================================================
+      function drawCampusInterior(vw, vh, dt, timeSec) {
+        // Architectural dark-slate backdrop around the campus floorplan
+        const bgGrad = ctx.createLinearGradient(0, 0, 0, vh);
+        bgGrad.addColorStop(0, '#0f172a');
+        bgGrad.addColorStop(1, '#1e293b');
+        ctx.fillStyle = bgGrad;
+        ctx.fillRect(0, 0, vw, vh);
+
+        const t = getInteriorTransform();
+        ctx.save();
+        ctx.translate(t.offsetX, t.offsetY);
+        ctx.scale(t.scale, t.scale);
+
+        const floorData = FLOORS[state.currentFloor];
+
+        // 1. Outer Building Shell & Floor Surface
+        ctx.fillStyle = floorData.floorColor;
+        roundRectPath(ctx, 24, 24, WORLD_W - 48, WORLD_H - 48, 28);
+        ctx.fill();
+
+        // Subtle Floor Grid Tiles
+        ctx.strokeStyle = floorData.tileAccent;
+        ctx.lineWidth = 1.5;
+        const tileSize = 56;
+        for (let gx = 48; gx < WORLD_W - 48; gx += tileSize) {
+          ctx.beginPath();
+          ctx.moveTo(gx, 110);
+          ctx.lineTo(gx, WORLD_H - 44);
+          ctx.stroke();
+        }
+        for (let gy = 110; gy < WORLD_H - 44; gy += tileSize) {
+          ctx.beginPath();
+          ctx.moveTo(48, gy);
+          ctx.lineTo(WORLD_W - 48, gy);
+          ctx.stroke();
+        }
+
+        // 2. Top Interior Wall & Floor Title Header Banner
+        ctx.fillStyle = floorData.wallColor;
+        roundRectPath(ctx, 24, 24, WORLD_W - 48, 92, [28, 28, 0, 0]);
+        ctx.fill();
+
+        // Decorative school windows along upper wall
+        for (let wx = 85; wx < WORLD_W - 140; wx += 145) {
+          ctx.fillStyle = '#bae6fd';
+          ctx.fillRect(wx, 44, 72, 34);
+          ctx.strokeStyle = '#ffffff';
+          ctx.lineWidth = 2;
+          ctx.strokeRect(wx, 44, 72, 34);
+          ctx.beginPath();
+          ctx.moveTo(wx + 36, 44);
+          ctx.lineTo(wx + 36, 78);
+          ctx.stroke();
+        }
+
+        // Floor Banner Pill
+        ctx.fillStyle = 'rgba(15, 23, 42, 0.9)';
+        roundRectPath(ctx, WORLD_W * 0.5 - 210, 88, 420, 38, 19);
+        ctx.fill();
+        ctx.strokeStyle = '#38bdf8';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        ctx.fillStyle = '#ffffff';
+        ctx.font = '900 17px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(floorData.title, WORLD_W * 0.5, 107);
+
+        // Outer Perimeter Thick Walls
+        ctx.strokeStyle = '#0f172a';
+        ctx.lineWidth = 10;
+        roundRectPath(ctx, 28, 28, WORLD_W - 56, WORLD_H - 56, 26);
+        ctx.stroke();
+
+        // 3. Floor-Specific Architectural Decorations
+        drawFloorDecorations(state.currentFloor, timeSec);
+
+        // 4. Interactive Staircase Zones
+        floorData.stairs.forEach(st => {
+          drawStaircaseZone(st, timeSec);
+        });
+
+        // 5. Solid Furniture / Display Obstacles
+        floorData.obstacles.forEach(obs => {
+          drawObstacleFurniture(obs);
+        });
+
+        // 6. Click-to-Walk Destination Ring
+        if (state.player.targetPoint) {
+          const tp = state.player.targetPoint;
+          const pulseR = 10 + Math.sin(timeSec * 8) * 3;
+          ctx.strokeStyle = '#0284c7';
+          ctx.lineWidth = 2.5;
+          ctx.beginPath();
+          ctx.arc(tp.x, tp.y, pulseR, 0, Math.PI * 2);
+          ctx.stroke();
+        }
+
+        // 7. Station NPCs, Extra Friendly Teachers & Easter Eggs on Current Floor
+        const floorStations = state.stations.filter(s => s.floor === state.currentFloor);
+        floorStations.forEach(st => {
+          drawStationNpc(st, timeSec);
+        });
+
+        EXTRA_TEACHERS.filter(t => t.floor === state.currentFloor).forEach(teacher => {
+          drawFriendlyTeacher(teacher, timeSec);
+        });
+
+        EASTER_EGGS.filter(e => e.floor === state.currentFloor).forEach(egg => {
+          drawEasterEggSpot(egg, timeSec);
+        });
+
+        // 8. Chibi Student Player + Floating Golden Compass Arrow
+        drawChibiPlayer();
+
+        // 9. Celebratory Confetti Particles
+        state.confetti.forEach(c => {
+          ctx.fillStyle = c.color;
+          ctx.fillRect(c.x - c.size * 0.5, c.y - c.size * 0.5, c.size, c.size * 0.7);
+        });
+
+        ctx.restore();
+      }
+
+      function drawFloorDecorations(floorId, timeSec) {
+        if (floorId === 0) {
+          // G/F Welcome Carpet
+          ctx.fillStyle = 'rgba(2, 132, 199, 0.14)';
+          roundRectPath(ctx, 140, 290, 620, 120, 24);
+          ctx.fill();
+          ctx.strokeStyle = 'rgba(2, 132, 199, 0.35)';
+          ctx.lineWidth = 2;
+          ctx.stroke();
+
+          ctx.fillStyle = '#0369a1';
+          ctx.font = '900 16px sans-serif';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText('✝ 識真理・得自由・以服務 — 歡迎蒞臨基朗中學開放日 ✝', 450, 350);
+
+          // G/F Mini Basketball Court Zone Floor Marking
+          ctx.fillStyle = 'rgba(34, 197, 94, 0.18)';
+          roundRectPath(ctx, 92, 455, 240, 148, 22);
+          ctx.fill();
+          ctx.strokeStyle = '#16a34a';
+          ctx.lineWidth = 2.5;
+          ctx.stroke();
+
+          ctx.strokeStyle = '#ffffff';
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.arc(212, 530, 46, 0, Math.PI * 2);
+          ctx.stroke();
+        } else if (floorId === 1) {
+          // 1/F Cozy Reading Rug
+          ctx.fillStyle = 'rgba(245, 158, 11, 0.16)';
+          roundRectPath(ctx, 210, 240, 250, 175, 28);
+          ctx.fill();
+          ctx.strokeStyle = 'rgba(217, 119, 6, 0.4)';
+          ctx.lineWidth = 2;
+          ctx.stroke();
+        } else if (floorId === 2) {
+          // 2/F Computer Room Floor Zone (電腦室專屬地板與電路紋理)
+          ctx.fillStyle = 'rgba(14, 165, 233, 0.13)';
+          roundRectPath(ctx, 185, 145, 325, 255, 24);
+          ctx.fill();
+          ctx.strokeStyle = 'rgba(2, 132, 199, 0.45)';
+          ctx.lineWidth = 2.5;
+          ctx.stroke();
+
+          // Subtle circuit lines inside Computer Room
+          ctx.strokeStyle = 'rgba(56, 189, 248, 0.35)';
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.moveTo(210, 265);
+          ctx.lineTo(295, 265);
+          ctx.lineTo(315, 285);
+          ctx.lineTo(475, 285);
+          ctx.stroke();
+
+          ctx.fillStyle = '#0369a1';
+          ctx.font = '900 13px sans-serif';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText('💻 基朗創科電腦室 (COMPUTER ROOM)', 348, 390);
+        }
+      }
+
+      function drawStaircaseZone(st, timeSec) {
+        const glow = 0.75 + Math.sin(timeSec * 4) * 0.2;
+        ctx.fillStyle = st.direction === 'up' ? 'rgba(250, 204, 21, 0.28)' : 'rgba(56, 189, 248, 0.25)';
+        roundRectPath(ctx, st.x, st.y, st.w, st.h, 16);
+        ctx.fill();
+
+        ctx.strokeStyle = st.direction === 'up' ? `rgba(217, 119, 6, ${glow})` : `rgba(2, 132, 199, ${glow})`;
+        ctx.lineWidth = 2.5;
+        ctx.stroke();
+
+        // Draw stair steps
+        const steps = 6;
+        const stepH = (st.h - 46) / steps;
+        for (let i = 0; i < steps; i++) {
+          const sy = st.y + 34 + i * stepH;
+          ctx.fillStyle = i % 2 === 0 ? '#cbd5e1' : '#94a3b8';
+          ctx.fillRect(st.x + 14, sy, st.w - 28, stepH - 2);
+        }
+
+        // Stair label badge
+        ctx.fillStyle = '#0f172a';
+        roundRectPath(ctx, st.x + 6, st.y + 6, st.w - 12, 24, 8);
+        ctx.fill();
+
+        ctx.fillStyle = '#fde047';
+        ctx.font = '900 12px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(st.label, st.x + st.w * 0.5, st.y + 18);
+      }
+
+      function drawObstacleFurniture(obs) {
+        // Drop shadow
+        ctx.fillStyle = 'rgba(15, 23, 42, 0.16)';
+        roundRectPath(ctx, obs.x + 4, obs.y + 6, obs.w, obs.h, 14);
+        ctx.fill();
+
+        // Main furniture body
+        ctx.fillStyle = obs.color;
+        roundRectPath(ctx, obs.x, obs.y, obs.w, obs.h, 14);
+        ctx.fill();
+
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        // G/F Mini Basketball Hoop Station
+        if (obs.isBasketball) {
+          ctx.fillStyle = '#15803d';
+          roundRectPath(ctx, obs.x + 10, obs.y + 28, obs.w - 20, obs.h - 36, 10);
+          ctx.fill();
+
+          // Backboard & Orange Rim
+          const bx = obs.x + obs.w * 0.5 - 24;
+          const by = obs.y + 34;
+          ctx.fillStyle = '#ffffff';
+          ctx.fillRect(bx, by, 48, 28);
+          ctx.strokeStyle = '#0f172a';
+          ctx.lineWidth = 2;
+          ctx.strokeRect(bx, by, 48, 28);
+          ctx.strokeStyle = '#ea580c';
+          ctx.strokeRect(bx + 14, by + 10, 20, 12);
+
+          // Rim & Net
+          ctx.strokeStyle = '#ea580c';
+          ctx.lineWidth = 3.5;
+          ctx.beginPath();
+          ctx.moveTo(bx + 13, by + 24);
+          ctx.lineTo(bx + 35, by + 24);
+          ctx.stroke();
+
+          // Bouncing Basketball Icon
+          ctx.fillStyle = '#f97316';
+          ctx.beginPath();
+          ctx.arc(obs.x + obs.w - 34, obs.y + obs.h - 24, 11, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.strokeStyle = '#431407';
+          ctx.lineWidth = 1.5;
+          ctx.stroke();
+
+          ctx.fillStyle = '#ffffff';
+          ctx.font = '900 12.5px sans-serif';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText('🏀 ' + obs.label + '（點擊或按 E 投籃）', obs.x + obs.w * 0.5, obs.y + 15);
+          return;
+        }
+
+        // 2/F Computer Room Workstations with Glowing Monitors
+        if (obs.isComputerRoom) {
+          ctx.fillStyle = '#0f172a';
+          roundRectPath(ctx, obs.x + 8, obs.y + 24, obs.w - 16, obs.h - 30, 8);
+          ctx.fill();
+
+          for (let m = 0; m < 4; m++) {
+            const mx = obs.x + 20 + m * 54;
+            const my = obs.y + 29;
+            ctx.fillStyle = m === 3 ? '#10b981' : '#38bdf8';
+            ctx.fillRect(mx, my, 38, 20);
+            ctx.fillStyle = '#0f172a';
+            ctx.fillRect(mx + 3, my + 3, 32, 14);
+            // Tiny glowing code bars on monitor
+            ctx.fillStyle = m === 3 ? '#34d399' : '#7dd3fc';
+            ctx.fillRect(mx + 5, my + 5, 18, 2.5);
+            ctx.fillRect(mx + 5, my + 9, 25, 2.5);
+            ctx.fillRect(mx + 5, my + 13, 14, 2.5);
+            // Keyboard
+            ctx.fillStyle = '#cbd5e1';
+            ctx.fillRect(mx + 4, my + 22, 30, 4);
+          }
+
+          ctx.fillStyle = '#ffffff';
+          ctx.font = '900 12px sans-serif';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText('💻 ' + obs.label, obs.x + obs.w * 0.5, obs.y + 13);
+          return;
+        }
+
+        // If Robotics Arena on 2/F, draw track & moving mini-robots
+        if (obs.isArena) {
+          ctx.fillStyle = '#1e293b';
+          roundRectPath(ctx, obs.x + 10, obs.y + 28, obs.w - 20, obs.h - 36, 10);
+          ctx.fill();
+
+          ctx.strokeStyle = '#38bdf8';
+          ctx.lineWidth = 2;
+          ctx.strokeRect(obs.x + 22, obs.y + 38, obs.w - 44, obs.h - 56);
+
+          state.miniRobots.forEach(bot => {
+            ctx.fillStyle = bot.color;
+            ctx.beginPath();
+            ctx.arc(bot.x, bot.y, 8, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#0f172a';
+            ctx.fillRect(bot.x - 4, bot.y - 3, 3, 3);
+            ctx.fillRect(bot.x + 1, bot.y - 3, 3, 3);
+          });
+
+          ctx.fillStyle = '#f8fafc';
+          ctx.font = '800 12px sans-serif';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText(obs.label, obs.x + obs.w * 0.5, obs.y + 15);
+          return;
+        }
+
+        ctx.fillStyle = '#ffffff';
+        ctx.font = '800 13px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(obs.label, obs.x + obs.w * 0.5, obs.y + obs.h * 0.5);
+      }
+
+      function drawStationNpc(st, timeSec) {
+        const pulse = Math.sin(timeSec * 4.5) * 4;
+        const activeTarget = getActiveTargetStation();
+        const isTarget = activeTarget && activeTarget.id === st.id;
+
+        // Ground halo ring
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(st.x, st.y + 14, 34 + (st.completed ? 0 : pulse), 0, Math.PI * 2);
+        if (st.completed) {
+          ctx.fillStyle = 'rgba(16, 185, 129, 0.22)';
+          ctx.strokeStyle = '#10b981';
+        } else {
+          ctx.fillStyle = isTarget ? 'rgba(250, 204, 21, 0.34)' : 'rgba(56, 189, 248, 0.22)';
+          ctx.strokeStyle = isTarget ? '#f59e0b' : '#0284c7';
+        }
+        ctx.lineWidth = 3;
+        ctx.fill();
+        ctx.stroke();
+        ctx.restore();
+
+        // NPC Body
+        ctx.fillStyle = st.completed ? '#059669' : '#1d4ed8';
+        roundRectPath(ctx, st.x - 16, st.y - 6, 32, 26, 10);
+        ctx.fill();
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        // NPC Head & Emoji Avatar
+        ctx.fillStyle = '#fde68a';
+        ctx.beginPath();
+        ctx.arc(st.x, st.y - 18, 16, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = '#0f172a';
+        ctx.lineWidth = 1.8;
+        ctx.stroke();
+
+        ctx.font = '22px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(st.avatar, st.x, st.y - 17);
+
+        // Floating Subject + Level Pill above NPC
+        const badgeW = 166;
+        const badgeH = 38;
+        const bx = st.x - badgeW * 0.5;
+        const by = st.y - 78 + Math.sin(timeSec * 3) * 2;
+
+        ctx.fillStyle = st.completed ? '#065f46' : '#0f172a';
+        roundRectPath(ctx, bx, by, badgeW, badgeH, 12);
+        ctx.fill();
+        ctx.strokeStyle = st.completed ? '#34d399' : '#facc15';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        ctx.fillStyle = '#ffffff';
+        ctx.font = '900 12px sans-serif';
+        ctx.fillText(st.npcName, st.x, by + 13);
+
+        ctx.fillStyle = st.completed ? '#6ee7b7' : '#fde047';
+        ctx.font = '800 10.5px sans-serif';
+        ctx.fillText(st.completed ? '✓ 已完成挑戰' : `${st.subject} • ${st.level}`, st.x, by + 28);
+      }
+
+      function drawFriendlyTeacher(teacher, timeSec) {
+        // Gentle green/teal welcome ring
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(teacher.x, teacher.y + 14, 28, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(20, 184, 166, 0.16)';
+        ctx.strokeStyle = 'rgba(13, 148, 136, 0.7)';
+        ctx.lineWidth = 2;
+        ctx.fill();
+        ctx.stroke();
+        ctx.restore();
+
+        // Teacher Body
+        ctx.fillStyle = teacher.shirtColor;
+        roundRectPath(ctx, teacher.x - 14, teacher.y - 5, 28, 24, 9);
+        ctx.fill();
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        // Teacher Head & Avatar
+        ctx.fillStyle = '#fef3c7';
+        ctx.beginPath();
+        ctx.arc(teacher.x, teacher.y - 16, 14, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = '#0f172a';
+        ctx.lineWidth = 1.6;
+        ctx.stroke();
+
+        ctx.font = '19px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(teacher.avatar, teacher.x, teacher.y - 15);
+
+        // Name Tag Pill
+        const tagW = 128;
+        const tagH = 22;
+        const tx = teacher.x - tagW * 0.5;
+        const ty = teacher.y - 52 + Math.sin(timeSec * 2.5 + teacher.x) * 1.5;
+
+        ctx.fillStyle = 'rgba(15, 23, 42, 0.85)';
+        roundRectPath(ctx, tx, ty, tagW, tagH, 10);
+        ctx.fill();
+        ctx.strokeStyle = '#5eead4';
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+
+        ctx.fillStyle = '#ffffff';
+        ctx.font = '800 11px sans-serif';
+        ctx.fillText('💬 ' + teacher.npcName, teacher.x, ty + 11);
+      }
+
+      function drawEasterEggSpot(egg, timeSec) {
+        const found = !!state.foundEggs[egg.id];
+        const bob = Math.sin(timeSec * 4.2 + egg.x) * 3;
+        const radius = 16 + Math.sin(timeSec * 5) * 2;
+
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(egg.x, egg.y + bob, radius, 0, Math.PI * 2);
+        ctx.fillStyle = found ? 'rgba(16, 185, 129, 0.25)' : 'rgba(192, 132, 252, 0.35)';
+        ctx.strokeStyle = found ? '#10b981' : '#a855f7';
+        ctx.lineWidth = 2.2;
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.font = '18px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(found ? '🌟' : '✨', egg.x, egg.y + bob);
+        ctx.restore();
+      }
+
+      function drawChibiPlayer() {
+        const p = state.player;
+        const bob = Math.abs(Math.sin(p.walkPhase)) * 4;
+        const legSwing = Math.sin(p.walkPhase) * 5;
+
+        // Soft ground shadow
+        ctx.fillStyle = 'rgba(15, 23, 42, 0.25)';
+        ctx.beginPath();
+        ctx.ellipse(p.x, p.y + 18, 17, 7, 0, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Navy school trousers & shoes
+        ctx.fillStyle = '#1e3a8a';
+        ctx.fillRect(p.x - 10, p.y + 4 - bob + legSwing * 0.4, 8, 12);
+        ctx.fillRect(p.x + 2, p.y + 4 - bob - legSwing * 0.4, 8, 12);
+
+        // CCC Kei Long College Light-Blue School Uniform Shirt
+        ctx.fillStyle = '#7dd3fc';
+        roundRectPath(ctx, p.x - 14, p.y - 12 - bob, 28, 20, 8);
+        ctx.fill();
+        ctx.strokeStyle = '#0369a1';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        // Navy School Tie
+        ctx.fillStyle = '#1e3a8a';
+        ctx.beginPath();
+        ctx.moveTo(p.x - 2, p.y - 10 - bob);
+        ctx.lineTo(p.x + 2, p.y - 10 - bob);
+        ctx.lineTo(p.x + 3, p.y + 2 - bob);
+        ctx.lineTo(p.x, p.y + 5 - bob);
+        ctx.lineTo(p.x - 3, p.y + 2 - bob);
+        ctx.closePath();
+        ctx.fill();
+
+        // Chibi Head
+        ctx.fillStyle = '#fed7aa';
+        ctx.beginPath();
+        ctx.arc(p.x, p.y - 24 - bob, 14, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = '#0f172a';
+        ctx.lineWidth = 1.8;
+        ctx.stroke();
+
+        // Neat Hair
+        ctx.fillStyle = '#1e293b';
+        ctx.beginPath();
+        ctx.arc(p.x, p.y - 27 - bob, 14.5, Math.PI, Math.PI * 2);
+        ctx.fill();
+
+        // Eyes looking in movement direction
+        const eyeOffset = p.dir === 'left' ? -3 : p.dir === 'right' ? 3 : 0;
+        ctx.fillStyle = '#0f172a';
+        ctx.beginPath();
+        ctx.arc(p.x - 4 + eyeOffset, p.y - 23 - bob, 2, 0, Math.PI * 2);
+        ctx.arc(p.x + 4 + eyeOffset, p.y - 23 - bob, 2, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Player Tag
+        ctx.fillStyle = 'rgba(2, 132, 199, 0.92)';
+        roundRectPath(ctx, p.x - 26, p.y - 54 - bob, 52, 16, 8);
+        ctx.fill();
+        ctx.fillStyle = '#ffffff';
+        ctx.font = '800 10px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('訪客同學', p.x, p.y - 46 - bob);
+
+        // Floating Golden Directional Compass Arrow pointing toward active target
+        const targetSt = getActiveTargetStation();
+        if (targetSt) {
+          let goalX = targetSt.x;
+          let goalY = targetSt.y;
+
+          if (targetSt.floor !== state.currentFloor) {
+            const floorData = FLOORS[state.currentFloor];
+            const desiredDir = targetSt.floor > state.currentFloor ? 'up' : 'down';
+            const stair = floorData.stairs.find(s => s.direction === desiredDir) || floorData.stairs[0];
+            if (stair) {
+              goalX = stair.x + stair.w * 0.5;
+              goalY = stair.y + stair.h * 0.5;
+            }
+          }
+
+          const angle = Math.atan2(goalY - p.y, goalX - p.x);
+          const orbitDist = 44;
+          const ax = p.x + Math.cos(angle) * orbitDist;
+          const ay = p.y + Math.sin(angle) * orbitDist;
+
+          ctx.save();
+          ctx.translate(ax, ay);
+          ctx.rotate(angle);
+          ctx.fillStyle = '#facc15';
+          ctx.strokeStyle = '#0f172a';
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.moveTo(11, 0);
+          ctx.lineTo(-6, -7);
+          ctx.lineTo(-3, 0);
+          ctx.lineTo(-6, 7);
+          ctx.closePath();
+          ctx.fill();
+          ctx.stroke();
+          ctx.restore();
+        }
+      }
+
+      // =====================================================================
+      // K. MOVEMENT, COLLISION & PROXIMITY INTERACTION
+      // =====================================================================
+      function collidesWithWorld(nx, ny, radius) {
+        if (nx - radius < 42 || nx + radius > WORLD_W - 42) return true;
+        if (ny - radius < 124 || ny + radius > WORLD_H - 42) return true;
+
+        const floorData = FLOORS[state.currentFloor];
+        for (let i = 0; i < floorData.obstacles.length; i++) {
+          const obs = floorData.obstacles[i];
+          const closestX = Math.max(obs.x, Math.min(nx, obs.x + obs.w));
+          const closestY = Math.max(obs.y, Math.min(ny, obs.y + obs.h));
+          const dx = nx - closestX;
+          const dy = ny - closestY;
+          if (dx * dx + dy * dy < radius * radius) {
+            return true;
+          }
+        }
+        return false;
+      }
+
+      function updateGameplay(dt) {
+        const isQuizOpen = !document.getElementById('quizModal').classList.contains('hidden');
+        const isSummaryOpen = !document.getElementById('summaryModal').classList.contains('hidden');
+        const isTalkOpen = !document.getElementById('npcTalkModal').classList.contains('hidden');
+        const isBballOpen = !document.getElementById('basketballModal').classList.contains('hidden');
+
+        // 1. Update 5-Minute Countdown Timer
+        if (!isQuizOpen && !isSummaryOpen && !isTalkOpen && !isBballOpen && state.remainingSeconds > 0) {
+          state.remainingSeconds = Math.max(0, state.remainingSeconds - dt);
+          updateTimerDisplay();
+          if (state.remainingSeconds <= 0) {
+            openSummaryModal(true);
+            return;
+          }
+        }
+
+        // Update confetti particles
+        for (let i = state.confetti.length - 1; i >= 0; i--) {
+          const c = state.confetti[i];
+          c.x += c.vx * dt;
+          c.y += c.vy * dt;
+          c.vy += 260 * dt;
+          c.life -= dt;
+          if (c.life <= 0) state.confetti.splice(i, 1);
+        }
+
+        // Animate mini-robots on 2/F (with turbo speed boost if Easter Egg #3 unlocked!)
+        if (state.robotTurboTimer > 0) {
+          state.robotTurboTimer = Math.max(0, state.robotTurboTimer - dt);
+        }
+        const robotSpeedMult = state.robotTurboTimer > 0 ? 2.6 : 1;
+        state.miniRobots.forEach(bot => {
+          bot.x += bot.vx * robotSpeedMult * dt;
+          if (bot.x < bot.minX) {
+            bot.x = bot.minX;
+            bot.vx = Math.abs(bot.vx);
+          } else if (bot.x > bot.maxX) {
+            bot.x = bot.maxX;
+            bot.vx = -Math.abs(bot.vx);
+          }
+        });
+
+        if (state.stairCooldown > 0) {
+          state.stairCooldown = Math.max(0, state.stairCooldown - dt);
+        }
+
+        const isQuestOpen = !document.getElementById('questListModal').classList.contains('hidden');
+        if (isQuizOpen || isQuestOpen || isSummaryOpen || isTalkOpen || isBballOpen) return;
+
+        // 2. Player Movement (Keyboard WASD / Arrow Keys / Touch D-Pad / Click-to-Walk)
+        let vx = 0;
+        let vy = 0;
+        if (state.keys['arrowup'] || state.keys['w'] || state.dpad.up) vy -= 1;
+        if (state.keys['arrowdown'] || state.keys['s'] || state.dpad.down) vy += 1;
+        if (state.keys['arrowleft'] || state.keys['a'] || state.dpad.left) vx -= 1;
+        if (state.keys['arrowright'] || state.keys['d'] || state.dpad.right) vx += 1;
+
+        if (vx !== 0 || vy !== 0) {
+          state.player.targetPoint = null;
+          const len = Math.hypot(vx, vy);
+          vx /= len;
+          vy /= len;
+        } else if (state.player.targetPoint) {
+          const dx = state.player.targetPoint.x - state.player.x;
+          const dy = state.player.targetPoint.y - state.player.y;
+          const dist = Math.hypot(dx, dy);
+          if (dist < 6) {
+            state.player.targetPoint = null;
+          } else {
+            vx = dx / dist;
+            vy = dy / dist;
+          }
+        }
+
+        if (vx !== 0 || vy !== 0) {
+          const stepX = vx * state.player.speed * dt;
+          const stepY = vy * state.player.speed * dt;
+
+          if (!collidesWithWorld(state.player.x + stepX, state.player.y, state.player.radius)) {
+            state.player.x += stepX;
+          }
+          if (!collidesWithWorld(state.player.x, state.player.y + stepY, state.player.radius)) {
+            state.player.y += stepY;
+          }
+
+          state.player.walkPhase += dt * 11;
+          if (Math.abs(vx) > Math.abs(vy)) {
+            state.player.dir = vx < 0 ? 'left' : 'right';
+          } else {
+            state.player.dir = vy < 0 ? 'up' : 'down';
+          }
+        } else {
+          state.player.walkPhase = 0;
+        }
+
+        // 3. Check Staircase Floor Transitions
+        if (state.stairCooldown <= 0) {
+          const floorData = FLOORS[state.currentFloor];
+          for (let i = 0; i < floorData.stairs.length; i++) {
+            const st = floorData.stairs[i];
+            if (
+              state.player.x > st.x &&
+              state.player.x < st.x + st.w &&
+              state.player.y > st.y &&
+              state.player.y < st.y + st.h
+            ) {
+              switchFloor(st.targetFloor, st.spawnX, st.spawnY, false);
+              return;
+            }
+          }
+        }
+
+        // 4. Check Proximity to Station NPCs, Friendly Teachers, Easter Eggs & G/F Basketball Hoop
+        const floorStations = state.stations.filter(s => s.floor === state.currentFloor);
+        let closest = null;
+        let minDist = 72;
+        floorStations.forEach(st => {
+          const d = Math.hypot(state.player.x - st.x, state.player.y - st.y);
+          if (d < minDist) {
+            minDist = d;
+            closest = st;
+          }
+        });
+        state.nearbyStation = closest;
+
+        const floorTeachers = EXTRA_TEACHERS.filter(t => t.floor === state.currentFloor);
+        let closestTeacher = null;
+        let minTeacherDist = 68;
+        floorTeachers.forEach(t => {
+          const d = Math.hypot(state.player.x - t.x, state.player.y - t.y);
+          if (d < minTeacherDist) {
+            minTeacherDist = d;
+            closestTeacher = t;
+          }
+        });
+        state.nearbyTeacher = closestTeacher;
+
+        const floorEggs = EASTER_EGGS.filter(egg => egg.floor === state.currentFloor);
+        let closestEgg = null;
+        let minEggDist = 62;
+        floorEggs.forEach(egg => {
+          const d = Math.hypot(state.player.x - egg.x, state.player.y - egg.y);
+          if (d < minEggDist) {
+            minEggDist = d;
+            closestEgg = egg;
+          }
+        });
+        state.nearbyEgg = closestEgg;
+
+        let nearBball = false;
+        if (state.currentFloor === 0) {
+          const bx = Math.max(115, Math.min(state.player.x, 310));
+          const by = Math.max(475, Math.min(state.player.y, 585));
+          if (Math.hypot(state.player.x - bx, state.player.y - by) < 52) {
+            nearBball = true;
+          }
+        }
+        state.nearbyBasketball = nearBball;
+
+        const actionBtn = document.getElementById('interactActionBtn');
+        if (closest) {
+          actionBtn.classList.remove('hidden');
+          actionBtn.textContent = closest.completed
+            ? `💬 再次向【${closest.npcName}】請教`
+            : `💬 按 E 或點擊與【${closest.npcName}】挑戰`;
+        } else if (closestEgg) {
+          actionBtn.classList.remove('hidden');
+          actionBtn.textContent = `✨ 按 E 或點擊查看【${closestEgg.title}】`;
+        } else if (nearBball) {
+          actionBtn.classList.remove('hidden');
+          actionBtn.textContent = `🏀 按 E 或點擊玩「基朗迷你投籃遊戲」`;
+        } else if (closestTeacher) {
+          actionBtn.classList.remove('hidden');
+          actionBtn.textContent = `💬 按 E 或點擊與【${closestTeacher.npcName}】聊天`;
+        } else {
+          actionBtn.classList.add('hidden');
+        }
+      }
+
+      // =====================================================================
+      // L. QUIZ STATION MODAL FLOW
+      // =====================================================================
+      function openQuizForStation(station) {
+        if (!station) return;
+        sfx.playClick();
+        state.player.targetPoint = null;
+
+        state.activeQuiz = {
+          station: station,
+          qIndex: 0,
+          answered: false
+        };
+
+        document.getElementById('quizNpcAvatar').textContent = station.avatar;
+        document.getElementById('quizSubjectBadge').textContent = station.subject;
+        document.getElementById('quizLevelBadge').textContent = station.level;
+        document.getElementById('quizNpcName').textContent = station.npcName;
+
+        renderCurrentQuestion();
+        document.getElementById('quizModal').classList.remove('hidden');
+      }
+
+      function renderCurrentQuestion() {
+        const aq = state.activeQuiz;
+        if (!aq) return;
+        aq.answered = false;
+
+        const qObj = aq.station.questions[aq.qIndex];
+        document.getElementById('quizStepText').textContent = `第 ${aq.qIndex + 1} / ${aq.station.questions.length} 題`;
+        document.getElementById('quizQuestionText').textContent = qObj.q;
+
+        const feedbackBox = document.getElementById('quizFeedbackBox');
+        feedbackBox.classList.add('hidden');
+        document.getElementById('nextQuestionBtn').classList.add('hidden');
+
+        const optsContainer = document.getElementById('quizOptionsContainer');
+        optsContainer.innerHTML = '';
+
+        const letters = ['A', 'B', 'C', 'D'];
+        qObj.options.forEach((optText, idx) => {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'quiz-opt-btn';
+          btn.innerHTML = `<span class="opt-letter">${letters[idx]}</span><span>${optText}</span>`;
+          btn.addEventListener('click', () => handleQuizAnswer(idx));
+          optsContainer.appendChild(btn);
+        });
+      }
+
+      function handleQuizAnswer(chosenIdx) {
+        const aq = state.activeQuiz;
+        if (!aq || aq.answered) return;
+
+        const qObj = aq.station.questions[aq.qIndex];
+        const feedbackBox = document.getElementById('quizFeedbackBox');
+        const feedbackTitle = document.getElementById('quizFeedbackTitle');
+        const explanationText = document.getElementById('quizExplanationText');
+        const optBtns = document.querySelectorAll('.quiz-opt-btn');
+
+        if (chosenIdx !== qObj.answer) {
+          sfx.playWrong();
+          const wrongBtn = optBtns[chosenIdx];
+          if (wrongBtn) {
+            wrongBtn.disabled = true;
+            wrongBtn.classList.add('opt-wrong');
+          }
+          feedbackBox.classList.remove('hidden', 'fb-success');
+          feedbackBox.classList.add('fb-hint');
+          feedbackTitle.textContent = '💡 再想一想，你可以再試一次！';
+          explanationText.textContent = `小貼士：${qObj.tip}`;
+          return;
+        }
+
+        aq.answered = true;
+        sfx.playCorrect();
+
+        optBtns.forEach((btn, idx) => {
+          btn.disabled = true;
+          if (idx === qObj.answer) {
+            btn.classList.add('opt-correct');
+          }
+        });
+
+        feedbackBox.classList.remove('hidden', 'fb-hint');
+        feedbackBox.classList.add('fb-success');
+        feedbackTitle.textContent = '🎉 答對了！真聰明！';
+        explanationText.textContent = qObj.tip;
+
+        const nextBtn = document.getElementById('nextQuestionBtn');
+        nextBtn.classList.remove('hidden');
+        nextBtn.textContent = aq.qIndex + 1 < aq.station.questions.length ? '下一題 ➜' : '領取學科印章 ✓';
+      }
+
+      function advanceQuizStep() {
+        const aq = state.activeQuiz;
+        if (!aq) return;
+
+        if (aq.qIndex + 1 < aq.station.questions.length) {
+          sfx.playClick();
+          aq.qIndex += 1;
+          renderCurrentQuestion();
+        } else {
+          const completedStation = aq.station;
+          completedStation.completed = true;
+          document.getElementById('quizModal').classList.add('hidden');
+          state.activeQuiz = null;
+          state.lastTimestamp = performance.now();
+          updateHud();
+          spawnConfettiBurst(completedStation.x, completedStation.y - 20, 42);
+
+          const allDone = state.stations.every(s => s.completed);
+          if (allDone) {
+            sfx.playVictory();
+            openSummaryModal(false);
+          } else {
+            sfx.playCorrect();
+            showToast(`🏅 恭喜獲得【${completedStation.subject}】知識印章！`);
+          }
+        }
+      }
+
+      // =====================================================================
+      // M. QUEST LIST MODAL & VICTORY SUMMARY MODAL
+      // =====================================================================
+      function openQuestListModal() {
+        sfx.playClick();
+        const container = document.getElementById('questListContainer');
+        container.innerHTML = '';
+
+        const activeTarget = getActiveTargetStation();
+
+        state.stations.forEach((st, idx) => {
+          const isTracking = activeTarget && activeTarget.id === st.id && !st.completed;
+          const item = document.createElement('div');
+          item.className = `quest-item ${st.completed ? 'q-done' : isTracking ? 'q-active' : ''}`;
+
+          const leftDiv = document.createElement('div');
+          leftDiv.className = 'quest-item-left';
+          leftDiv.innerHTML = `
+            <div class="npc-avatar-box" style="width:44px;height:44px;font-size:24px;">${st.avatar}</div>
+            <div>
+              <div class="badge-row">
+                <span class="quest-floor-tag">${st.floorName}</span>
+                <span class="subject-badge">${st.subject}</span>
+                <span class="level-badge">${st.level}</span>
+              </div>
+              <div style="font-weight:900;font-size:15px;color:#0f172a;">${idx + 1}. ${st.npcName}</div>
+              <div style="font-size:12px;color:#64748b;">地點：${st.locationLabel}</div>
+            </div>
+          `;
+
+          const rightDiv = document.createElement('div');
+          if (st.completed) {
+            rightDiv.innerHTML = `<span class="status-pill-done">✓ 已獲印章</span>`;
+          } else if (isTracking) {
+            rightDiv.innerHTML = `<span class="status-pill-tracking">🧭 指引中</span>`;
+          } else {
+            const trackBtn = document.createElement('button');
+            trackBtn.type = 'button';
+            trackBtn.className = 'btn-track-target';
+            trackBtn.textContent = '設為指引目標';
+            trackBtn.addEventListener('click', () => {
+              sfx.playClick();
+              state.trackedStationId = st.id;
+              updateHud();
+              document.getElementById('questListModal').classList.add('hidden');
+              showToast(`🧭 已設定指引目標：前往 ${st.floorName} 找【${st.npcName}】`);
+            });
+            rightDiv.appendChild(trackBtn);
+          }
+
+          item.appendChild(leftDiv);
+          item.appendChild(rightDiv);
+          container.appendChild(item);
+        });
+
+        document.getElementById('questListModal').classList.remove('hidden');
+      }
+
+      function openSummaryModal(isTimeUp) {
+        const completedCount = state.stations.filter(s => s.completed).length;
+        const usedSecs = Math.max(0, 300 - Math.ceil(state.remainingSeconds));
+        const usedM = Math.floor(usedSecs / 60);
+        const usedS = String(usedSecs % 60).padStart(2, '0');
+
+        if (isTimeUp && completedCount < state.stations.length) {
+          document.getElementById('summaryEmoji').textContent = '⏰';
+          document.getElementById('summaryTitle').textContent = '5 分鐘探索時間到啦！';
+          document.getElementById('summarySubtitle').textContent = `你在本次開放日探索中合共收集了 ${completedCount} / 5 個學科印章，表現非常棒！`;
+        } else {
+          document.getElementById('summaryEmoji').textContent = '🏆';
+          document.getElementById('summaryTitle').textContent = '恭喜成為「基朗探索小博士」！';
+          document.getElementById('summarySubtitle').textContent = `你只用了 ${usedM} 分 ${usedS} 秒便順利穿梭三層校舍並完成全部 5 大挑戰！`;
+        }
+
+        const grid = document.getElementById('summaryStampsGrid');
+        grid.innerHTML = '';
+        state.stations.forEach(st => {
+          const card = document.createElement('div');
+          card.className = `stamp-card ${st.completed ? 'earned' : ''}`;
+          card.innerHTML = `
+            <div style="font-size:26px;margin-bottom:4px;">${st.completed ? st.stampIcon : '🔒'}</div>
+            <div style="font-size:12px;font-weight:900;color:#0f172a;">${st.subject}</div>
+            <div style="font-size:10.5px;color:#475569;">${st.completed ? '已獲得' : '未完成'}</div>
+          `;
+          grid.appendChild(card);
+        });
+
+        document.getElementById('summaryModal').classList.remove('hidden');
+      }
+
+      // =====================================================================
+      // N. MAIN ANIMATION LOOP (Protected so frame loop can never halt)
+      // =====================================================================
+      function gameLoop(timestamp) {
+        requestAnimationFrame(gameLoop);
+
+        try {
+          resizeCanvas();
+          const now = timestamp || performance.now();
+          if (!state.lastTimestamp) state.lastTimestamp = now;
+          const dt = Math.min(0.1, Math.max(0.001, (now - state.lastTimestamp) / 1000));
+          state.lastTimestamp = now;
+          const timeSec = now / 1000;
+
+          const vp = getViewportSize();
+
+          if (state.mode === 'START') {
+            drawSchoolExterior(vp.w, vp.h, dt, timeSec);
+          } else {
+            updateGameplay(dt);
+            drawCampusInterior(vp.w, vp.h, dt, timeSec);
+          }
+        } catch (err) {
+          console.error('Render loop error:', err);
+        }
+      }
+
+      // Backup timer interval to guarantee visible countdown even if background-throttled
+      setInterval(() => {
+        if (state.mode !== 'PLAYING') return;
+        const isQuizOpen = !document.getElementById('quizModal').classList.contains('hidden');
+        const isSummaryOpen = !document.getElementById('summaryModal').classList.contains('hidden');
+        const isTalkOpen = !document.getElementById('npcTalkModal').classList.contains('hidden');
+        const isBballOpen = !document.getElementById('basketballModal').classList.contains('hidden');
+        if (!isQuizOpen && !isSummaryOpen && !isTalkOpen && !isBballOpen && state.remainingSeconds > 0) {
+          updateTimerDisplay();
+        }
+      }, 250);
+
+      // =====================================================================
+      // N2. FRIENDLY TEACHER & EASTER EGG INTERACTION + MINI BASKETBALL GAME
+      // =====================================================================
+      function openFriendlyTeacherModal(teacher) {
+        if (!teacher) return;
+        sfx.playClick();
+        state.player.targetPoint = null;
+
+        document.getElementById('talkNpcAvatar').textContent = teacher.avatar;
+        document.getElementById('talkRoleBadge').textContent = teacher.role;
+        document.getElementById('talkFloorBadge').textContent = teacher.floorName;
+        document.getElementById('talkNpcName').textContent = teacher.npcName;
+        document.getElementById('talkMessageText').textContent = teacher.message;
+        document.getElementById('talkHintTag').textContent = teacher.tip;
+
+        const box = document.getElementById('talkSpeechBox');
+        box.classList.remove('egg-box');
+        document.getElementById('npcTalkModal').classList.remove('hidden');
+      }
+
+      function openEasterEggModal(egg) {
+        if (!egg) return;
+        state.player.targetPoint = null;
+        const isFirstFind = !state.foundEggs[egg.id];
+        state.foundEggs[egg.id] = true;
+
+        if (egg.id === 'egg_2f_terminal') {
+          state.robotTurboTimer = 8;
+        }
+
+        if (isFirstFind) {
+          sfx.playVictory();
+          spawnConfettiBurst(egg.x, egg.y - 10, 48);
+          updateHud();
+        } else {
+          sfx.playClick();
+        }
+
+        document.getElementById('talkNpcAvatar').textContent = egg.avatar;
+        document.getElementById('talkRoleBadge').textContent = '✨ 校園隱藏彩蛋';
+        document.getElementById('talkFloorBadge').textContent = egg.floorName;
+        document.getElementById('talkNpcName').textContent = egg.title;
+        document.getElementById('talkMessageText').textContent = egg.message;
+        document.getElementById('talkHintTag').textContent = egg.tip;
+
+        const box = document.getElementById('talkSpeechBox');
+        box.classList.add('egg-box');
+        document.getElementById('npcTalkModal').classList.remove('hidden');
+      }
+
+      function closeTalkModal() {
+        sfx.playClick();
+        document.getElementById('npcTalkModal').classList.add('hidden');
+        state.lastTimestamp = performance.now();
+      }
+
+      document.getElementById('closeTalkModalBtn').addEventListener('click', closeTalkModal);
+      document.getElementById('confirmTalkBtn').addEventListener('click', closeTalkModal);
+
+      // G/F Mini Basketball Game Engine
+      const bballCanvas = document.getElementById('bballCanvas');
+      const bballCtx = bballCanvas.getContext('2d');
+      const bballState = {
+        active: false,
+        streak: 0,
+        aimAngle: -0.95,
+        aimDir: 1,
+        ball: { x: 95, y: 205, vx: 0, vy: 0, flying: false, scoredThisShot: false },
+        netRipple: 0,
+        bannerText: '',
+        bannerTimer: 0,
+        lastTime: 0
+      };
+
+      function resetBballShot() {
+        bballState.ball.x = 95;
+        bballState.ball.y = 205;
+        bballState.ball.vx = 0;
+        bballState.ball.vy = 0;
+        bballState.ball.flying = false;
+        bballState.ball.scoredThisShot = false;
+      }
+
+      function updateBballStatsUI() {
+        document.getElementById('bballScoreVal').textContent = state.bballScore;
+        document.getElementById('bballStreakVal').textContent = bballState.streak;
+        document.getElementById('bballBestVal').textContent = state.bballBest;
+      }
+
+      function openBasketballModal() {
+        sfx.playClick();
+        state.player.targetPoint = null;
+        bballState.active = true;
+        bballState.lastTime = performance.now();
+        bballState.bannerText = '點擊「投籃」或按空白鍵出手！';
+        bballState.bannerTimer = 2.5;
+        resetBballShot();
+        updateBballStatsUI();
+        document.getElementById('basketballModal').classList.remove('hidden');
+        requestAnimationFrame(bballLoop);
+      }
+
+      function closeBasketballModal() {
+        sfx.playClick();
+        bballState.active = false;
+        document.getElementById('basketballModal').classList.add('hidden');
+        state.lastTimestamp = performance.now();
+      }
+
+      function shootBasketball() {
+        if (!bballState.active || bballState.ball.flying) return;
+        sfx.playClick();
+        const speed = 555;
+        bballState.ball.flying = true;
+        bballState.ball.scoredThisShot = false;
+        bballState.ball.vx = Math.cos(bballState.aimAngle) * speed;
+        bballState.ball.vy = Math.sin(bballState.aimAngle) * speed;
+      }
+
+      function bballLoop(now) {
+        if (!bballState.active) return;
+        requestAnimationFrame(bballLoop);
+
+        const dt = Math.min(0.05, Math.max(0.001, (now - bballState.lastTime) / 1000));
+        bballState.lastTime = now;
+
+        const w = bballCanvas.width;
+        const h = bballCanvas.height;
+        const hoopX = 415;
+        const hoopY = 112;
+
+        if (bballState.netRipple > 0) bballState.netRipple = Math.max(0, bballState.netRipple - dt * 2.5);
+        if (bballState.bannerTimer > 0) bballState.bannerTimer = Math.max(0, bballState.bannerTimer - dt);
+
+        if (!bballState.ball.flying) {
+          bballState.aimAngle += bballState.aimDir * dt * 1.35;
+          if (bballState.aimAngle > -0.62) {
+            bballState.aimAngle = -0.62;
+            bballState.aimDir = -1;
+          } else if (bballState.aimAngle < -1.24) {
+            bballState.aimAngle = -1.24;
+            bballState.aimDir = 1;
+          }
+        } else {
+          const b = bballState.ball;
+          const prevY = b.y;
+          b.vy += 680 * dt;
+          b.x += b.vx * dt;
+          b.y += b.vy * dt;
+
+          // Backboard bounce
+          if (b.x + 15 > hoopX + 34 && b.x - 15 < hoopX + 46 && b.y > hoopY - 56 && b.y < hoopY + 14) {
+            b.x = hoopX + 19;
+            b.vx = -Math.abs(b.vx) * 0.52;
+            sfx.playTone(220, 'sine', 0.08, 0, 0.1);
+          }
+
+          // Check clean basket score passing downward through rim (hoopX - 24 .. hoopX + 24)
+          if (!b.scoredThisShot && b.vy > 0 && prevY <= hoopY && b.y >= hoopY && Math.abs(b.x - hoopX) < 25) {
+            b.scoredThisShot = true;
+            state.bballScore += 1;
+            bballState.streak += 1;
+            if (state.bballScore > state.bballBest) state.bballBest = state.bballScore;
+            bballState.netRipple = 1;
+            bballState.bannerText = bballState.streak >= 2 ? `🔥 ${bballState.streak} 連中！神射手！` : '🎉 好球！+1 分！';
+            bballState.bannerTimer = 1.6;
+            sfx.playCorrect();
+            updateBballStatsUI();
+
+            if (state.bballScore === 3) {
+              showToast('🏀 太厲害了！你已獲得「基朗籃球場神射手」稱號！');
+              spawnConfettiBurst(212, 510, 45);
+            }
+          }
+
+          // Reset once ball leaves court floor
+          if (b.y > h + 25 || b.x > w + 25 || b.x < -25) {
+            if (!b.scoredThisShot) {
+              bballState.streak = 0;
+              bballState.bannerText = '差一點點，再試一次！';
+              bballState.bannerTimer = 1.2;
+              updateBballStatsUI();
+            }
+            resetBballShot();
+          }
+        }
+
+        // Render Mini Basketball Court Scene
+        const sky = bballCtx.createLinearGradient(0, 0, 0, h);
+        sky.addColorStop(0, '#7dd3fc');
+        sky.addColorStop(0.75, '#e0f2fe');
+        sky.addColorStop(0.75, '#228e5c');
+        sky.addColorStop(1, '#15803d');
+        bballCtx.fillStyle = sky;
+        bballCtx.fillRect(0, 0, w, h);
+
+        // Court white line
+        bballCtx.strokeStyle = '#ffffff';
+        bballCtx.lineWidth = 3;
+        bballCtx.beginPath();
+        bballCtx.moveTo(0, h * 0.75);
+        bballCtx.lineTo(w, h * 0.75);
+        bballCtx.stroke();
+
+        // Hoop Pole & Backboard
+        bballCtx.fillStyle = '#1e293b';
+        bballCtx.fillRect(hoopX + 42, hoopY - 20, 10, h * 0.75 - (hoopY - 20));
+        bballCtx.fillStyle = '#ffffff';
+        bballCtx.fillRect(hoopX + 34, hoopY - 56, 10, 68);
+        bballCtx.strokeStyle = '#0f172a';
+        bballCtx.lineWidth = 2;
+        bballCtx.strokeRect(hoopX + 34, hoopY - 56, 10, 68);
+
+        // Net
+        const sway = Math.sin(bballState.netRipple * Math.PI * 3) * 6;
+        bballCtx.strokeStyle = '#ffffff';
+        bballCtx.lineWidth = 2;
+        bballCtx.beginPath();
+        bballCtx.moveTo(hoopX - 24, hoopY);
+        bballCtx.lineTo(hoopX - 16 + sway, hoopY + 34);
+        bballCtx.lineTo(hoopX + 16 + sway, hoopY + 34);
+        bballCtx.lineTo(hoopX + 24, hoopY);
+        bballCtx.stroke();
+
+        // Orange Rim
+        bballCtx.strokeStyle = '#ea580c';
+        bballCtx.lineWidth = 5;
+        bballCtx.beginPath();
+        bballCtx.moveTo(hoopX - 26, hoopY);
+        bballCtx.lineTo(hoopX + 34, hoopY);
+        bballCtx.stroke();
+
+        // Aim Trajectory Dots when ready to shoot
+        if (!bballState.ball.flying) {
+          const speed = 555;
+          const vx = Math.cos(bballState.aimAngle) * speed;
+          const vy = Math.sin(bballState.aimAngle) * speed;
+          bballCtx.fillStyle = '#facc15';
+          for (let step = 1; step <= 8; step++) {
+            const t = step * 0.085;
+            const px = bballState.ball.x + vx * t;
+            const py = bballState.ball.y + vy * t + 0.5 * 680 * t * t;
+            bballCtx.beginPath();
+            bballCtx.arc(px, py, Math.max(2.5, 6 - step * 0.4), 0, Math.PI * 2);
+            bballCtx.fill();
+          }
+        }
+
+        // Basketball
+        const bx = bballState.ball.x;
+        const by = bballState.ball.y;
+        bballCtx.fillStyle = '#f97316';
+        bballCtx.beginPath();
+        bballCtx.arc(bx, by, 15, 0, Math.PI * 2);
+        bballCtx.fill();
+        bballCtx.strokeStyle = '#431407';
+        bballCtx.lineWidth = 2;
+        bballCtx.stroke();
+        bballCtx.beginPath();
+        bballCtx.moveTo(bx - 14, by);
+        bballCtx.lineTo(bx + 14, by);
+        bballCtx.moveTo(bx, by - 14);
+        bballCtx.lineTo(bx, by + 14);
+        bballCtx.stroke();
+
+        // Feedback Banner inside Mini-Game
+        if (bballState.bannerTimer > 0 && bballState.bannerText) {
+          bballCtx.fillStyle = 'rgba(15, 23, 42, 0.85)';
+          roundRectPath(bballCtx, w * 0.5 - 145, 14, 290, 32, 16);
+          bballCtx.fill();
+          bballCtx.fillStyle = '#fde047';
+          bballCtx.font = '900 14px sans-serif';
+          bballCtx.textAlign = 'center';
+          bballCtx.textBaseline = 'middle';
+          bballCtx.fillText(bballState.bannerText, w * 0.5, 30);
+        }
+      }
+
+      document.getElementById('closeBasketballBtn').addEventListener('click', closeBasketballModal);
+      document.getElementById('shootBballBtn').addEventListener('click', shootBasketball);
+      bballCanvas.addEventListener('pointerdown', (e) => {
+        e.preventDefault();
+        shootBasketball();
+      });
+
+      function triggerContextInteraction() {
+        if (state.nearbyStation) {
+          openQuizForStation(state.nearbyStation);
+        } else if (state.nearbyEgg) {
+          openEasterEggModal(state.nearbyEgg);
+        } else if (state.nearbyBasketball) {
+          openBasketballModal();
+        } else if (state.nearbyTeacher) {
+          openFriendlyTeacherModal(state.nearbyTeacher);
+        }
+      }
+
+      // =====================================================================
+      // O. EVENT BINDINGS (Start, One-Click Reset, Floor Switch, Canvas Tap)
+      // =====================================================================
+      function startExplorationGame() {
+        if (state.mode === 'PLAYING') return;
+        sfx.playClick();
+        resizeCanvas();
+        resetGameState(false);
+        showToast('歡迎進入基朗中學！跟隨頭頂黃色箭頭尋找老師吧！');
+      }
+
+      document.getElementById('startGameBtn').addEventListener('click', startExplorationGame);
+
+      document.getElementById('resetGameBtn').addEventListener('click', () => {
+        sfx.playClick();
+        resetGameState(true);
+        showToast('🔄 已一鍵重設遊戲，歡迎下一位同學體驗！');
+      });
+
+      document.getElementById('summaryResetBtn').addEventListener('click', () => {
+        sfx.playClick();
+        resetGameState(true);
+      });
+
+      // Floor Quick-Switcher Buttons
+      document.querySelectorAll('.floor-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const targetF = Number(btn.getAttribute('data-floor'));
+          if (targetF !== state.currentFloor) {
+            switchFloor(targetF, 550, 355, false);
+          }
+        });
+      });
+
+      // Quest List Modal Controls
+      document.getElementById('openQuestListBtn').addEventListener('click', openQuestListModal);
+      document.getElementById('closeQuestListBtn').addEventListener('click', () => {
+        sfx.playClick();
+        document.getElementById('questListModal').classList.add('hidden');
+      });
+
+      // Quiz Modal Controls
+      document.getElementById('closeQuizModalBtn').addEventListener('click', () => {
+        sfx.playClick();
+        document.getElementById('quizModal').classList.add('hidden');
+        state.activeQuiz = null;
+        state.lastTimestamp = performance.now();
+      });
+      document.getElementById('nextQuestionBtn').addEventListener('click', advanceQuizStep);
+
+      // Contextual Interact Button
+      document.getElementById('interactActionBtn').addEventListener('click', triggerContextInteraction);
+
+      // Canvas Click / Tap to Walk or Interact Directly with NPCs, Eggs & Basketball Hoop
+      canvas.addEventListener('pointerdown', (e) => {
+        if (state.mode !== 'PLAYING') return;
+        const pos = screenToWorld(e.clientX, e.clientY);
+
+        const floorStations = state.stations.filter(s => s.floor === state.currentFloor);
+        for (let i = 0; i < floorStations.length; i++) {
+          const st = floorStations[i];
+          if (Math.hypot(pos.x - st.x, pos.y - st.y) < 48) {
+            if (Math.hypot(state.player.x - st.x, state.player.y - st.y) < 75) {
+              openQuizForStation(st);
+            } else {
+              state.player.targetPoint = { x: st.x, y: st.y + 34 };
+            }
+            return;
+          }
+        }
+
+        // Check Easter Eggs click
+        const floorEggs = EASTER_EGGS.filter(egg => egg.floor === state.currentFloor);
+        for (let i = 0; i < floorEggs.length; i++) {
+          const egg = floorEggs[i];
+          if (Math.hypot(pos.x - egg.x, pos.y - egg.y) < 36) {
+            if (Math.hypot(state.player.x - egg.x, state.player.y - egg.y) < 68) {
+              openEasterEggModal(egg);
+            } else {
+              state.player.targetPoint = { x: egg.x, y: egg.y + 24 };
+            }
+            return;
+          }
+        }
+
+        // Check Extra Friendly Teachers click
+        const floorTeachers = EXTRA_TEACHERS.filter(t => t.floor === state.currentFloor);
+        for (let i = 0; i < floorTeachers.length; i++) {
+          const t = floorTeachers[i];
+          if (Math.hypot(pos.x - t.x, pos.y - t.y) < 42) {
+            if (Math.hypot(state.player.x - t.x, state.player.y - t.y) < 72) {
+              openFriendlyTeacherModal(t);
+            } else {
+              state.player.targetPoint = { x: t.x, y: t.y + 32 };
+            }
+            return;
+          }
+        }
+
+        // Check G/F Mini Basketball Hoop click
+        if (state.currentFloor === 0 && pos.x >= 115 && pos.x <= 310 && pos.y >= 475 && pos.y <= 585) {
+          if (state.nearbyBasketball) {
+            openBasketballModal();
+          } else {
+            state.player.targetPoint = { x: 215, y: 455 };
+          }
+          return;
+        }
+
+        const clampedX = Math.max(60, Math.min(WORLD_W - 60, pos.x));
+        const clampedY = Math.max(145, Math.min(WORLD_H - 60, pos.y));
+        state.player.targetPoint = { x: clampedX, y: clampedY };
+      });
+
+      // On-Screen Touch D-Pad Bindings
+      document.querySelectorAll('.dpad-btn').forEach(btn => {
+        const dir = btn.getAttribute('data-dir');
+        const setDir = (active) => {
+          state.dpad[dir] = active;
+          if (active) btn.classList.add('pressed');
+          else btn.classList.remove('pressed');
+        };
+        btn.addEventListener('pointerdown', (e) => {
+          e.preventDefault();
+          setDir(true);
+        });
+        btn.addEventListener('pointerup', () => setDir(false));
+        btn.addEventListener('pointerleave', () => setDir(false));
+        btn.addEventListener('pointercancel', () => setDir(false));
+      });
+
+      // Keyboard Controls
+      window.addEventListener('keydown', (e) => {
+        const k = e.key.toLowerCase();
+
+        if (state.mode === 'START') {
+          if (k === 'enter' || k === ' ') {
+            e.preventDefault();
+            startExplorationGame();
+          }
+          return;
+        }
+
+        const isQuizOpen = !document.getElementById('quizModal').classList.contains('hidden');
+        if (isQuizOpen) {
+          if (['1', '2', '3', '4'].includes(k)) {
+            handleQuizAnswer(Number(k) - 1);
+          } else if (k === 'enter' || k === ' ') {
+            const nextBtn = document.getElementById('nextQuestionBtn');
+            if (!nextBtn.classList.contains('hidden')) {
+              e.preventDefault();
+              advanceQuizStep();
+            }
+          }
+          return;
+        }
+
+        const isTalkOpen = !document.getElementById('npcTalkModal').classList.contains('hidden');
+        if (isTalkOpen) {
+          if (k === 'enter' || k === ' ' || k === 'escape') {
+            e.preventDefault();
+            closeTalkModal();
+          }
+          return;
+        }
+
+        const isBballOpen = !document.getElementById('basketballModal').classList.contains('hidden');
+        if (isBballOpen) {
+          if (k === ' ' || k === 'enter') {
+            e.preventDefault();
+            shootBasketball();
+          } else if (k === 'escape') {
+            e.preventDefault();
+            closeBasketballModal();
+          }
+          return;
+        }
+
+        state.keys[k] = true;
+
+        if (k === 'e' || k === ' ') {
+          e.preventDefault();
+          triggerContextInteraction();
+        }
+      });
+
+      window.addEventListener('keyup', (e) => {
+        state.keys[e.key.toLowerCase()] = false;
+      });
+
+      window.addEventListener('resize', resizeCanvas);
+
+      // Initialize immediately
+      resizeCanvas();
+      resetGameState(true);
+      requestAnimationFrame(gameLoop);
+    })();
+  </script>
+</body>
+</html>
