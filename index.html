@@ -19,11 +19,13 @@
       width: 100%;
       height: 100%;
       overflow: hidden;
-      font-family: "PingFang HK", "PingFang TC", "Microsoft JhengHei", "Noto Sans TC", -apple-system, BlinkMacSystemFont, sans-serif;
-      background-color: #0f172a;
-      color: #0f172a;
+      font-family: "Courier New", "PingFang HK", "PingFang TC", "Microsoft JhengHei", "Noto Sans TC", monospace;
+      background-color: #2d1b12;
+      color: #3b2314;
       user-select: none;
       -webkit-user-select: none;
+      image-rendering: pixelated;
+      image-rendering: crisp-edges;
     }
 
     #gameCanvas {
@@ -35,6 +37,18 @@
       display: block;
       z-index: 1;
       touch-action: none;
+      image-rendering: pixelated;
+      image-rendering: crisp-edges;
+    }
+
+    /* Warm Sunlit Stardew Vignette Overlay */
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 60;
+      background: radial-gradient(circle at 50% 25%, rgba(255, 251, 235, 0.06), rgba(45, 27, 18, 0.22));
     }
 
     .hidden {
@@ -42,7 +56,7 @@
     }
 
     /* ===================================================================== */
-    /* 2. START SCREEN OVERLAY (Compact Glass Card over School Exterior)     */
+    /* 2. START SCREEN OVERLAY (Cozy Stardew Parchment & Wood UI)            */
     /* ===================================================================== */
     #startScreenOverlay {
       position: fixed;
@@ -68,40 +82,39 @@
       display: inline-flex;
       align-items: center;
       gap: 12px;
-      background: rgba(255, 255, 255, 0.92);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      background: #fdf3dc;
       padding: 8px 16px;
-      border-radius: 18px;
-      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.16);
-      border: 1.5px solid rgba(186, 230, 253, 0.95);
+      border-radius: 6px;
+      box-shadow: 0 4px 0 #3b1f0e, inset 0 0 0 2px #e6c68a, inset 0 0 0 4px #9c6234;
+      border: 3px solid #4a2511;
     }
 
     .crest-icon {
       width: 40px;
       height: 40px;
-      border-radius: 12px;
-      background: linear-gradient(135deg, #0284c7, #1e3a8a);
-      color: #fde047;
+      border-radius: 4px;
+      background: #2b6cb0;
+      color: #fef08a;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 22px;
       font-weight: 900;
-      box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.25);
+      border: 2px solid #4a2511;
+      box-shadow: inset -2px -2px 0px #1e4e8c, inset 2px 2px 0px #63b3ed;
     }
 
     .crest-sub {
       font-size: 11px;
-      font-weight: 700;
+      font-weight: 800;
       letter-spacing: 0.04em;
-      color: #0369a1;
+      color: #8c4a1c;
     }
 
     .crest-main {
       font-size: 17px;
       font-weight: 900;
-      color: #0f172a;
+      color: #3b2314;
       line-height: 1.2;
     }
 
@@ -109,26 +122,24 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      background: rgba(250, 204, 21, 0.95);
-      color: #0f172a;
+      background: #f6c445;
+      color: #3b2314;
       padding: 8px 16px;
-      border-radius: 16px;
+      border-radius: 6px;
       font-size: 13px;
       font-weight: 900;
-      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.15);
-      border: 1.5px solid #fef08a;
+      box-shadow: 0 4px 0 #3b1f0e, inset -2px -2px 0px #d99b26, inset 2px 2px 0px #fde68a;
+      border: 3px solid #4a2511;
     }
 
     .start-card {
       width: 100%;
-      max-width: 690px;
-      background: rgba(255, 255, 255, 0.90);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border-radius: 24px;
+      max-width: 710px;
+      background: #fdf3dc;
+      border-radius: 8px;
       padding: 18px 22px;
-      box-shadow: 0 20px 45px rgba(15, 23, 42, 0.28);
-      border: 2px solid rgba(186, 230, 253, 0.95);
+      box-shadow: 0 6px 0 #3b1f0e, inset 0 0 0 3px #e6c68a, inset 0 0 0 6px #9c6234;
+      border: 4px solid #4a2511;
       pointer-events: auto;
       display: flex;
       flex-wrap: wrap;
@@ -145,10 +156,12 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 4px 12px;
-      border-radius: 999px;
-      background: #e0f2fe;
-      color: #0369a1;
+      padding: 4px 10px;
+      border-radius: 4px;
+      background: #3a8c4e;
+      color: #fffbeb;
+      border: 2px solid #4a2511;
+      box-shadow: inset 0 2px 0 #68b87a;
       font-size: 12px;
       font-weight: 800;
       margin-bottom: 6px;
@@ -157,19 +170,19 @@
     .start-title {
       font-size: clamp(20px, 2.8vw, 27px);
       font-weight: 900;
-      color: #0f172a;
+      color: #3b2314;
       line-height: 1.25;
       margin-bottom: 6px;
     }
 
     .start-desc {
       font-size: 13.5px;
-      color: #334155;
+      color: #5c3a21;
       line-height: 1.55;
     }
 
     .start-desc strong {
-      color: #0369a1;
+      color: #b45309;
     }
 
     .start-action-col {
@@ -182,42 +195,42 @@
 
     .btn-start-game {
       cursor: pointer;
-      border: none;
       outline: none;
-      padding: 14px 26px;
-      border-radius: 18px;
-      background: linear-gradient(135deg, #0284c7 0%, #2563eb 55%, #4338ca 100%);
-      color: #ffffff;
+      padding: 14px 24px;
+      border-radius: 6px;
+      background: #3a8c4e;
+      color: #fffbeb;
       font-family: inherit;
       font-size: 18px;
       font-weight: 900;
-      letter-spacing: 0.02em;
-      box-shadow: 0 10px 24px rgba(37, 99, 235, 0.42), inset 0 1px 1px rgba(255, 255, 255, 0.35);
-      border-bottom: 4px solid #1e1b4b;
-      transition: transform 0.14s ease, box-shadow 0.14s ease, filter 0.14s ease;
+      letter-spacing: 0.04em;
+      border: 3px solid #3b1f0e;
+      box-shadow: 0 4px 0 #3b1f0e, inset -3px -3px 0px #276336, inset 3px 3px 0px #68b87a;
+      transition: transform 0.08s ease, box-shadow 0.08s ease, filter 0.12s ease;
       display: inline-flex;
       align-items: center;
       gap: 8px;
     }
 
     .btn-start-game:hover {
-      filter: brightness(1.07);
+      filter: brightness(1.06);
       transform: translateY(-2px);
+      box-shadow: 0 6px 0 #3b1f0e, inset -3px -3px 0px #276336, inset 3px 3px 0px #86efac;
     }
 
     .btn-start-game:active {
       transform: translateY(2px);
-      border-bottom-width: 2px;
+      box-shadow: 0 2px 0 #3b1f0e;
     }
 
     .start-hint-text {
       font-size: 11px;
-      color: #475569;
-      font-weight: 600;
+      color: #7c4d2b;
+      font-weight: 700;
     }
 
     /* ===================================================================== */
-    /* 3. TOP HUD BAR (Floor Switcher, Mission Guide, Timer, 1-Click Reset)  */
+    /* 3. TOP HUD BAR (Cozy Wood & Parchment HUD)                            */
     /* ===================================================================== */
     #gameHud {
       position: fixed;
@@ -242,11 +255,11 @@
     }
 
     .hud-panel {
-      background: rgba(255, 255, 255, 0.95);
-      border-radius: 16px;
+      background: #fdf3dc;
+      border-radius: 6px;
       padding: 6px 10px;
-      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.18);
-      border: 1.5px solid #cbd5e1;
+      box-shadow: 0 4px 0 #3b1f0e, inset 0 0 0 2px #e6c68a;
+      border: 3px solid #4a2511;
       display: flex;
       align-items: center;
       gap: 6px;
@@ -254,40 +267,42 @@
 
     .floor-btn {
       cursor: pointer;
-      border: none;
-      padding: 6px 12px;
-      border-radius: 11px;
+      border: 2px solid #4a2511;
+      padding: 5px 11px;
+      border-radius: 4px;
       font-family: inherit;
       font-size: 12.5px;
-      font-weight: 800;
-      background: #f1f5f9;
-      color: #334155;
-      transition: all 0.15s ease;
+      font-weight: 900;
+      background: #f5e1b5;
+      color: #5c3a21;
+      box-shadow: 0 2px 0 #4a2511;
+      transition: transform 0.08s ease;
     }
 
     .floor-btn:hover {
-      background: #e0f2fe;
-      color: #0369a1;
+      background: #fde68a;
+      color: #3b2314;
     }
 
     .floor-btn.active {
-      background: linear-gradient(135deg, #0284c7, #1d4ed8);
-      color: #ffffff;
-      box-shadow: 0 3px 10px rgba(2, 132, 199, 0.35);
+      background: #3a8c4e;
+      color: #fffbeb;
+      box-shadow: inset -2px -2px 0px #276336, inset 2px 2px 0px #68b87a;
+      transform: translateY(1px);
     }
 
     .mission-banner {
       pointer-events: auto;
-      background: rgba(15, 23, 42, 0.93);
-      color: #f8fafc;
-      border: 1.5px solid #38bdf8;
-      border-radius: 16px;
+      background: #fdf3dc;
+      color: #3b2314;
+      border: 3px solid #4a2511;
+      border-radius: 6px;
       padding: 7px 14px;
-      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.26);
+      box-shadow: 0 4px 0 #3b1f0e, inset 0 0 0 2px #e6c68a;
       display: flex;
       align-items: center;
       gap: 10px;
-      max-width: 530px;
+      max-width: 580px;
     }
 
     .mission-icon {
@@ -297,64 +312,69 @@
 
     .mission-text-wrap {
       font-size: 12.5px;
+      font-weight: 800;
       line-height: 1.35;
     }
 
     .mission-guide-label {
-      color: #fde047;
+      color: #b45309;
       font-weight: 900;
     }
 
     .progress-pill {
-      background: #0284c7;
-      color: #ffffff;
+      background: #2b6cb0;
+      color: #fffbeb;
+      border: 2px solid #4a2511;
       font-size: 12px;
       font-weight: 900;
-      padding: 4px 10px;
-      border-radius: 999px;
+      padding: 3px 9px;
+      border-radius: 4px;
       white-space: nowrap;
+      box-shadow: inset 0 1px 0 #63b3ed;
     }
 
     .hud-btn {
       cursor: pointer;
-      border: none;
-      border-radius: 14px;
-      padding: 8px 13px;
+      border: 3px solid #4a2511;
+      border-radius: 6px;
+      padding: 7px 12px;
       font-family: inherit;
       font-size: 13px;
-      font-weight: 800;
+      font-weight: 900;
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      box-shadow: 0 6px 16px rgba(15, 23, 42, 0.18);
-      transition: transform 0.12s ease, filter 0.12s ease;
+      box-shadow: 0 4px 0 #3b1f0e;
+      transition: transform 0.08s ease, box-shadow 0.08s ease, filter 0.12s ease;
     }
 
     .hud-btn:hover {
-      filter: brightness(1.06);
+      filter: brightness(1.05);
       transform: translateY(-1px);
+      box-shadow: 0 5px 0 #3b1f0e;
     }
 
     .hud-btn:active {
-      transform: translateY(1px);
+      transform: translateY(2px);
+      box-shadow: 0 2px 0 #3b1f0e;
     }
 
     .btn-quest-list {
-      background: #ffffff;
-      color: #0f172a;
-      border: 1.5px solid #cbd5e1;
+      background: #fdf3dc;
+      color: #3b2314;
+      box-shadow: 0 4px 0 #3b1f0e, inset 0 0 0 2px #e6c68a;
     }
 
     .timer-pill {
-      background: #ffffff;
-      color: #0f172a;
-      border: 1.5px solid #cbd5e1;
-      border-radius: 14px;
-      padding: 7px 13px;
+      background: #fdf3dc;
+      color: #3b2314;
+      border: 3px solid #4a2511;
+      border-radius: 6px;
+      padding: 6px 12px;
       font-size: 14.5px;
       font-weight: 900;
       font-variant-numeric: tabular-nums;
-      box-shadow: 0 6px 16px rgba(15, 23, 42, 0.16);
+      box-shadow: 0 4px 0 #3b1f0e, inset 0 0 0 2px #e6c68a;
       display: inline-flex;
       align-items: center;
       gap: 6px;
@@ -362,21 +382,21 @@
 
     .timer-pill.warning {
       background: #fef3c7;
-      border-color: #f59e0b;
+      border-color: #b45309;
       color: #b45309;
     }
 
     .timer-pill.danger {
       background: #fee2e2;
-      border-color: #ef4444;
-      color: #b91c1c;
+      border-color: #991b1b;
+      color: #991b1b;
       animation: pulseAlert 1s infinite;
     }
 
     .btn-reset {
-      background: linear-gradient(135deg, #f97316, #dc2626);
-      color: #ffffff;
-      border-bottom: 3px solid #7f1d1d;
+      background: #d9534f;
+      color: #fffbeb;
+      box-shadow: 0 4px 0 #3b1f0e, inset -2px -2px 0px #a93226, inset 2px 2px 0px #f1948a;
     }
 
     @keyframes pulseAlert {
@@ -405,41 +425,44 @@
       grid-template-columns: repeat(3, 44px);
       grid-template-rows: repeat(3, 44px);
       gap: 4px;
-      background: rgba(15, 23, 42, 0.52);
+      background: #8c5227;
       padding: 6px;
-      border-radius: 20px;
-      border: 1.5px solid rgba(255, 255, 255, 0.25);
+      border-radius: 6px;
+      border: 3px solid #4a2511;
+      box-shadow: 0 4px 0 #3b1f0e, inset 0 0 0 2px #b87a46;
     }
 
     .dpad-btn {
       cursor: pointer;
-      border: none;
-      border-radius: 12px;
-      background: rgba(255, 255, 255, 0.92);
-      color: #0f172a;
+      border: 2px solid #4a2511;
+      border-radius: 4px;
+      background: #fdf3dc;
+      color: #3b2314;
       font-size: 17px;
       font-weight: 900;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+      box-shadow: inset -2px -2px 0px #d9b97e, inset 2px 2px 0px #ffffff;
     }
 
     .dpad-btn:active, .dpad-btn.pressed {
-      background: #38bdf8;
-      color: #ffffff;
-      transform: scale(0.94);
+      background: #f6c445;
+      color: #3b2314;
+      box-shadow: inset 2px 2px 0px #b45309;
+      transform: translateY(1px);
     }
 
     .controls-tip-pill {
       pointer-events: auto;
-      background: rgba(15, 23, 42, 0.88);
-      color: #e2e8f0;
+      background: #fdf3dc;
+      color: #5c3a21;
       padding: 8px 14px;
-      border-radius: 14px;
+      border-radius: 6px;
       font-size: 12px;
-      font-weight: 600;
-      border: 1px solid rgba(148, 163, 184, 0.35);
+      font-weight: 800;
+      border: 3px solid #4a2511;
+      box-shadow: 0 4px 0 #3b1f0e, inset 0 0 0 2px #e6c68a;
       display: flex;
       align-items: center;
       gap: 10px;
@@ -448,16 +471,15 @@
     #interactActionBtn {
       pointer-events: auto;
       cursor: pointer;
-      border: none;
       padding: 12px 20px;
-      border-radius: 16px;
-      background: linear-gradient(135deg, #facc15, #f59e0b);
-      color: #0f172a;
+      border-radius: 6px;
+      background: #f6c445;
+      color: #3b2314;
       font-family: inherit;
       font-size: 15px;
       font-weight: 900;
-      box-shadow: 0 10px 24px rgba(245, 158, 11, 0.45);
-      border-bottom: 3px solid #b45309;
+      border: 3px solid #4a2511;
+      box-shadow: 0 4px 0 #3b1f0e, inset -3px -3px 0px #d99b26, inset 3px 3px 0px #fef08a;
       animation: bounceSoft 1.2s infinite;
     }
 
@@ -475,14 +497,14 @@
       left: 50%;
       transform: translateX(-50%);
       z-index: 45;
-      background: rgba(15, 23, 42, 0.95);
-      color: #ffffff;
+      background: #fdf3dc;
+      color: #3b2314;
       padding: 10px 20px;
-      border-radius: 999px;
+      border-radius: 6px;
       font-size: 13.5px;
-      font-weight: 800;
-      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.35);
-      border: 1.5px solid #38bdf8;
+      font-weight: 900;
+      box-shadow: 0 5px 0 #3b1f0e, inset 0 0 0 2px #e6c68a;
+      border: 3px solid #4a2511;
       pointer-events: none;
       white-space: nowrap;
       max-width: 92vw;
@@ -491,15 +513,15 @@
     }
 
     /* ===================================================================== */
-    /* 6. MODALS (Quiz Modal, Quest List Modal, Victory & Time-Up Modals)    */
+    /* 6. MODALS (Cozy Stardew Valley Dialogue & Quest Boards)               */
     /* ===================================================================== */
     .modal-backdrop {
       position: fixed;
       inset: 0;
       z-index: 50;
-      background: rgba(15, 23, 42, 0.72);
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
+      background: rgba(45, 27, 18, 0.65);
+      backdrop-filter: blur(3px);
+      -webkit-backdrop-filter: blur(3px);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -511,11 +533,11 @@
       max-width: 600px;
       max-height: 90vh;
       overflow-y: auto;
-      background: #ffffff;
-      border-radius: 26px;
+      background: #fdf3dc;
+      border-radius: 8px;
       padding: 22px 24px;
-      box-shadow: 0 25px 60px rgba(15, 23, 42, 0.45);
-      border: 2px solid #e2e8f0;
+      box-shadow: 0 8px 0 #3b1f0e, inset 0 0 0 3px #e6c68a, inset 0 0 0 6px #9c6234;
+      border: 4px solid #4a2511;
     }
 
     .modal-header {
@@ -524,7 +546,7 @@
       justify-content: space-between;
       gap: 12px;
       padding-bottom: 14px;
-      border-bottom: 1.5px solid #f1f5f9;
+      border-bottom: 2px dashed #c89d66;
       margin-bottom: 16px;
     }
 
@@ -535,11 +557,12 @@
     }
 
     .npc-avatar-box {
-      width: 52px;
-      height: 52px;
-      border-radius: 16px;
-      background: #e0f2fe;
-      border: 2px solid #7dd3fc;
+      width: 54px;
+      height: 54px;
+      border-radius: 6px;
+      background: #f5e1b5;
+      border: 3px solid #4a2511;
+      box-shadow: 0 3px 0 #4a2511, inset 0 0 0 2px #fffbeb;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -557,38 +580,41 @@
 
     .subject-badge {
       padding: 3px 10px;
-      border-radius: 8px;
+      border-radius: 4px;
       font-size: 11.5px;
       font-weight: 900;
       background: #dbeafe;
       color: #1e40af;
+      border: 2px solid #4a2511;
     }
 
     .level-badge {
       padding: 3px 10px;
-      border-radius: 8px;
+      border-radius: 4px;
       font-size: 11.5px;
       font-weight: 800;
       background: #fef3c7;
       color: #92400e;
+      border: 2px solid #4a2511;
     }
 
     .modal-title {
       font-size: 18px;
       font-weight: 900;
-      color: #0f172a;
+      color: #3b2314;
     }
 
     .btn-close-modal {
       cursor: pointer;
-      border: none;
+      border: 3px solid #4a2511;
       width: 36px;
       height: 36px;
-      border-radius: 12px;
-      background: #f1f5f9;
-      color: #475569;
+      border-radius: 6px;
+      background: #d9534f;
+      color: #fffbeb;
       font-size: 18px;
       font-weight: 900;
+      box-shadow: 0 3px 0 #3b1f0e;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -596,29 +622,29 @@
     }
 
     .btn-close-modal:hover {
-      background: #e2e8f0;
-      color: #0f172a;
+      background: #c9302c;
     }
 
     .question-box {
-      background: #f8fafc;
-      border: 1.5px solid #e2e8f0;
-      border-radius: 18px;
+      background: #fffbeb;
+      border: 3px solid #8c5227;
+      border-radius: 6px;
+      box-shadow: inset 0 2px 0 #ffffff;
       padding: 16px 18px;
       margin-bottom: 16px;
     }
 
     .question-step {
       font-size: 12px;
-      font-weight: 800;
-      color: #0284c7;
+      font-weight: 900;
+      color: #b45309;
       margin-bottom: 6px;
     }
 
     .question-text {
       font-size: 17px;
       font-weight: 800;
-      color: #0f172a;
+      color: #3b2314;
       line-height: 1.55;
     }
 
@@ -633,23 +659,29 @@
       width: 100%;
       text-align: left;
       padding: 13px 16px;
-      border-radius: 16px;
-      border: 2px solid #cbd5e1;
-      background: #ffffff;
-      color: #0f172a;
+      border-radius: 6px;
+      border: 3px solid #4a2511;
+      background: #fffbeb;
+      color: #3b2314;
       font-family: inherit;
       font-size: 15px;
-      font-weight: 700;
+      font-weight: 800;
+      box-shadow: 0 3px 0 #4a2511;
       display: flex;
       align-items: center;
       gap: 12px;
-      transition: all 0.14s ease;
+      transition: transform 0.08s ease, box-shadow 0.08s ease, background 0.1s ease;
     }
 
     .quiz-opt-btn:hover:not(:disabled) {
-      background: #f0f9ff;
-      border-color: #0284c7;
-      transform: translateX(3px);
+      background: #fef3c7;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 0 #4a2511;
+    }
+
+    .quiz-opt-btn:active:not(:disabled) {
+      transform: translateY(2px);
+      box-shadow: 0 1px 0 #4a2511;
     }
 
     .quiz-opt-btn:disabled {
@@ -657,24 +689,25 @@
     }
 
     .quiz-opt-btn.opt-correct {
-      background: #ecfdf5;
-      border-color: #10b981;
-      color: #065f46;
+      background: #dcfce7;
+      border-color: #15803d;
+      color: #14532d;
     }
 
     .quiz-opt-btn.opt-wrong {
-      background: #fff1f2;
-      border-color: #f43f5e;
-      color: #9f1239;
-      opacity: 0.75;
+      background: #fee2e2;
+      border-color: #b91c1c;
+      color: #7f1d1d;
+      opacity: 0.78;
     }
 
     .opt-letter {
       width: 30px;
       height: 30px;
-      border-radius: 10px;
-      background: #e2e8f0;
-      color: #1e293b;
+      border-radius: 4px;
+      background: #f5e1b5;
+      border: 2px solid #4a2511;
+      color: #3b2314;
       font-size: 14px;
       font-weight: 900;
       display: flex;
@@ -684,30 +717,30 @@
     }
 
     .opt-correct .opt-letter {
-      background: #10b981;
+      background: #16a34a;
       color: #ffffff;
     }
 
     .opt-wrong .opt-letter {
-      background: #f43f5e;
+      background: #dc2626;
       color: #ffffff;
     }
 
     .feedback-box {
       margin-top: 16px;
       padding: 14px 16px;
-      border-radius: 16px;
-      border: 2px solid #cbd5e1;
+      border-radius: 6px;
+      border: 3px solid #8c5227;
     }
 
     .feedback-box.fb-success {
-      background: #ecfdf5;
-      border-color: #6ee7b7;
+      background: #dcfce7;
+      border-color: #15803d;
     }
 
     .feedback-box.fb-hint {
-      background: #fffbeb;
-      border-color: #fcd34d;
+      background: #fef3c7;
+      border-color: #b45309;
     }
 
     .feedback-title {
@@ -717,7 +750,7 @@
     }
 
     .fb-success .feedback-title {
-      color: #047857;
+      color: #15803d;
     }
 
     .fb-hint .feedback-title {
@@ -726,7 +759,7 @@
 
     .feedback-tip {
       font-size: 13.5px;
-      color: #334155;
+      color: #3b2314;
       line-height: 1.5;
     }
 
@@ -734,15 +767,15 @@
       cursor: pointer;
       margin-top: 12px;
       width: 100%;
-      border: none;
+      border: 3px solid #4a2511;
       padding: 12px 18px;
-      border-radius: 14px;
-      background: linear-gradient(135deg, #059669, #0284c7);
-      color: #ffffff;
+      border-radius: 6px;
+      background: #3a8c4e;
+      color: #fffbeb;
       font-family: inherit;
       font-size: 15px;
       font-weight: 900;
-      box-shadow: 0 6px 16px rgba(5, 150, 105, 0.3);
+      box-shadow: 0 4px 0 #3b1f0e, inset -2px -2px 0px #276336, inset 2px 2px 0px #68b87a;
     }
 
     /* Quest List Items */
@@ -754,9 +787,10 @@
 
     .quest-item {
       padding: 12px 14px;
-      border-radius: 18px;
-      border: 2px solid #e2e8f0;
-      background: #f8fafc;
+      border-radius: 6px;
+      border: 3px solid #8c5227;
+      background: #fffbeb;
+      box-shadow: 0 3px 0 #c89d66;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -764,13 +798,13 @@
     }
 
     .quest-item.q-done {
-      background: #ecfdf5;
-      border-color: #6ee7b7;
+      background: #dcfce7;
+      border-color: #15803d;
     }
 
     .quest-item.q-active {
-      background: #fffbeb;
-      border-color: #f59e0b;
+      background: #fef3c7;
+      border-color: #d97706;
     }
 
     .quest-item-left {
@@ -782,20 +816,20 @@
 
     .quest-floor-tag {
       padding: 2px 8px;
-      border-radius: 6px;
-      background: #0f172a;
-      color: #ffffff;
+      border-radius: 4px;
+      background: #5c3317;
+      color: #fffbeb;
       font-size: 11px;
       font-weight: 900;
     }
 
     .btn-track-target {
       cursor: pointer;
-      border: none;
+      border: 2px solid #4a2511;
       padding: 7px 12px;
-      border-radius: 11px;
-      background: #e0f2fe;
-      color: #0369a1;
+      border-radius: 4px;
+      background: #dbeafe;
+      color: #1e40af;
       font-family: inherit;
       font-size: 12px;
       font-weight: 900;
@@ -803,14 +837,15 @@
     }
 
     .btn-track-target:hover {
-      background: #bae6fd;
+      background: #bfdbfe;
     }
 
     .status-pill-done {
       padding: 6px 11px;
-      border-radius: 11px;
-      background: #059669;
-      color: #ffffff;
+      border-radius: 4px;
+      border: 2px solid #4a2511;
+      background: #3a8c4e;
+      color: #fffbeb;
       font-size: 12px;
       font-weight: 900;
       white-space: nowrap;
@@ -818,9 +853,10 @@
 
     .status-pill-tracking {
       padding: 6px 11px;
-      border-radius: 11px;
-      background: #facc15;
-      color: #0f172a;
+      border-radius: 4px;
+      border: 2px solid #4a2511;
+      background: #f6c445;
+      color: #3b2314;
       font-size: 12px;
       font-weight: 900;
       white-space: nowrap;
@@ -840,13 +876,13 @@
     .summary-title {
       font-size: 24px;
       font-weight: 900;
-      color: #0f172a;
+      color: #3b2314;
       margin-bottom: 6px;
     }
 
     .summary-subtitle {
       font-size: 14px;
-      color: #475569;
+      color: #5c3a21;
       line-height: 1.6;
     }
 
@@ -859,53 +895,55 @@
 
     .stamp-card {
       padding: 10px 8px;
-      border-radius: 16px;
+      border-radius: 6px;
       text-align: center;
-      border: 2px solid #cbd5e1;
-      background: #f8fafc;
+      border: 3px solid #c89d66;
+      background: #fffbeb;
     }
 
     .stamp-card.earned {
-      border-color: #10b981;
-      background: #ecfdf5;
+      border-color: #15803d;
+      background: #dcfce7;
     }
 
     .btn-summary-reset {
       cursor: pointer;
       width: 100%;
-      border: none;
+      border: 3px solid #4a2511;
       padding: 14px 20px;
-      border-radius: 16px;
-      background: linear-gradient(135deg, #0284c7, #2563eb);
-      color: #ffffff;
+      border-radius: 6px;
+      background: #2b6cb0;
+      color: #fffbeb;
       font-family: inherit;
       font-size: 16px;
       font-weight: 900;
-      box-shadow: 0 10px 24px rgba(37, 99, 235, 0.35);
+      box-shadow: 0 4px 0 #3b1f0e, inset -3px -3px 0px #1e4e8c, inset 3px 3px 0px #63b3ed;
     }
 
     /* Friendly Teacher Dialogue & Easter Egg Card Styling */
     .talk-speech-box {
-      background: #f0f9ff;
-      border: 2px solid #bae6fd;
-      border-radius: 18px;
+      background: #fffbeb;
+      border: 3px solid #8c5227;
+      border-radius: 6px;
+      box-shadow: inset 0 2px 0 #ffffff;
       padding: 16px 18px;
       font-size: 15px;
       line-height: 1.65;
-      color: #0f172a;
+      color: #3b2314;
       margin-bottom: 14px;
     }
 
     .talk-speech-box.egg-box {
       background: #faf5ff;
-      border-color: #d8b4fe;
+      border-color: #7e22ce;
     }
 
     .talk-tip-tag {
       display: inline-block;
       margin-top: 8px;
       padding: 6px 12px;
-      border-radius: 12px;
+      border-radius: 4px;
+      border: 2px solid #b45309;
       background: #fef3c7;
       color: #92400e;
       font-size: 13px;
@@ -918,9 +956,9 @@
       align-items: center;
       justify-content: space-around;
       gap: 8px;
-      background: #f8fafc;
-      border: 1.5px solid #e2e8f0;
-      border-radius: 16px;
+      background: #fffbeb;
+      border: 3px solid #8c5227;
+      border-radius: 6px;
       padding: 10px 14px;
       margin-bottom: 12px;
     }
@@ -932,20 +970,21 @@
     .bball-stat-label {
       font-size: 11px;
       font-weight: 800;
-      color: #64748b;
+      color: #7c4d2b;
     }
 
     .bball-stat-val {
       font-size: 20px;
       font-weight: 900;
-      color: #0f172a;
+      color: #3b2314;
     }
 
     .bball-canvas-wrap {
       width: 100%;
-      border-radius: 18px;
+      border-radius: 6px;
       overflow: hidden;
-      border: 2.5px solid #cbd5e1;
+      border: 4px solid #4a2511;
+      box-shadow: 0 4px 0 #3b1f0e;
       background: #bae6fd;
       margin-bottom: 14px;
     }
@@ -955,27 +994,28 @@
       width: 100%;
       height: auto;
       cursor: pointer;
+      image-rendering: pixelated;
+      image-rendering: crisp-edges;
     }
 
     .btn-shoot-bball {
       cursor: pointer;
       width: 100%;
-      border: none;
+      border: 3px solid #4a2511;
       padding: 14px 20px;
-      border-radius: 16px;
-      background: linear-gradient(135deg, #f97316, #ea580c);
-      color: #ffffff;
+      border-radius: 6px;
+      background: #ea580c;
+      color: #fffbeb;
       font-family: inherit;
       font-size: 17px;
       font-weight: 900;
-      box-shadow: 0 10px 22px rgba(234, 88, 12, 0.35);
-      border-bottom: 4px solid #9a3412;
-      transition: transform 0.1s ease;
+      box-shadow: 0 4px 0 #3b1f0e, inset -3px -3px 0px #9a3412, inset 3px 3px 0px #fdba74;
+      transition: transform 0.08s ease, box-shadow 0.08s ease;
     }
 
     .btn-shoot-bball:active {
       transform: translateY(2px);
-      border-bottom-width: 2px;
+      box-shadow: 0 1px 0 #3b1f0e;
     }
 
     @media (max-width: 640px) {
@@ -1267,750 +1307,53 @@
       'use strict';
 
       // =====================================================================
-      // A. CROSS-BROWSER ROUNDED RECTANGLE PATH HELPER (100% Compatible)
-      // =====================================================================
-      function roundRectPath(ctx, x, y, w, h, r) {
-        let tl = 0, tr = 0, br = 0, bl = 0;
-        if (typeof r === 'number') {
-          tl = tr = br = bl = r;
-        } else if (Array.isArray(r)) {
-          tl = r[0] || 0;
-          tr = r[1] || 0;
-          br = r[2] || 0;
-          bl = r[3] || 0;
-        }
-        const maxR = Math.max(0, Math.min(w * 0.5, h * 0.5));
-        tl = Math.max(0, Math.min(tl, maxR));
-        tr = Math.max(0, Math.min(tr, maxR));
-        br = Math.max(0, Math.min(br, maxR));
-        bl = Math.max(0, Math.min(bl, maxR));
-
-        ctx.beginPath();
-        ctx.moveTo(x + tl, y);
-        ctx.lineTo(x + w - tr, y);
-        ctx.quadraticCurveTo(x + w, y, x + w, y + tr);
-        ctx.lineTo(x + w, y + h - br);
-        ctx.quadraticCurveTo(x + w, y + h, x + w - br, y + h);
-        ctx.lineTo(x + bl, y + h);
-        ctx.quadraticCurveTo(x, y + h, x, y + h - bl);
-        ctx.lineTo(x, y + tl);
-        ctx.quadraticCurveTo(x, y, x + tl, y);
-        ctx.closePath();
-      }
-
-      // =====================================================================
-      // B. WEB AUDIO SYNTHESIZER (Self-Contained Sound Effects, No External MP3)
-      // =====================================================================
-      class SoundFX {
-        constructor() {
-          this.ctx = null;
-        }
-        ensureContext() {
-          if (!this.ctx) {
-            const AudioCtx = window.AudioContext || window.webkitAudioContext;
-            if (AudioCtx) {
-              this.ctx = new AudioCtx();
-            }
-          }
-          if (this.ctx && this.ctx.state === 'suspended') {
-            this.ctx.resume().catch(function () {});
-          }
-        }
-        playTone(freq, type, duration, delay, gainVal) {
-          try {
-            this.ensureContext();
-            if (!this.ctx) return;
-            const now = this.ctx.currentTime + (delay || 0);
-            const osc = this.ctx.createOscillator();
-            const gain = this.ctx.createGain();
-            osc.type = type || 'sine';
-            osc.frequency.setValueAtTime(freq, now);
-            gain.gain.setValueAtTime(gainVal || 0.12, now);
-            gain.gain.exponentialRampToValueAtTime(0.001, now + duration);
-            osc.connect(gain);
-            gain.connect(this.ctx.destination);
-            osc.start(now);
-            osc.stop(now + duration);
-          } catch (e) {}
-        }
-        playClick() {
-          this.playTone(660, 'triangle', 0.08, 0, 0.1);
-        }
-        playFloorChange() {
-          this.playTone(440, 'sine', 0.12, 0, 0.1);
-          this.playTone(587.33, 'sine', 0.18, 0.08, 0.12);
-        }
-        playCorrect() {
-          this.playTone(523.25, 'triangle', 0.14, 0, 0.14);
-          this.playTone(659.25, 'triangle', 0.14, 0.09, 0.14);
-          this.playTone(783.99, 'triangle', 0.24, 0.18, 0.16);
-        }
-        playWrong() {
-          this.playTone(280, 'sawtooth', 0.16, 0, 0.08);
-          this.playTone(230, 'sawtooth', 0.22, 0.12, 0.08);
-        }
-        playVictory() {
-          const notes = [523.25, 659.25, 783.99, 1046.5];
-          notes.forEach((n, idx) => {
-            this.playTone(n, 'triangle', 0.28, idx * 0.11, 0.16);
-          });
-        }
-      }
-      const sfx = new SoundFX();
-
-      // =====================================================================
-      // C. QUESTION BANK (5 Stations: Math, Chinese, STEAM across Primary Levels)
-      // =====================================================================
-      const STATION_BLUEPRINTS = [
-        {
-          id: 'st_math_junior',
-          floor: 0,
-          floorName: 'G/F 地下',
-          locationLabel: '創夢大堂・校史展板旁',
-          x: 680,
-          y: 350,
-          npcName: '數學科・羅老師',
-          avatar: '👩‍🏫',
-          subject: '數學科',
-          level: '初小程度 (P1–P2)',
-          stampIcon: '🔢',
-          questionPool: [
-            {
-              q: '基朗中學開放日派發紀念貼紙，小明先拿了 18 張，後來老師又獎勵他 15 張，他現在一共有多少張貼紙？',
-              options: ['23 張', '33 張', '35 張', '43 張'],
-              answer: 1,
-              tip: '先算個位：8 + 5 = 13，向十位進 1；再算十位：10 + 10 + 10 = 30，合起來是 33 張！'
-            },
-            {
-              q: '觀察數列的規律：5、10、15、（ ？ ）、25、30，括號裡應該填上哪個數字？',
-              options: ['16', '18', '20', '22'],
-              answer: 2,
-              tip: '每個數字都比前一個多 5（5 個一數），15 + 5 = 20！'
-            },
-            {
-              q: '開放日攤位遊戲在上午 10 時 30 分開始，玩了 30 分鐘後結束，結束時間是上午幾時幾分？',
-              options: ['10 時 50 分', '11 時正', '11 時 30 分', '12 時正'],
-              answer: 1,
-              tip: '30 分鐘 + 30 分鐘 = 60 分鐘（即 1 小時），所以 10 時 30 分過了 30 分鐘就是 11 時正！'
-            }
-          ]
-        },
-        {
-          id: 'st_chi_mid',
-          floor: 1,
-          floorName: '1/F 一樓',
-          locationLabel: '基朗閱讀角・書架旁',
-          x: 330,
-          y: 355,
-          npcName: '中文科・許老師',
-          avatar: '👨‍🏫',
-          subject: '中文科',
-          level: '中小程度 (P3–P4)',
-          stampIcon: '📖',
-          questionPool: [
-            {
-              q: '下列哪一個成語最適合用來形容「同學們在圖書館裡非常專心、安靜地看書」？',
-              options: ['手舞足蹈', '專心致志', '人山人海', '畫蛇添足'],
-              answer: 1,
-              tip: '「專心致志」形容一心一意、非常專注地做事或學習，最適合形容專心看書！'
-            },
-            {
-              q: '請找出下列句子中的錯別字：「我們要愛惜公物，保持校園環境整潔，做一個負責任的好學生。」（若無錯字請選 D）',
-              options: ['「愛惜」應為「愛昔」', '「保持」應為「保時」', '「整潔」應為「整結」', '全部用字正確，沒有錯別字'],
-              answer: 3,
-              tip: '這句話的「愛惜」、「保持」、「整潔」、「負責」全部用字正確呢！'
-            },
-            {
-              q: '「春風輕輕地撫摸著校園裡的小樹苗。」這句話運用了哪一種修辭手法？',
-              options: ['擬人法', '反問法', '誇張法', '對偶法'],
-              answer: 0,
-              tip: '把「春風」寫得像人一樣會「輕輕地撫摸」，賦予事物人的動作，這就是「擬人法」！'
-            }
-          ]
-        },
-        {
-          id: 'st_math_senior',
-          floor: 1,
-          floorName: '1/F 一樓',
-          locationLabel: '數理思維廊・課室門前',
-          x: 790,
-          y: 440,
-          npcName: '數學科・溫老師',
-          avatar: '👨‍🏫',
-          subject: '數學科',
-          level: '高小程度 (P5–P6)',
-          stampIcon: '📐',
-          questionPool: [
-            {
-              q: '一個長方形花槽的長是 8 米，闊是 5 米。如果要在花槽四邊圍上一圈裝飾彩帶，至少需要多長的彩帶？',
-              options: ['13 米', '26 米', '40 米', '80 米'],
-              answer: 1,
-              tip: '四邊一圈的長度是「周界」！長方形周界 = (長 + 闊) × 2 = (8 + 5) × 2 = 26 米。'
-            },
-            {
-              q: '基朗中學籃球隊有 20 名隊員，其中 25% 是六年級同學，請問六年級隊員有多少人？',
-              options: ['4 人', '5 人', '8 人', '15 人'],
-              answer: 1,
-              tip: '25% 等於四分之一（1/4），20 × 25% = 20 ÷ 4 = 5 人！'
-            },
-            {
-              q: '一本故事書共有 120 頁，志明第一天看了全書的 1/3，第二天看了 30 頁，他還剩下多少頁未看？',
-              options: ['40 頁', '50 頁', '70 頁', '90 頁'],
-              answer: 1,
-              tip: '第一天看了 120 × 1/3 = 40 頁，兩天共看了 40 + 30 = 70 頁，剩下 120 - 70 = 50 頁！'
-            }
-          ]
-        },
-        {
-          id: 'st_steam_mid',
-          floor: 2,
-          floorName: '2/F 二樓',
-          locationLabel: '電腦室・編程實驗桌',
-          x: 360,
-          y: 350,
-          npcName: '科學科・李老師',
-          avatar: '👩‍🔬',
-          subject: 'STEAM 電腦與科學',
-          level: '中小程度 (P3–P4)',
-          stampIcon: '🔬',
-          questionPool: [
-            {
-              q: '在電腦室使用編程積木（例如 Scratch）控制角色向前移動時，我們通常會用到哪一類指令積木？',
-              options: ['動作類指令（移動步數）', '關機指令', '調整螢幕亮度', '刪除檔案指令'],
-              answer: 0,
-              tip: '「動作類指令」負責控制角色在舞台上的移動步數、旋轉角度與座標位置！'
-            },
-            {
-              q: '在我們的太陽能與風力發電實驗中，太陽能電池板主要把哪一種能量轉換成電能？',
-              options: ['光能（太陽能）', '聲音能量', '磁力能量', '化學食物能量'],
-              answer: 0,
-              tip: '太陽能電池板吸收陽光中的「光能」，並將其直接轉換成清潔的「電能」！'
-            },
-            {
-              q: '把一杯液態的水放進冰箱的冰格（0°C 以下）後，水會變成固態的冰，這個物態變化過程稱為什麼？',
-              options: ['蒸發', '凝固（結冰）', '融化', '凝結'],
-              answer: 1,
-              tip: '液體遇冷變成固體的過程稱為「凝固」（水結成冰），相反冰變成水則是「融化」。'
-            },
-            {
-              q: '磁鐵有南極（S 極）和北極（N 極），當兩塊磁鐵的 N 極與 N 極互相靠近時，會發生什麼現象？',
-              options: ['互相吸引黏在一起', '互相排斥推開', '變成沒有磁力', '發出亮光'],
-              answer: 1,
-              tip: '磁鐵的特性是「同極相斥、異極相吸」，所以兩個 N 極靠近時會互相排斥推開！'
-            }
-          ]
-        },
-        {
-          id: 'st_steam_senior',
-          floor: 2,
-          floorName: '2/F 二樓',
-          locationLabel: '機械人與創科競技場',
-          x: 820,
-          y: 420,
-          npcName: '科創隊長・文同學',
-          avatar: '🤖',
-          subject: 'STEAM 綜合',
-          level: '高小程度 (P5–P6)',
-          stampIcon: '⚙️',
-          questionPool: [
-            {
-              q: '在編寫機械人巡線程式時，如果我們想讓機械人「一直重複偵測黑線直到到達終點」，應該使用哪種程式結構？',
-              options: ['迴圈結構（Loop）', '單次顯示文字', '關機指令', '音量調大指令'],
-              answer: 0,
-              tip: '「迴圈結構（Loop）」可以讓程式重複執行感測與判斷動作，直到滿足終點條件為止！'
-            },
-            {
-              q: '工程師設計橋樑時，經常在支架中加入「三角形」結構，主要是因為三角形具有什麼特性？',
-              options: ['顏色最鮮豔', '形狀最容易畫', '結構最穩固、不易變形', '重量最輕不會下沉'],
-              answer: 2,
-              tip: '三角形在受力時三條邊互相支撐，幾何形狀不會輕易改變，因此是最穩固的工程結構！'
-            },
-            {
-              q: '使用槓桿原理（如蹺蹺板或撬棍）抬起重物時，支點距離重物越近、距離施力點越遠，會產生什麼效果？',
-              options: ['更加省力', '更加費力', '完全不能移動', '重物會變重'],
-              answer: 0,
-              tip: '當「動力臂」大於「阻力臂」時，槓桿就能幫我們用較小的力氣抬起較重的物體，達到省力效果！'
-            }
-          ]
-        }
-      ];
-
-      // Extra Friendly Teachers across all 3 floors (Non-blocking flavor & guidance NPCs)
-      const EXTRA_TEACHERS = [
-        {
-          id: 'npc_vp_chow',
-          floor: 0,
-          floorName: 'G/F 地下',
-          x: 120,
-          y: 285,
-          npcName: '副校長・陳老師',
-          avatar: '👨‍💼',
-          role: '校園迎新導賞',
-          shirtColor: '#0f766e',
-          message: '歡迎各位小學同學同家長來到中華基督教會基朗中學！我們學校秉持「識真理、得自由、以服務」的校訓，希望你們在今天的小學開放日玩得開心、學得精彩！',
-          tip: '💡 小貼士：地下左下方還有「迷你投籃區」，走過去按 E 鍵就可以體驗投籃樂趣！'
-        },
-        {
-          id: 'npc_pe_ho',
-          floor: 0,
-          floorName: 'G/F 地下',
-          x: 345,
-          y: 525,
-          npcName: '體育科・何老師',
-          avatar: '🏃‍♂️',
-          role: '體育與籃球大使',
-          shirtColor: '#ea580c',
-          message: '基朗中學擁有寬敞的室外籃球場，籃球隊同學平時都在這裡熱血訓練！你想不想試試身手，挑戰連續入球呢？',
-          tip: '🏀 提示：走到旁邊的橘色籃球架前，就可以開啟「基朗迷你投籃挑戰賽」！'
-        },
-        {
-          id: 'npc_eng_wong',
-          floor: 1,
-          floorName: '1/F 一樓',
-          x: 545,
-          y: 295,
-          npcName: '英文科・Ms Dan',
-          avatar: '👩‍💼',
-          role: '英語學習廊大使',
-          shirtColor: '#7c3aed',
-          message: 'Welcome to CCC Kei Long College! 一樓設有溫馨的「基朗閱讀角」與「數理思維廊」，同學們可以在這裡享受閱讀與解難的樂趣！',
-          tip: '✨ 悄悄話：聽說「基朗閱讀角書櫃」附近藏著一枚發光的黃金書籤小彩蛋喔！'
-        },
-        {
-          id: 'npc_it_chan',
-          floor: 2,
-          floorName: '2/F 二樓',
-          x: 205,
-          y: 350,
-          npcName: '資訊科技科・唐老師',
-          avatar: '👨‍💻',
-          role: '電腦室創科導師',
-          shirtColor: '#0284c7',
-          message: '歡迎參觀二樓全新升級的「電腦室」！同學們在這裡學習程式設計、AI 人工智慧應用以及 3D 建模，把創意變成現實！',
-          tip: '💻 彩蛋線索：電腦室最右邊的綠色終端機螢幕似乎閃爍著「1982」神秘代碼，去看看吧！'
-        },
-        {
-          id: 'npc_va_ng',
-          floor: 2,
-          floorName: '2/F 二樓',
-          x: 635,
-          y: 280,
-          npcName: '視藝與設計・李老師',
-          avatar: '🎨',
-          role: '3D 打印創客導師',
-          shirtColor: '#db2777',
-          message: '看看這些由基朗同學親手設計並用 3D 打印機製作的校舍模型與環保小擺設，藝術與科技結合就能創造無限可能！',
-          tip: '🤖 提示：右邊的「機械人巡線競技場」有兩台自動巡線小車正在測試呢！'
-        }
-      ];
-
-      // 3 Hidden Easter Eggs across the 3 floors
-      const EASTER_EGGS = [
-        {
-          id: 'egg_gf_motto',
-          floor: 0,
-          floorName: 'G/F 地下',
-          x: 562,
-          y: 222,
-          title: '彩蛋 ①：基朗創校校訓密碼',
-          avatar: '📜',
-          message: '你細心觀察了校史與校訓展板！中華基督教會基朗中學創校於 1982 年，位於元朗鳳攸南街，校訓「識真理、得自由、以服務」源自《聖經》約翰福音，勉勵每位基朗人追求真知、服務社群！',
-          tip: '🎉 恭喜發現第 1 個校園隱藏彩蛋！獲得「基朗校史小達人」稱號！'
-        },
-        {
-          id: 'egg_1f_bookmark',
-          floor: 1,
-          floorName: '1/F 一樓',
-          x: 245,
-          y: 235,
-          title: '彩蛋 ②：閱讀角的黃金書籤',
-          avatar: '🔖',
-          message: '你在閱讀角書櫃的《基朗文集》裡發現了一枚閃閃發光的黃金書籤！書籤背面寫著：「書山有路勤為徑，學海無涯樂作舟。祝願每位小六同學升中順利、前程錦繡！」',
-          tip: '🎉 恭喜發現第 2 個校園隱藏彩蛋！獲得「博學小書蟲」祝福！'
-        },
-        {
-          id: 'egg_2f_terminal',
-          floor: 2,
-          floorName: '2/F 二樓',
-          x: 465,
-          y: 248,
-          title: '彩蛋 ③：電腦室神秘代碼 1982',
-          avatar: '💾',
-          message: 'BEEP! 你啟動了電腦室的隱藏創科終端機，成功輸入創校年份密碼「1982」！實驗室的兩台巡線機械人立刻進入「超頻加速模式」為你歡呼慶祝！',
-          tip: '🎉 恭喜發現第 3 個校園隱藏彩蛋！機械人已啟動加速模式！'
-        }
-      ];
-
-      // =====================================================================
-      // D. FLOOR ARCHITECTURAL DEFINITIONS & COLLISION OBSTACLES
-      // =====================================================================
-      const WORLD_W = 1140;
-      const WORLD_H = 660;
-
-      const FLOORS = [
-        {
-          id: 0,
-          code: 'G/F',
-          title: 'G/F 地下 — 創夢大堂與校史廊',
-          floorColor: '#f5efe6',
-          tileAccent: '#e7dec8',
-          wallColor: '#1e3a5f',
-          obstacles: [
-            { x: 170, y: 190, w: 230, h: 68, label: '開放日接待處', color: '#0284c7' },
-            { x: 470, y: 155, w: 185, h: 48, label: '校史與校訓展板', color: '#b45309' },
-            { x: 750, y: 155, w: 165, h: 52, label: '榮譽獎盃櫃', color: '#d97706' },
-            { x: 470, y: 425, w: 150, h: 56, label: '校園綠化休憩區', color: '#15803d' },
-            { x: 115, y: 475, w: 195, h: 110, label: '基朗迷你投籃區', color: '#ea580c', isBasketball: true }
-          ],
-          stairs: [
-            {
-              x: 960,
-              y: 230,
-              w: 115,
-              h: 165,
-              targetFloor: 1,
-              spawnX: 910,
-              spawnY: 315,
-              label: '樓梯上 1/F ▲',
-              direction: 'up'
-            }
-          ]
-        },
-        {
-          id: 1,
-          code: '1/F',
-          title: '1/F 一樓 — 語文與數理學習廊',
-          floorColor: '#eef6fb',
-          tileAccent: '#dcebf5',
-          wallColor: '#1e3a5f',
-          obstacles: [
-            { x: 230, y: 165, w: 210, h: 52, label: '基朗閱讀角書櫃', color: '#7c2d12' },
-            { x: 650, y: 165, w: 215, h: 52, label: '數理思維互動牆', color: '#1d4ed8' },
-            { x: 470, y: 430, w: 170, h: 56, label: '小組研習閱讀桌', color: '#0369a1' }
-          ],
-          stairs: [
-            {
-              x: 960,
-              y: 230,
-              w: 115,
-              h: 165,
-              targetFloor: 0,
-              spawnX: 910,
-              spawnY: 315,
-              label: '樓梯落 G/F ▼',
-              direction: 'down'
-            },
-            {
-              x: 65,
-              y: 230,
-              w: 115,
-              h: 165,
-              targetFloor: 2,
-              spawnX: 225,
-              spawnY: 315,
-              label: '樓梯上 2/F ▲',
-              direction: 'up'
-            }
-          ]
-        },
-        {
-          id: 2,
-          code: '2/F',
-          title: '2/F 二樓 — STEAM 創科與電腦室',
-          floorColor: '#eef2ff',
-          tileAccent: '#dfe7fd',
-          wallColor: '#1e293b',
-          obstacles: [
-            { x: 240, y: 165, w: 245, h: 66, label: '電腦室・編程與創科區', color: '#0284c7', isComputerRoom: true },
-            { x: 545, y: 170, w: 185, h: 56, label: '3D 打印創客站', color: '#4f46e5' },
-            { x: 785, y: 185, w: 230, h: 115, label: '機械人巡線競技場', color: '#0f172a', isArena: true }
-          ],
-          stairs: [
-            {
-              x: 65,
-              y: 230,
-              w: 115,
-              h: 165,
-              targetFloor: 1,
-              spawnX: 225,
-              spawnY: 315,
-              label: '樓梯落 1/F ▼',
-              direction: 'down'
-            }
-          ]
-        }
-      ];
-
-      // =====================================================================
-      // E. GAME STATE & DOM REFERENCES
+      // A. PIXEL CANVAS & RESPONSIVE VIEWPORT SETUP
       // =====================================================================
       const canvas = document.getElementById('gameCanvas');
       const ctx = canvas.getContext('2d');
+      const pixelCanvas = document.createElement('canvas');
+      const pCtx = pixelCanvas.getContext('2d');
 
-      const state = {
-        mode: 'START', // 'START' | 'PLAYING'
-        currentFloor: 0,
-        trackedStationId: null,
-        remainingSeconds: 300, // 5 minutes = 300s
-        lastTimestamp: 0,
-        stairCooldown: 0,
-        player: {
-          x: 240,
-          y: 380,
-          radius: 19,
-          speed: 265,
-          dir: 'right',
-          walkPhase: 0,
-          targetPoint: null
-        },
-        keys: {},
-        dpad: { up: false, down: false, left: false, right: false },
-        stations: [],
-        activeQuiz: null,
-        nearbyStation: null,
-        nearbyTeacher: null,
-        nearbyEgg: null,
-        nearbyBasketball: false,
-        foundEggs: {},
-        bballScore: 0,
-        bballBest: 0,
-        robotTurboTimer: 0,
-        confetti: [],
-        clouds: [
-          { x: 140, y: 85, s: 1.05, v: 12 },
-          { x: 460, y: 65, s: 0.85, v: 9 },
-          { x: 820, y: 95, s: 1.15, v: 14 },
-          { x: 1150, y: 72, s: 0.9, v: 10 }
-        ],
-        birds: [
-          { x: 260, y: 135, phase: 0 },
-          { x: 282, y: 145, phase: 1.4 },
-          { x: 720, y: 115, phase: 2.5 }
-        ],
-        miniRobots: [
-          { x: 830, y: 225, vx: 45, minX: 805, maxX: 985, color: '#38bdf8' },
-          { x: 950, y: 265, vx: -38, minX: 805, maxX: 985, color: '#facc15' }
-        ]
-      };
+      const WORLD_W = 1100;
+      const WORLD_H = 650;
+      const PIXEL_SCALE = 2;
 
       function getViewportSize() {
-        const w = window.innerWidth || document.documentElement.clientWidth || 1280;
-        const h = window.innerHeight || document.documentElement.clientHeight || 720;
-        return { w: Math.max(320, w), h: Math.max(240, h) };
+        return {
+          w: Math.max(320, window.innerWidth || document.documentElement.clientWidth || 1024),
+          h: Math.max(320, window.innerHeight || document.documentElement.clientHeight || 768)
+        };
       }
 
-      function pickRandomQuestions(pool, count) {
-        const copy = pool.slice();
-        for (let i = copy.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          const temp = copy[i];
-          copy[i] = copy[j];
-          copy[j] = temp;
-        }
-        return copy.slice(0, count);
-      }
-
-      function buildFreshStations() {
-        return STATION_BLUEPRINTS.map(bp => ({
-          id: bp.id,
-          floor: bp.floor,
-          floorName: bp.floorName,
-          locationLabel: bp.locationLabel,
-          x: bp.x,
-          y: bp.y,
-          npcName: bp.npcName,
-          avatar: bp.avatar,
-          subject: bp.subject,
-          level: bp.level,
-          stampIcon: bp.stampIcon,
-          completed: false,
-          questions: pickRandomQuestions(bp.questionPool, 2)
-        }));
-      }
-
-      // =====================================================================
-      // F. TOAST & CONFETTI HELPERS
-      // =====================================================================
-      let toastTimeoutId = null;
-      function showToast(msg) {
-        const banner = document.getElementById('toastBanner');
-        if (!banner) return;
-        banner.textContent = msg;
-        banner.classList.remove('hidden');
-        if (toastTimeoutId) clearTimeout(toastTimeoutId);
-        toastTimeoutId = setTimeout(() => {
-          banner.classList.add('hidden');
-        }, 3200);
-      }
-
-      function spawnConfettiBurst(wx, wy, count) {
-        const colors = ['#facc15', '#38bdf8', '#10b981', '#f43f5e', '#a855f7'];
-        for (let i = 0; i < count; i++) {
-          const angle = Math.random() * Math.PI * 2;
-          const speed = 70 + Math.random() * 180;
-          state.confetti.push({
-            x: wx,
-            y: wy,
-            vx: Math.cos(angle) * speed,
-            vy: Math.sin(angle) * speed - 90,
-            size: 5 + Math.random() * 5,
-            color: colors[i % colors.length],
-            life: 1.1 + Math.random() * 0.7
-          });
-        }
-      }
-
-      // =====================================================================
-      // G. CORE STATE RESET & HUD UPDATER
-      // =====================================================================
-      function resetGameState(returnToStart) {
-        state.mode = returnToStart ? 'START' : 'PLAYING';
-        state.currentFloor = 0;
-        state.trackedStationId = null;
-        state.remainingSeconds = 300;
-        state.lastTimestamp = performance.now();
-        state.stairCooldown = 0;
-        state.activeQuiz = null;
-        state.nearbyStation = null;
-        state.nearbyTeacher = null;
-        state.nearbyEgg = null;
-        state.nearbyBasketball = false;
-        state.foundEggs = {};
-        state.bballScore = 0;
-        state.robotTurboTimer = 0;
-        state.confetti = [];
-
-        state.player.x = 240;
-        state.player.y = 380;
-        state.player.dir = 'right';
-        state.player.walkPhase = 0;
-        state.player.targetPoint = null;
-
-        state.keys = {};
-        state.dpad = { up: false, down: false, left: false, right: false };
-        state.stations = buildFreshStations();
-
-        // Hide all modals
-        document.getElementById('quizModal').classList.add('hidden');
-        document.getElementById('questListModal').classList.add('hidden');
-        document.getElementById('summaryModal').classList.add('hidden');
-        document.getElementById('npcTalkModal').classList.add('hidden');
-        document.getElementById('basketballModal').classList.add('hidden');
-
-        if (returnToStart) {
-          document.getElementById('startScreenOverlay').classList.remove('hidden');
-          document.getElementById('gameHud').classList.add('hidden');
-          document.getElementById('bottomControlsBar').classList.add('hidden');
-        } else {
-          document.getElementById('startScreenOverlay').classList.add('hidden');
-          document.getElementById('gameHud').classList.remove('hidden');
-          document.getElementById('bottomControlsBar').classList.remove('hidden');
-        }
-
-        updateFloorButtons();
-        updateHud();
-        updateTimerDisplay();
-      }
-
-      function getActiveTargetStation() {
-        if (state.trackedStationId) {
-          const found = state.stations.find(s => s.id === state.trackedStationId && !s.completed);
-          if (found) return found;
-          state.trackedStationId = null;
-        }
-        return state.stations.find(s => !s.completed) || null;
-      }
-
-      function updateFloorButtons() {
-        const btns = document.querySelectorAll('.floor-btn');
-        btns.forEach(btn => {
-          const f = Number(btn.getAttribute('data-floor'));
-          if (f === state.currentFloor) {
-            btn.classList.add('active');
-          } else {
-            btn.classList.remove('active');
-          }
-        });
-      }
-
-      function updateHud() {
-        const completedCount = state.stations.filter(s => s.completed).length;
-        document.getElementById('missionProgressPill').textContent = `進度：${completedCount} / ${state.stations.length}`;
-
-        const eggCount = Object.keys(state.foundEggs).length;
-        const eggPill = document.getElementById('easterEggPill');
-        if (eggPill) {
-          eggPill.textContent = `🥚 彩蛋：${eggCount} / ${EASTER_EGGS.length}`;
-        }
-
-        const guideEl = document.getElementById('missionGuideText');
-        const nextSt = getActiveTargetStation();
-        if (!nextSt) {
-          guideEl.textContent = '🎉 全部 5 個關卡已完成！恭喜你！';
-        } else if (nextSt.floor === state.currentFloor) {
-          guideEl.textContent = `本層目標 ➜ 尋找【${nextSt.npcName}】（${nextSt.subject}・${nextSt.level}）`;
-        } else {
-          guideEl.textContent = `請搭乘樓梯前往 ${nextSt.floorName} 尋找【${nextSt.npcName}】（${nextSt.subject}）`;
-        }
-      }
-
-      function updateTimerDisplay() {
-        const secs = Math.max(0, Math.ceil(state.remainingSeconds));
-        const m = String(Math.floor(secs / 60)).padStart(2, '0');
-        const s = String(secs % 60).padStart(2, '0');
-        const timerEl = document.getElementById('timerText');
-        if (timerEl) timerEl.textContent = `${m}:${s}`;
-
-        const pill = document.getElementById('timerPill');
-        if (pill) {
-          pill.classList.remove('warning', 'danger');
-          if (secs <= 30) {
-            pill.classList.add('danger');
-          } else if (secs <= 60) {
-            pill.classList.add('warning');
-          }
-        }
-      }
-
-      function switchFloor(targetFloor, spawnX, spawnY, silent) {
-        if (targetFloor < 0 || targetFloor >= FLOORS.length) return;
-        state.currentFloor = targetFloor;
-        state.player.targetPoint = null;
-        if (typeof spawnX === 'number') state.player.x = spawnX;
-        if (typeof spawnY === 'number') state.player.y = spawnY;
-        state.stairCooldown = 0.75;
-        updateFloorButtons();
-        updateHud();
-        if (!silent) {
-          sfx.playFloorChange();
-          showToast(`已抵達 ${FLOORS[targetFloor].title}`);
-        }
-      }
-
-      // =====================================================================
-      // H. CANVAS RESIZE & COORDINATE MAPPING
-      // =====================================================================
       function resizeCanvas() {
         const vp = getViewportSize();
-        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        const dpr = Math.min(2, window.devicePixelRatio || 1);
         const targetW = Math.floor(vp.w * dpr);
         const targetH = Math.floor(vp.h * dpr);
+
         if (canvas.width !== targetW || canvas.height !== targetH) {
           canvas.width = targetW;
           canvas.height = targetH;
         }
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+        const pw = Math.max(240, Math.floor(vp.w / PIXEL_SCALE));
+        const ph = Math.max(180, Math.floor(vp.h / PIXEL_SCALE));
+        if (pixelCanvas.width !== pw || pixelCanvas.height !== ph) {
+          pixelCanvas.width = pw;
+          pixelCanvas.height = ph;
+        }
       }
 
       function getInteriorTransform() {
         const vp = getViewportSize();
-        const padTop = 64;
-        const padBottom = 24;
+        const topReserve = 66;
+        const bottomReserve = 62;
         const availW = Math.max(280, vp.w - 24);
-        const availH = Math.max(200, vp.h - padTop - padBottom);
-        const scale = Math.min(availW / WORLD_W, availH / WORLD_H, 1.25);
+        const availH = Math.max(220, vp.h - topReserve - bottomReserve);
+        const scale = Math.min(availW / WORLD_W, availH / WORLD_H);
         const offsetX = (vp.w - WORLD_W * scale) * 0.5;
-        const offsetY = padTop + (availH - WORLD_H * scale) * 0.5;
+        const offsetY = topReserve + (availH - WORLD_H * scale) * 0.5;
         return { scale, offsetX, offsetY };
       }
 
@@ -2023,10 +1366,621 @@
       }
 
       // =====================================================================
-      // I. HIGH-DETAIL 2D SCHOOL EXTERIOR RENDERER (中華基督教會基朗中學)
+      // B. SELF-CONTAINED WEB AUDIO SOUND EFFECTS (Zero External Sound URLs)
+      // =====================================================================
+      const sfx = {
+        ctx: null,
+        ensureCtx() {
+          try {
+            if (!this.ctx) {
+              const AudioCtx = window.AudioContext || window.webkitAudioContext;
+              if (AudioCtx) this.ctx = new AudioCtx();
+            }
+            if (this.ctx && this.ctx.state === 'suspended') {
+              this.ctx.resume();
+            }
+          } catch (e) {}
+        },
+        playTone(freq, type, duration, delay, gainVal) {
+          try {
+            this.ensureCtx();
+            if (!this.ctx) return;
+            const now = this.ctx.currentTime + (delay || 0);
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+            osc.type = type || 'triangle';
+            osc.frequency.setValueAtTime(freq, now);
+            gain.gain.setValueAtTime(gainVal || 0.08, now);
+            gain.gain.exponentialRampToValueAtTime(0.0008, now + duration);
+            osc.connect(gain);
+            gain.connect(this.ctx.destination);
+            osc.start(now);
+            osc.stop(now + duration);
+          } catch (e) {}
+        },
+        playClick() {
+          this.playTone(520, 'triangle', 0.08, 0, 0.07);
+        },
+        playCorrect() {
+          this.playTone(523.25, 'triangle', 0.12, 0, 0.09);
+          this.playTone(659.25, 'triangle', 0.14, 0.09, 0.09);
+          this.playTone(783.99, 'triangle', 0.22, 0.18, 0.1);
+        },
+        playWrong() {
+          this.playTone(230, 'sawtooth', 0.16, 0, 0.06);
+          this.playTone(190, 'sawtooth', 0.2, 0.12, 0.06);
+        },
+        playVictory() {
+          [523.25, 659.25, 783.99, 1046.5].forEach((f, idx) => {
+            this.playTone(f, 'triangle', 0.24, idx * 0.1, 0.1);
+          });
+        }
+      };
+
+      // =====================================================================
+      // C. UI HELPERS (Toast, Confetti, Timer, Mission HUD, Floor Switching)
+      // =====================================================================
+      let toastTimeout = null;
+      function showToast(msg) {
+        const banner = document.getElementById('toastBanner');
+        if (!banner) return;
+        banner.textContent = msg;
+        banner.classList.remove('hidden');
+        if (toastTimeout) clearTimeout(toastTimeout);
+        toastTimeout = setTimeout(() => {
+          banner.classList.add('hidden');
+        }, 3200);
+      }
+
+      function spawnConfettiBurst(x, y, count) {
+        const colors = ['#facc15', '#38bdf8', '#4ade80', '#f87171', '#c084fc', '#fb923c'];
+        const total = count || 32;
+        for (let i = 0; i < total; i++) {
+          const angle = Math.random() * Math.PI * 2;
+          const speed = 70 + Math.random() * 190;
+          state.confetti.push({
+            x,
+            y,
+            vx: Math.cos(angle) * speed,
+            vy: Math.sin(angle) * speed - 110,
+            size: 6 + Math.random() * 5,
+            color: colors[i % colors.length],
+            life: 0.9 + Math.random() * 0.7
+          });
+        }
+      }
+
+      function updateTimerDisplay() {
+        const secs = Math.max(0, Math.ceil(state.remainingSeconds));
+        const m = String(Math.floor(secs / 60)).padStart(2, '0');
+        const s = String(secs % 60).padStart(2, '0');
+        const timerText = document.getElementById('timerText');
+        const timerPill = document.getElementById('timerPill');
+        if (timerText) timerText.textContent = `${m}:${s}`;
+        if (timerPill) {
+          timerPill.classList.toggle('warning', secs <= 60 && secs > 20);
+          timerPill.classList.toggle('danger', secs <= 20);
+        }
+      }
+
+      function getActiveTargetStation() {
+        if (!state.stations || state.stations.length === 0) return null;
+        if (state.trackedStationId) {
+          const tracked = state.stations.find(s => s.id === state.trackedStationId && !s.completed);
+          if (tracked) return tracked;
+          state.trackedStationId = null;
+        }
+        const sameFloorNext = state.stations.find(s => s.floor === state.currentFloor && !s.completed);
+        if (sameFloorNext) return sameFloorNext;
+        return state.stations.find(s => !s.completed) || null;
+      }
+
+      function updateHud() {
+        const completedCount = state.stations.filter(s => s.completed).length;
+        const eggCount = Object.keys(state.foundEggs).length;
+
+        const progressPill = document.getElementById('missionProgressPill');
+        if (progressPill) progressPill.textContent = `進度：${completedCount} / ${state.stations.length}`;
+
+        const eggPill = document.getElementById('easterEggPill');
+        if (eggPill) eggPill.textContent = `🥚 彩蛋：${eggCount} / ${EASTER_EGGS.length}`;
+
+        const guideText = document.getElementById('missionGuideText');
+        if (!guideText) return;
+
+        const target = getActiveTargetStation();
+        if (!target) {
+          guideText.textContent = '🎉 全部 5 個學科挑戰已完成！歡迎繼續自由探索校園！';
+        } else if (target.floor === state.currentFloor) {
+          guideText.textContent = `本層目標 ➜ 尋找【${target.npcName}】（${target.subject} • ${target.level}）`;
+        } else {
+          guideText.textContent = `前往 ${target.floorName} 尋找【${target.npcName}】（${target.subject}）`;
+        }
+      }
+
+      function switchFloor(targetFloor, spawnX, spawnY, silent) {
+        if (targetFloor < 0 || targetFloor >= FLOORS.length) return;
+        state.currentFloor = targetFloor;
+        state.stairCooldown = 0.75;
+        state.player.x = typeof spawnX === 'number' ? spawnX : 550;
+        state.player.y = typeof spawnY === 'number' ? spawnY : 355;
+        state.player.targetPoint = null;
+
+        document.querySelectorAll('.floor-btn').forEach(btn => {
+          btn.classList.toggle('active', Number(btn.getAttribute('data-floor')) === targetFloor);
+        });
+
+        updateHud();
+        if (!silent) {
+          sfx.playClick();
+          showToast(`已抵達 ${FLOORS[targetFloor].title}`);
+        }
+      }
+
+      // =====================================================================
+      // D. THREE-FLOOR CAMPUS ARCHITECTURE (G/F, 1/F, 2/F - Stardew Warm Wood)
+      // =====================================================================
+      const FLOORS = [
+        {
+          id: 0,
+          name: 'G/F 地下',
+          title: 'G/F 地下 — 創夢大堂與校史廊',
+          floorColor: '#e8c38e',
+          tileAccent: '#dcb176',
+          plankSeam: '#b8864b',
+          wallColor: '#f6e2b3',
+          wallTrim: '#7c4621',
+          stairs: [
+            {
+              x: 930,
+              y: 155,
+              w: 110,
+              h: 150,
+              direction: 'up',
+              targetFloor: 1,
+              spawnX: 880,
+              spawnY: 230,
+              label: '▲ 往 1/F 樓梯'
+            }
+          ],
+          obstacles: [
+            { x: 145, y: 150, w: 190, h: 58, color: '#8c5227', label: '校史與校訓展板' },
+            { x: 430, y: 150, w: 220, h: 58, color: '#2b6cb0', label: '基朗創夢接待處' },
+            { x: 700, y: 150, w: 170, h: 58, color: '#b45309', label: '學生成就獎盃櫃' },
+            { x: 115, y: 475, w: 195, h: 110, color: '#2f855a', label: '基朗迷你投籃架', isBasketball: true }
+          ]
+        },
+        {
+          id: 1,
+          name: '1/F 一樓',
+          title: '1/F 一樓 — 語文與數理學習廊',
+          floorColor: '#ebd09e',
+          tileAccent: '#dfbe84',
+          plankSeam: '#bd8e52',
+          wallColor: '#fef3c7',
+          wallTrim: '#8c5227',
+          stairs: [
+            {
+              x: 60,
+              y: 155,
+              w: 110,
+              h: 150,
+              direction: 'down',
+              targetFloor: 0,
+              spawnX: 880,
+              spawnY: 230,
+              label: '▼ 往 G/F 樓梯'
+            },
+            {
+              x: 930,
+              y: 155,
+              w: 110,
+              h: 150,
+              direction: 'up',
+              targetFloor: 2,
+              spawnX: 880,
+              spawnY: 230,
+              label: '▲ 往 2/F 樓梯'
+            }
+          ],
+          obstacles: [
+            { x: 225, y: 265, w: 220, h: 72, color: '#9c4221', label: '基朗閱讀角書櫃', isBookshelf: true },
+            { x: 560, y: 150, w: 240, h: 58, color: '#2b6cb0', label: '數理思維展示牆' },
+            { x: 580, y: 470, w: 230, h: 64, color: '#2c7a7b', label: '英語互動學習桌' }
+          ]
+        },
+        {
+          id: 2,
+          name: '2/F 二樓',
+          title: '2/F 二樓 — 電腦室與 STEAM 創科基地',
+          floorColor: '#e4c292',
+          tileAccent: '#d7b07a',
+          plankSeam: '#b08048',
+          wallColor: '#e0f2fe',
+          wallTrim: '#5c3317',
+          stairs: [
+            {
+              x: 60,
+              y: 155,
+              w: 110,
+              h: 150,
+              direction: 'down',
+              targetFloor: 1,
+              spawnX: 880,
+              spawnY: 230,
+              label: '▼ 往 1/F 樓梯'
+            }
+          ],
+          obstacles: [
+            { x: 215, y: 185, w: 255, h: 78, color: '#334155', label: '編程與 AI 工作站', isComputerRoom: true },
+            { x: 585, y: 425, w: 330, h: 155, color: '#1e293b', label: '🤖 機械人競技場', isArena: true }
+          ]
+        }
+      ];
+
+      // =====================================================================
+      // E. FIVE PRIMARY SCHOOL QUIZ STATIONS, EXTRA TEACHERS & EASTER EGGS
+      // =====================================================================
+      const INITIAL_STATIONS = [
+        {
+          id: 'math_p1',
+          floor: 0,
+          floorName: 'G/F 地下',
+          x: 540,
+          y: 275,
+          npcName: '數學科・羅老師',
+          avatar: '👨‍🏫',
+          subject: '數學科',
+          level: '初小程度 (P1–P2)',
+          locationLabel: 'G/F 創夢接待處前',
+          stampIcon: '🔢',
+          questions: [
+            {
+              q: '基朗開放日接待處有 18 張校園地圖，派發了 7 張給小學生後，還剩下多少張？',
+              options: ['9 張', '11 張', '12 張', '25 張'],
+              answer: 1,
+              tip: '用減法計算：18 − 7 = 11（張）。'
+            },
+            {
+              q: '花槽裡每盆有 4 棵小樹苗，3 盆一共有多少棵小樹苗？',
+              options: ['7 棵', '10 棵', '12 棵', '16 棵'],
+              answer: 2,
+              tip: '3 個 4 相加：4 + 4 + 4 = 12（棵），即 4 × 3 = 12。'
+            }
+          ]
+        },
+        {
+          id: 'chi_p3',
+          floor: 1,
+          floorName: '1/F 一樓',
+          x: 335,
+          y: 425,
+          npcName: '中文科・許老師',
+          avatar: '👩‍🏫',
+          subject: '中文科',
+          level: '中小程度 (P3–P4)',
+          locationLabel: '1/F 基朗閱讀角',
+          stampIcon: '📖',
+          questions: [
+            {
+              q: '下列哪一個成語最適合形容同學在圖書館專心看書的樣子？',
+              options: ['手不釋卷', '畫蛇添足', '守株待兔', '掩耳盜鈴'],
+              answer: 0,
+              tip: '「手不釋卷」形容勤奮好學、書本不離手的樣子。'
+            },
+            {
+              q: '「春風像溫柔的雙手，輕輕撫摸著校園裡的小草。」這句運用了哪種修辭手法？',
+              options: ['反問', '明喻（比喻）', '誇張', '排比'],
+              answer: 1,
+              tip: '句中使用了喻詞「像」，把春風比作溫柔的雙手，屬於明喻。'
+            }
+          ]
+        },
+        {
+          id: 'math_p5',
+          floor: 1,
+          floorName: '1/F 一樓',
+          x: 680,
+          y: 275,
+          npcName: '數學科・溫老師',
+          avatar: '🧑‍🏫',
+          subject: '數學科',
+          level: '高小程度 (P5–P6)',
+          locationLabel: '1/F 數理思維走廊',
+          stampIcon: '📐',
+          questions: [
+            {
+              q: '一個長方形實驗桌長 1.5 米、闊 0.8 米，它的周界是多少米？',
+              options: ['2.3 米', '4.6 米', '1.2 米', '3.8 米'],
+              answer: 1,
+              tip: '長方形周界 = (長 + 闊) × 2 = (1.5 + 0.8) × 2 = 2.3 × 2 = 4.6（米）。'
+            },
+            {
+              q: '開放日共有 200 位訪客，其中 35% 是小五學生，小五學生有多少人？',
+              options: ['35 人', '65 人', '70 人', '130 人'],
+              answer: 2,
+              tip: '200 × 35% = 200 × 0.35 = 70（人）。'
+            }
+          ]
+        },
+        {
+          id: 'steam_p3',
+          floor: 2,
+          floorName: '2/F 二樓',
+          x: 345,
+          y: 335,
+          npcName: '科學科・李老師',
+          avatar: '👩‍🔬',
+          subject: 'STEAM・科學與編程',
+          level: '中小程度 (P3–P4)',
+          locationLabel: '2/F 基朗創科電腦室',
+          stampIcon: '💻',
+          questions: [
+            {
+              q: '在編程積木（如 Scratch）中，如果想讓機械人不斷重複前進動作，應該使用哪種指令？',
+              options: ['重複迴圈（Loop）', '停止全部', '隱藏角色', '播放音效'],
+              answer: 0,
+              tip: '「重複迴圈（Loop）」可以讓程式自動重複執行指定步驟，省時又準確！'
+            },
+            {
+              q: '下列哪一種物品屬於「良導體」，可以讓簡單電路中的小燈泡發亮？',
+              options: ['塑膠間尺', '木製鉛筆', '銅製鑰匙', '橡皮擦'],
+              answer: 2,
+              tip: '金屬（如銅、鐵）具有良好的導電性，能讓電流順利通過。'
+            }
+          ]
+        },
+        {
+          id: 'steam_p5',
+          floor: 2,
+          floorName: '2/F 二樓',
+          x: 750,
+          y: 345,
+          npcName: '科創隊長・文同學',
+          avatar: '🧑‍🚀',
+          subject: 'STEAM・創科工程',
+          level: '高小程度 (P5–P6)',
+          locationLabel: '2/F 機械人競技場旁',
+          stampIcon: '🤖',
+          questions: [
+            {
+              q: '太陽能電池板在陽光照射下，主要把光能轉換成哪一種能量供機械人運作？',
+              options: ['電能', '聲能', '核能', '化學能'],
+              answer: 0,
+              tip: '太陽能電池板能直接把太陽的光能轉化為乾淨可再生的電能！'
+            },
+            {
+              q: '為了讓結構橋樑更穩固且不易變形，工程師最常在支架中加入哪種幾何圖形？',
+              options: ['圓形', '三角形', '五邊形', '梯形'],
+              answer: 1,
+              tip: '三角形的三條邊長度確定後形狀便不會改變，具有極高的結構穩定性！'
+            }
+          ]
+        }
+      ];
+
+      const EXTRA_TEACHERS = [
+        {
+          id: 'vp_chan',
+          floor: 0,
+          floorName: 'G/F 地下',
+          x: 785,
+          y: 275,
+          npcName: '副校長・陳老師',
+          avatar: '👨‍💼',
+          role: '校務導賞',
+          shirtColor: '#1e3a8a',
+          message: '歡迎來到中華基督教會基朗中學！我們秉承「識真理得自由以服務」的校訓，祝你在開放日玩得開心！',
+          tip: '💡 小貼士：走到左下角籃球架還可以體驗投籃挑戰賽喔！'
+        },
+        {
+          id: 'pe_ho',
+          floor: 0,
+          floorName: 'G/F 地下',
+          x: 375,
+          y: 525,
+          npcName: '體育科・何老師',
+          avatar: '🏃‍♂️',
+          role: '體育及運動發展',
+          shirtColor: '#059669',
+          message: '同學你好！基朗中學重視全人發展，除了學業外，我們的籃球隊及田徑隊也非常出色！',
+          tip: '🏀 試試在旁邊的迷你投籃架連續命中 3 球吧！'
+        },
+        {
+          id: 'eng_dan',
+          floor: 1,
+          floorName: '1/F 一樓',
+          x: 695,
+          y: 410,
+          npcName: '英文科・Ms Dan',
+          avatar: '👩‍💼',
+          role: '英語學習大使',
+          shirtColor: '#7c3aed',
+          message: 'Welcome to CCC Kei Long College! In our English Corner, students learn through drama, debate, and fun games!',
+          tip: '📚 提示：1/F 閱讀角書櫃旁好像藏著一枚發光的書籤彩蛋！'
+        },
+        {
+          id: 'ict_tong',
+          floor: 2,
+          floorName: '2/F 二樓',
+          x: 215,
+          y: 485,
+          npcName: '資訊科技科・唐老師',
+          avatar: '👨‍💻',
+          role: '資訊科技與編程',
+          shirtColor: '#0284c7',
+          message: '歡迎來到基朗創科電腦室！同學們在這裡學習 Python 編程、人工智能及 3D 建模設計。',
+          tip: '💻 秘訣：點擊電腦室旁的神秘終端機光點，可啟動機械人超頻加速！'
+        },
+        {
+          id: 'va_lee',
+          floor: 2,
+          floorName: '2/F 二樓',
+          x: 520,
+          y: 245,
+          npcName: '視藝與設計・李老師',
+          avatar: '🎨',
+          role: '視覺藝術與設計',
+          shirtColor: '#db2777',
+          message: '在基朗中學，我們將藝術美學融入 STEAM 設計（Art + Tech），讓科技作品既實用又美觀！',
+          tip: '🎨 祝你順利集齊全部 5 個學科知識印章！'
+        }
+      ];
+
+      const EASTER_EGGS = [
+        {
+          id: 'egg_gf_motto',
+          floor: 0,
+          floorName: 'G/F 地下',
+          x: 240,
+          y: 245,
+          avatar: '📜',
+          title: '基朗創校年份密碼（1982）',
+          message: '你細心觀察校史展板，發現中華基督教會基朗中學創校於 1982 年，並一直以「識真理得自由以服務」培育英才！',
+          tip: '✨ 已解鎖隱藏彩蛋 1 / 3！記得去 2/F 電腦室試試這組密碼喔！'
+        },
+        {
+          id: 'egg_1f_bookmark',
+          floor: 1,
+          floorName: '1/F 一樓',
+          x: 215,
+          y: 375,
+          avatar: '🔖',
+          title: '閱讀角的黃金書籤',
+          message: '你在基朗閱讀角的書架旁發現了一枚刻有金色十字架的「基朗閱讀之星」紀念書籤！',
+          tip: '✨ 已解鎖隱藏彩蛋 2 / 3！多閱讀能讓語文能力更上一層樓！'
+        },
+        {
+          id: 'egg_2f_terminal',
+          floor: 2,
+          floorName: '2/F 二樓',
+          x: 488,
+          y: 225,
+          avatar: '⚡',
+          title: '電腦室超頻加速指令（1982）',
+          message: '你在電腦室終端機輸入創校年份「1982」，成功啟動機械人競技場的「極速超頻模式」8 秒鐘！',
+          tip: '✨ 已解鎖隱藏彩蛋 3 / 3！快看看右下方機械人的移動速度吧！'
+        }
+      ];
+
+      // =====================================================================
+      // F. GAME STATE & ONE-CLICK RESET
+      // =====================================================================
+      const state = {
+        mode: 'START',
+        currentFloor: 0,
+        remainingSeconds: 300,
+        lastTimestamp: 0,
+        stairCooldown: 0,
+        trackedStationId: null,
+        nearbyStation: null,
+        nearbyTeacher: null,
+        nearbyEgg: null,
+        nearbyBasketball: false,
+        activeQuiz: null,
+        foundEggs: {},
+        robotTurboTimer: 0,
+        bballScore: 0,
+        bballBest: 0,
+        keys: {},
+        dpad: { up: false, down: false, left: false, right: false },
+        player: {
+          x: 250,
+          y: 350,
+          radius: 18,
+          speed: 250,
+          dir: 'right',
+          walkPhase: 0,
+          targetPoint: null
+        },
+        stations: [],
+        confetti: [],
+        dustPuffs: [],
+        dustMotes: Array.from({ length: 18 }, (_, i) => ({
+          x: 90 + ((i * 59) % 920),
+          y: 140 + ((i * 43) % 460),
+          r: 2 + (i % 2),
+          phase: i * 0.9
+        })),
+        butterflies: [
+          { x: 180, y: 540, vx: 24, phase: 0, color: '#fef08a' },
+          { x: 520, y: 560, vx: -20, phase: 2.1, color: '#fbcfe8' },
+          { x: 780, y: 530, vx: 18, phase: 4.0, color: '#bae6fd' }
+        ],
+        clouds: [
+          { x: 140, y: 95, s: 1.0, v: 12 },
+          { x: 480, y: 72, s: 1.25, v: 9 },
+          { x: 860, y: 110, s: 0.9, v: 14 }
+        ],
+        birds: [
+          { x: 260, y: 150, phase: 0 },
+          { x: 295, y: 162, phase: 1.4 }
+        ],
+        miniRobots: [
+          { x: 650, y: 495, vx: 65, minX: 625, maxX: 875, color: '#38bdf8' },
+          { x: 830, y: 535, vx: -75, minX: 625, maxX: 875, color: '#facc15' }
+        ]
+      };
+
+      function resetGameState(returnToStart) {
+        state.mode = returnToStart ? 'START' : 'PLAYING';
+        state.currentFloor = 0;
+        state.remainingSeconds = 300;
+        state.lastTimestamp = performance.now();
+        state.stairCooldown = 0;
+        state.trackedStationId = null;
+        state.nearbyStation = null;
+        state.nearbyTeacher = null;
+        state.nearbyEgg = null;
+        state.nearbyBasketball = false;
+        state.activeQuiz = null;
+        state.foundEggs = {};
+        state.robotTurboTimer = 0;
+        state.bballScore = 0;
+        state.confetti = [];
+        state.keys = {};
+        state.dpad = { up: false, down: false, left: false, right: false };
+
+        state.player.x = 250;
+        state.player.y = 350;
+        state.player.dir = 'right';
+        state.player.walkPhase = 0;
+        state.player.targetPoint = null;
+
+        state.stations = INITIAL_STATIONS.map(st => ({
+          ...st,
+          completed: false
+        }));
+
+        ['quizModal', 'questListModal', 'summaryModal', 'npcTalkModal', 'basketballModal'].forEach(id => {
+          const el = document.getElementById(id);
+          if (el) el.classList.add('hidden');
+        });
+        document.getElementById('interactActionBtn').classList.add('hidden');
+
+        if (returnToStart) {
+          document.getElementById('startScreenOverlay').classList.remove('hidden');
+          document.getElementById('gameHud').classList.add('hidden');
+          document.getElementById('bottomControlsBar').classList.add('hidden');
+        } else {
+          document.getElementById('startScreenOverlay').classList.add('hidden');
+          document.getElementById('gameHud').classList.remove('hidden');
+          document.getElementById('bottomControlsBar').classList.remove('hidden');
+        }
+
+        document.querySelectorAll('.floor-btn').forEach(btn => {
+          btn.classList.toggle('active', Number(btn.getAttribute('data-floor')) === 0);
+        });
+
+        updateTimerDisplay();
+        updateHud();
+      }
+
+      // =====================================================================
+      // I. STARDEW-INSPIRED CUTE PIXEL SCHOOL EXTERIOR (中華基督教會基朗中學)
       // =====================================================================
       function drawSchoolExterior(w, h, dt, timeSec) {
-        // Animate clouds & birds gently
+        // Animate clouds, birds & fluttering courtyard butterflies
         state.clouds.forEach(c => {
           c.x += c.v * dt;
           if (c.x > w + 220) c.x = -220;
@@ -2036,28 +1990,53 @@
           b.phase += dt * 5.5;
           if (b.x > w + 80) b.x = -80;
         });
+        state.butterflies.forEach(bf => {
+          bf.x += bf.vx * dt;
+          bf.phase += dt * 7;
+          if (bf.x > w + 40) bf.x = -40;
+          if (bf.x < -40) bf.x = w + 40;
+        });
 
-        // 1. Bright Hong Kong Daytime Sky Gradient
-        const skyGrad = ctx.createLinearGradient(0, 0, 0, h * 0.85);
-        skyGrad.addColorStop(0, '#498ed3');
-        skyGrad.addColorStop(0.55, '#89bfe9');
-        skyGrad.addColorStop(1, '#cbe5f9');
-        ctx.fillStyle = skyGrad;
-        ctx.fillRect(0, 0, w, h);
+        const pw = pixelCanvas.width;
+        const ph = pixelCanvas.height;
+        const pxScale = pw / w;
+        const pyScale = ph / h;
 
-        // Soft Fluffy Cumulus Clouds
+        pCtx.save();
+        pCtx.scale(pxScale, pyScale);
+
+        // 1. Warm Cozy Stardew Pastel Sky Bands
+        const skyBands = ['#4a90e2', '#64a6ed', '#82bcf2', '#a3d1f7', '#c5e4fb', '#e6f4fe'];
+        const bandHeight = (h * 0.85) / skyBands.length;
+        skyBands.forEach((col, idx) => {
+          pCtx.fillStyle = col;
+          pCtx.fillRect(0, Math.floor(idx * bandHeight), w, Math.ceil(bandHeight) + 1);
+        });
+
+        // Warm Cozy Golden Sun in Upper Left Sky
+        const sunX = w * 0.14;
+        const sunY = h * 0.14;
+        pCtx.fillStyle = 'rgba(254, 240, 138, 0.28)';
+        pCtx.beginPath();
+        pCtx.arc(sunX, sunY, 44 + Math.sin(timeSec * 2) * 3, 0, Math.PI * 2);
+        pCtx.fill();
+        pCtx.fillStyle = '#fde047';
+        pCtx.fillRect(sunX - 18, sunY - 18, 36, 36);
+        pCtx.fillStyle = '#fef9c3';
+        pCtx.fillRect(sunX - 12, sunY - 12, 24, 24);
+
+        // Fluffy Multi-Tone Pixel Cumulus Clouds
         state.clouds.forEach(c => drawCloud(c.x, c.y, c.s));
 
-        // Subtle Flying Birds
-        ctx.strokeStyle = 'rgba(30, 58, 138, 0.45)';
-        ctx.lineWidth = 1.8;
+        // Cute Pixel Flying Birds
+        pCtx.fillStyle = '#4a2511';
         state.birds.forEach(b => {
-          const flap = Math.sin(b.phase) * 3.5;
-          ctx.beginPath();
-          ctx.moveTo(b.x - 7, b.y + flap);
-          ctx.quadraticCurveTo(b.x - 3, b.y - 4, b.x, b.y);
-          ctx.quadraticCurveTo(b.x + 3, b.y - 4, b.x + 7, b.y + flap);
-          ctx.stroke();
+          const flap = Math.round(Math.sin(b.phase) * 3);
+          pCtx.fillRect(b.x - 6, b.y + flap, 3, 3);
+          pCtx.fillRect(b.x - 3, b.y - 2, 3, 3);
+          pCtx.fillRect(b.x, b.y, 3, 3);
+          pCtx.fillRect(b.x + 3, b.y - 2, 3, 3);
+          pCtx.fillRect(b.x + 6, b.y + flap, 3, 3);
         });
 
         const horizonY = h * 0.835;
@@ -2068,51 +2047,113 @@
         // 3. Far-Left Neighboring Sage-Grey Corridor Block
         drawFarLeftNeighborBlock(w, horizonY);
 
-        // 4. Foreground Green Outdoor Basketball Court + Blue Center Circle + Hoop
+        // 4. Foreground Lush Green Outdoor Basketball Court + Flowers + Blue Center Circle + Hoop
         drawBasketballCourtForeground(w, h, horizonY, timeSec);
 
         // 5. Left Wing Building with Royal-Blue Vertical Fins & Cantilevered Balcony
         drawLeftBlueRibbedBuilding(w, horizonY);
 
-        // 6. Central 7-Story Main Building + Golden Cross + 直書「基朗中學」 + Stairwell Tower
+        // 6. Central 7-Story Main Building + Golden Cross + Stairwell Tower
         drawMainKeiLongBuilding(w, horizonY);
 
         // 7. White Steel-Mesh Security Fence & Parked School Van / Cars
         drawCourtyardFenceAndCars(w, horizonY);
 
-        // 8. Five White Planter Boxes with Lush Green Bushes along Building Base
-        drawFrontPlanters(w, horizonY);
+        // 8. Five White Planter Boxes with Lush Blooming Bushes along Building Base
+        drawFrontPlanters(w, horizonY, timeSec);
+
+        // 9. Cute Fluttering Stardew Butterflies in the Foreground
+        state.butterflies.forEach(bf => {
+          const by = horizonY + (bf.y % Math.max(40, h - horizonY - 24)) + Math.sin(bf.phase * 0.6) * 8;
+          const wing = Math.abs(Math.round(Math.sin(bf.phase) * 3));
+          pCtx.fillStyle = '#4a2511';
+          pCtx.fillRect(bf.x, by, 2, 5);
+          pCtx.fillStyle = bf.color;
+          pCtx.fillRect(bf.x - 2 - wing, by - 1, 2 + wing, 4);
+          pCtx.fillRect(bf.x + 2, by - 1, 2 + wing, 4);
+        });
+
+        pCtx.restore();
+
+        // Blit low-res pixel buffer onto full-screen canvas with nearest-neighbor crisp pixels
+        ctx.imageSmoothingEnabled = false;
+        ctx.clearRect(0, 0, w, h);
+        ctx.drawImage(pixelCanvas, 0, 0, w, h);
+
+        // Crisp Warm-Outlined Chinese School Name Signs on Main Building
+        drawCrispSchoolExteriorSigns(w, horizonY);
+      }
+
+      function drawCrispSchoolExteriorSigns(w, horizonY) {
+        const xLeft = w * 0.354;
+        const xCorner = w * 0.618;
+        const xSideEnd = w * 0.746;
+        const yTopLeft = horizonY * 0.298;
+        const yTopCorner = horizonY * 0.062;
+        const yTopSide = horizonY * 0.168;
+
+        // Vertical Warm-Outlined Lettering 「基朗中學」
+        const mottoX = xCorner + (xSideEnd - xCorner) * 0.76;
+        const mottoStartY = yTopSide + 44;
+        const verticalChars = ['基', '朗', '中', '學'];
+        const charStep = Math.max(17, (horizonY - yTopSide) * 0.055);
+        ctx.font = `900 ${Math.max(12, Math.round(w * 0.0115))}px "Courier New", monospace`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        verticalChars.forEach((ch, idx) => {
+          const cy = mottoStartY + idx * charStep;
+          ctx.fillStyle = '#fffbeb';
+          ctx.fillText(ch, mottoX + 1.5, cy + 1.5);
+          ctx.fillStyle = '#3b2314';
+          ctx.fillText(ch, mottoX, cy);
+        });
+
+        // Main Roof 3D Warm-Outlined School Name: 「中華基督教會基朗中學」
+        ctx.save();
+        const angle = Math.atan2(yTopCorner - yTopLeft, xCorner - xLeft);
+        const signMidX = (xLeft + xCorner) * 0.5;
+        const signMidY = (yTopLeft + yTopCorner) * 0.5 + Math.max(16, horizonY * 0.031);
+        ctx.translate(signMidX, signMidY);
+        ctx.rotate(angle);
+
+        const fontSize = Math.max(13, Math.min(25, Math.round((xCorner - xLeft) * 0.08)));
+        ctx.font = `900 ${fontSize}px "Courier New", monospace`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+
+        ctx.fillStyle = '#fffbeb';
+        ctx.fillText('中華基督教會基朗中學', 2, 2);
+        ctx.fillStyle = '#3b2314';
+        ctx.fillText('中華基督教會基朗中學', 0, 0);
+        ctx.restore();
       }
 
       function drawCloud(x, y, scale) {
-        ctx.save();
-        ctx.translate(x, y);
-        ctx.scale(scale, scale);
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.55)';
-        ctx.beginPath();
-        ctx.ellipse(26, 14, 64, 15, 0, 0, Math.PI * 2);
-        ctx.fill();
-
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.84)';
-        ctx.beginPath();
-        ctx.arc(-8, 4, 24, 0, Math.PI * 2);
-        ctx.arc(18, -5, 32, 0, Math.PI * 2);
-        ctx.arc(48, 0, 26, 0, Math.PI * 2);
-        ctx.arc(72, 7, 19, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.restore();
+        pCtx.save();
+        pCtx.translate(Math.round(x), Math.round(y));
+        pCtx.scale(scale, scale);
+        // Warm pastel shadow base
+        pCtx.fillStyle = '#bfdbfe';
+        pCtx.fillRect(-28, 12, 112, 10);
+        // Fluffy Stardew stepped pixel cloud blocks
+        pCtx.fillStyle = '#fffbeb';
+        pCtx.fillRect(-24, 2, 104, 14);
+        pCtx.fillStyle = '#ffffff';
+        pCtx.fillRect(-14, -8, 84, 13);
+        pCtx.fillRect(4, -17, 46, 11);
+        pCtx.restore();
       }
 
       function drawDistantResidentialTowers(w, horizonY) {
         const peekX = w * 0.01;
         const peekW = w * 0.055;
         const peekH = horizonY * 0.42;
-        ctx.fillStyle = '#9aa8b8';
-        ctx.fillRect(peekX, horizonY * 0.20, peekW, peekH);
-        ctx.fillStyle = 'rgba(30, 41, 59, 0.25)';
+        pCtx.fillStyle = '#9aa8b8';
+        pCtx.fillRect(peekX, horizonY * 0.20, peekW, peekH);
+        pCtx.fillStyle = 'rgba(30, 41, 59, 0.35)';
         for (let r = 0; r < 8; r++) {
           for (let c = 0; c < 4; c++) {
-            ctx.fillRect(peekX + 5 + c * (peekW / 4.5), horizonY * 0.22 + r * 11, 6, 6);
+            pCtx.fillRect(peekX + 5 + c * (peekW / 4.5), horizonY * 0.22 + r * 11, 6, 6);
           }
         }
 
@@ -2123,11 +2164,11 @@
         ];
         towers.forEach(t => {
           const topY = horizonY - t.h;
-          ctx.fillStyle = t.color;
-          ctx.fillRect(t.x, topY, t.w, t.h);
+          pCtx.fillStyle = t.color;
+          pCtx.fillRect(t.x, topY, t.w, t.h);
 
-          ctx.fillStyle = 'rgba(15, 23, 42, 0.35)';
-          ctx.fillRect(t.x + t.w * 0.46, topY + 6, t.w * 0.1, t.h - 6);
+          pCtx.fillStyle = 'rgba(15, 23, 42, 0.45)';
+          pCtx.fillRect(t.x + t.w * 0.46, topY + 6, t.w * 0.1, t.h - 6);
 
           const cols = 4;
           const rows = 18;
@@ -2135,159 +2176,170 @@
           const padY = (t.h - 35) / (rows + 1);
           for (let r = 1; r <= rows; r++) {
             for (let c = 1; c <= cols; c++) {
-              ctx.fillStyle = (r + c) % 5 === 0 ? 'rgba(254, 243, 199, 0.35)' : 'rgba(255, 255, 255, 0.22)';
-              ctx.fillRect(t.x + c * padX - 2.5, topY + r * padY, 5, 6);
+              pCtx.fillStyle = (r + c) % 5 === 0 ? '#fef08a' : 'rgba(255, 255, 255, 0.28)';
+              pCtx.fillRect(t.x + c * padX - 2.5, topY + r * padY, 5, 6);
             }
           }
         });
 
-        ctx.fillStyle = '#1e293b';
-        ctx.fillRect(w * 0.86, horizonY - 36, w * 0.14, 36);
-        ctx.fillStyle = '#475569';
-        ctx.fillRect(w * 0.86, horizonY - 40, w * 0.14, 4);
+        pCtx.fillStyle = '#1e293b';
+        pCtx.fillRect(w * 0.86, horizonY - 36, w * 0.14, 36);
+        pCtx.fillStyle = '#475569';
+        pCtx.fillRect(w * 0.86, horizonY - 40, w * 0.14, 4);
       }
 
       function drawFarLeftNeighborBlock(w, horizonY) {
         const edgeX = w * 0.065;
         const topY = horizonY * 0.34;
-        ctx.fillStyle = '#738276';
-        ctx.fillRect(0, topY, edgeX, horizonY - topY);
+        pCtx.fillStyle = '#738276';
+        pCtx.fillRect(0, topY, edgeX, horizonY - topY);
 
         const levels = 5;
         const lvH = (horizonY - topY) / levels;
         for (let i = 0; i < levels; i++) {
           const y = topY + i * lvH;
-          ctx.fillStyle = '#1e2923';
-          ctx.fillRect(0, y + 6, edgeX - 4, lvH * 0.56);
-          ctx.fillStyle = '#a7b8a8';
-          ctx.fillRect(0, y + lvH * 0.62, edgeX, lvH * 0.38);
-          ctx.strokeStyle = '#334155';
-          ctx.lineWidth = 1.2;
-          ctx.beginPath();
-          ctx.moveTo(0, y + lvH * 0.45);
-          ctx.lineTo(edgeX - 2, y + lvH * 0.45);
-          ctx.stroke();
+          pCtx.fillStyle = '#1e2923';
+          pCtx.fillRect(0, y + 6, edgeX - 4, lvH * 0.56);
+          pCtx.fillStyle = '#a7b8a8';
+          pCtx.fillRect(0, y + lvH * 0.62, edgeX, lvH * 0.38);
+          pCtx.strokeStyle = '#334155';
+          pCtx.lineWidth = 2;
+          pCtx.beginPath();
+          pCtx.moveTo(0, y + lvH * 0.45);
+          pCtx.lineTo(edgeX - 2, y + lvH * 0.45);
+          pCtx.stroke();
         }
       }
 
       function drawBasketballCourtForeground(w, h, horizonY, timeSec) {
-        const courtGrad = ctx.createLinearGradient(0, horizonY, 0, h);
-        courtGrad.addColorStop(0, '#2ea86f');
-        courtGrad.addColorStop(0.55, '#228e5c');
-        courtGrad.addColorStop(1, '#18754a');
-        ctx.fillStyle = courtGrad;
-        ctx.fillRect(0, horizonY, w, h - horizonY);
+        // Lush Stardew Spring-Green Court Turf Bands
+        const courtH = h - horizonY;
+        pCtx.fillStyle = '#48bb78';
+        pCtx.fillRect(0, horizonY, w, courtH * 0.38);
+        pCtx.fillStyle = '#38a169';
+        pCtx.fillRect(0, horizonY + courtH * 0.38, w, courtH * 0.34);
+        pCtx.fillStyle = '#2f855a';
+        pCtx.fillRect(0, horizonY + courtH * 0.72, w, courtH * 0.28);
 
-        // White perspective basketball court lines
-        ctx.strokeStyle = 'rgba(255, 255, 255, 0.9)';
-        ctx.lineWidth = 2.6;
-        ctx.beginPath();
-        ctx.moveTo(0, horizonY + (h - horizonY) * 0.28);
-        ctx.lineTo(w, horizonY + (h - horizonY) * 0.13);
-        ctx.moveTo(w * 0.14, h);
-        ctx.lineTo(w * 0.63, horizonY + (h - horizonY) * 0.17);
-        ctx.moveTo(w * 0.72, horizonY + (h - horizonY) * 0.16);
-        ctx.lineTo(w * 0.96, h * 0.94);
-        ctx.stroke();
+        // Cute Pixel Grass Tufts & Tiny Wildflowers along Courtyard
+        const flowerSpots = [0.06, 0.12, 0.21, 0.33, 0.49, 0.58, 0.81, 0.95];
+        flowerSpots.forEach((ft, idx) => {
+          const fx = Math.round(w * ft);
+          const fy = Math.round(horizonY + courtH * (0.18 + (idx % 3) * 0.26));
+          pCtx.fillStyle = '#22543d';
+          pCtx.fillRect(fx - 3, fy, 2, 4);
+          pCtx.fillRect(fx + 2, fy - 1, 2, 5);
+          if (idx % 2 === 0) {
+            pCtx.fillStyle = idx % 4 === 0 ? '#fef08a' : '#fbcfe8';
+            pCtx.fillRect(fx - 1, fy - 3, 4, 4);
+          }
+        });
 
-        // Royal-Blue Center Circle (#1d70d1)
+        // Warm-White perspective basketball court lines
+        pCtx.strokeStyle = '#fffbeb';
+        pCtx.lineWidth = 3;
+        pCtx.beginPath();
+        pCtx.moveTo(0, horizonY + courtH * 0.28);
+        pCtx.lineTo(w, horizonY + courtH * 0.13);
+        pCtx.moveTo(w * 0.14, h);
+        pCtx.lineTo(w * 0.63, horizonY + courtH * 0.17);
+        pCtx.moveTo(w * 0.72, horizonY + courtH * 0.16);
+        pCtx.lineTo(w * 0.96, h * 0.94);
+        pCtx.stroke();
+
+        // Cozy Sky-Blue Center Circle (#2b7bb9)
         const cx = w * 0.725;
-        const cy = horizonY + (h - horizonY) * 0.56;
+        const cy = horizonY + courtH * 0.56;
         const rx = Math.max(54, w * 0.082);
-        const ry = Math.max(13, (h - horizonY) * 0.135);
+        const ry = Math.max(13, courtH * 0.135);
 
-        ctx.fillStyle = '#1d70d1';
-        ctx.beginPath();
-        ctx.ellipse(cx, cy, rx, ry, 0, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.strokeStyle = '#ffffff';
-        ctx.lineWidth = 2.8;
-        ctx.stroke();
+        pCtx.fillStyle = '#2b7bb9';
+        pCtx.beginPath();
+        pCtx.ellipse(cx, cy, rx, ry, 0, 0, Math.PI * 2);
+        pCtx.fill();
+        pCtx.strokeStyle = '#fffbeb';
+        pCtx.lineWidth = 3;
+        pCtx.stroke();
 
         // Right Restricted Key Area
         const keyX = w * 0.86;
-        const keyY = horizonY + (h - horizonY) * 0.24;
-        ctx.fillStyle = '#1d70d1';
-        ctx.beginPath();
-        ctx.moveTo(keyX - 55, keyY + 22);
-        ctx.lineTo(w, keyY + 11);
-        ctx.lineTo(w, keyY - 6);
-        ctx.lineTo(keyX - 30, keyY - 1);
-        ctx.closePath();
-        ctx.fill();
-        ctx.strokeStyle = '#ffffff';
-        ctx.lineWidth = 2.2;
-        ctx.stroke();
+        const keyY = horizonY + courtH * 0.24;
+        pCtx.fillStyle = '#1d70d1';
+        pCtx.beginPath();
+        pCtx.moveTo(keyX - 55, keyY + 22);
+        pCtx.lineTo(w, keyY + 11);
+        pCtx.lineTo(w, keyY - 6);
+        pCtx.lineTo(keyX - 30, keyY - 1);
+        pCtx.closePath();
+        pCtx.fill();
+        pCtx.strokeStyle = '#ffffff';
+        pCtx.lineWidth = 2.5;
+        pCtx.stroke();
 
-        // Tall White Flagpole & Waving School Flag next to right stairwell tower
+        // Tall White Flagpole & Waving Pixel Flag
         const flagX = w * 0.872;
         const flagTopY = horizonY * 0.42;
-        ctx.strokeStyle = '#f8fafc';
-        ctx.lineWidth = 2.8;
-        ctx.beginPath();
-        ctx.moveTo(flagX, horizonY + 4);
-        ctx.lineTo(flagX - 10, flagTopY);
-        ctx.stroke();
+        pCtx.strokeStyle = '#f8fafc';
+        pCtx.lineWidth = 3;
+        pCtx.beginPath();
+        pCtx.moveTo(flagX, horizonY + 4);
+        pCtx.lineTo(flagX - 10, flagTopY);
+        pCtx.stroke();
 
-        const wave = Math.sin((timeSec || 0) * 4) * 3;
-        ctx.fillStyle = '#dc2626';
-        ctx.beginPath();
-        ctx.moveTo(flagX - 10, flagTopY + 2);
-        ctx.quadraticCurveTo(flagX + 8, flagTopY + wave, flagX + 24, flagTopY + 5 + wave);
-        ctx.lineTo(flagX + 22, flagTopY + 18 + wave);
-        ctx.quadraticCurveTo(flagX + 6, flagTopY + 14 + wave, flagX - 9, flagTopY + 16);
-        ctx.closePath();
-        ctx.fill();
+        const wave = Math.round(Math.sin((timeSec || 0) * 5) * 3);
+        pCtx.fillStyle = '#dc2626';
+        pCtx.fillRect(flagX - 10, flagTopY + 2, 18, 14);
+        pCtx.fillRect(flagX + 8, flagTopY + 2 + wave, 16, 14);
 
         // Triple-Pole Basketball Hoop on Far Right
         const hoopX = w * 0.925;
-        const hoopBaseY = horizonY + (h - horizonY) * 0.14;
+        const hoopBaseY = horizonY + courtH * 0.14;
 
-        ctx.fillStyle = '#0f172a';
-        ctx.fillRect(hoopX - 8, hoopBaseY - 2, 34, 6);
+        pCtx.fillStyle = '#0f172a';
+        pCtx.fillRect(hoopX - 8, hoopBaseY - 2, 34, 6);
 
-        ctx.strokeStyle = '#0f172a';
-        ctx.lineWidth = 4;
-        ctx.beginPath();
-        ctx.moveTo(hoopX - 2, hoopBaseY);
-        ctx.lineTo(hoopX - 2, hoopBaseY - 78);
-        ctx.moveTo(hoopX + 10, hoopBaseY + 2);
-        ctx.lineTo(hoopX + 10, hoopBaseY - 82);
-        ctx.moveTo(hoopX + 22, hoopBaseY + 2);
-        ctx.lineTo(hoopX + 22, hoopBaseY - 76);
-        ctx.stroke();
+        pCtx.strokeStyle = '#0f172a';
+        pCtx.lineWidth = 4;
+        pCtx.beginPath();
+        pCtx.moveTo(hoopX - 2, hoopBaseY);
+        pCtx.lineTo(hoopX - 2, hoopBaseY - 78);
+        pCtx.moveTo(hoopX + 10, hoopBaseY + 2);
+        pCtx.lineTo(hoopX + 10, hoopBaseY - 82);
+        pCtx.moveTo(hoopX + 22, hoopBaseY + 2);
+        pCtx.lineTo(hoopX + 22, hoopBaseY - 76);
+        pCtx.stroke();
 
         const bbX = hoopX - 26;
         const bbY = hoopBaseY - 108;
         const bbW = 58;
         const bbH = 36;
 
-        ctx.fillStyle = 'rgba(248, 250, 252, 0.93)';
-        ctx.strokeStyle = '#1e293b';
-        ctx.lineWidth = 2.4;
-        ctx.fillRect(bbX, bbY, bbW, bbH);
-        ctx.strokeRect(bbX, bbY, bbW, bbH);
+        pCtx.fillStyle = '#f8fafc';
+        pCtx.strokeStyle = '#0f172a';
+        pCtx.lineWidth = 3;
+        pCtx.fillRect(bbX, bbY, bbW, bbH);
+        pCtx.strokeRect(bbX, bbY, bbW, bbH);
 
-        ctx.strokeStyle = '#334155';
-        ctx.lineWidth = 1.6;
-        ctx.strokeRect(bbX + 19, bbY + 14, 20, 14);
+        pCtx.strokeStyle = '#334155';
+        pCtx.lineWidth = 2;
+        pCtx.strokeRect(bbX + 19, bbY + 14, 20, 14);
 
         // Orange Rim & White Net
-        ctx.strokeStyle = '#ea580c';
-        ctx.lineWidth = 3.2;
-        ctx.beginPath();
-        ctx.moveTo(bbX + 18, bbY + 28);
-        ctx.lineTo(bbX + 39, bbY + 28);
-        ctx.stroke();
+        pCtx.strokeStyle = '#ea580c';
+        pCtx.lineWidth = 3.5;
+        pCtx.beginPath();
+        pCtx.moveTo(bbX + 18, bbY + 28);
+        pCtx.lineTo(bbX + 39, bbY + 28);
+        pCtx.stroke();
 
-        ctx.strokeStyle = 'rgba(255, 255, 255, 0.85)';
-        ctx.lineWidth = 1.2;
-        ctx.beginPath();
-        ctx.moveTo(bbX + 20, bbY + 29);
-        ctx.lineTo(bbX + 23, bbY + 41);
-        ctx.lineTo(bbX + 34, bbY + 41);
-        ctx.lineTo(bbX + 37, bbY + 29);
-        ctx.stroke();
+        pCtx.strokeStyle = '#ffffff';
+        pCtx.lineWidth = 2;
+        pCtx.beginPath();
+        pCtx.moveTo(bbX + 20, bbY + 29);
+        pCtx.lineTo(bbX + 23, bbY + 41);
+        pCtx.lineTo(bbX + 34, bbY + 41);
+        pCtx.lineTo(bbX + 37, bbY + 29);
+        pCtx.stroke();
       }
 
       function drawLeftBlueRibbedBuilding(w, horizonY) {
@@ -2300,36 +2352,33 @@
         const topRightY = horizonY * 0.405;
 
         // Sunlit side wall
-        ctx.fillStyle = '#a4cee8';
-        ctx.beginPath();
-        ctx.moveTo(leftX, topLeftY);
-        ctx.lineTo(midX, topMidY);
-        ctx.lineTo(midX, horizonY);
-        ctx.lineTo(leftX, horizonY);
-        ctx.closePath();
-        ctx.fill();
+        pCtx.fillStyle = '#a4cee8';
+        pCtx.beginPath();
+        pCtx.moveTo(leftX, topLeftY);
+        pCtx.lineTo(midX, topMidY);
+        pCtx.lineTo(midX, horizonY);
+        pCtx.lineTo(leftX, horizonY);
+        pCtx.closePath();
+        pCtx.fill();
 
         // Main angled facade
-        const wingGrad = ctx.createLinearGradient(midX, topMidY, rightX, horizonY);
-        wingGrad.addColorStop(0, '#85bee2');
-        wingGrad.addColorStop(1, '#68a6d1');
-        ctx.fillStyle = wingGrad;
-        ctx.beginPath();
-        ctx.moveTo(midX, topMidY);
-        ctx.lineTo(rightX, topRightY);
-        ctx.lineTo(rightX, horizonY);
-        ctx.lineTo(midX, horizonY);
-        ctx.closePath();
-        ctx.fill();
+        pCtx.fillStyle = '#7bb4db';
+        pCtx.beginPath();
+        pCtx.moveTo(midX, topMidY);
+        pCtx.lineTo(rightX, topRightY);
+        pCtx.lineTo(rightX, horizonY);
+        pCtx.lineTo(midX, horizonY);
+        pCtx.closePath();
+        pCtx.fill();
 
         // Royal-blue parapet trim
-        ctx.strokeStyle = '#184e9e';
-        ctx.lineWidth = 4;
-        ctx.beginPath();
-        ctx.moveTo(leftX, topLeftY);
-        ctx.lineTo(midX, topMidY);
-        ctx.lineTo(rightX, topRightY);
-        ctx.stroke();
+        pCtx.strokeStyle = '#184e9e';
+        pCtx.lineWidth = 4;
+        pCtx.beginPath();
+        pCtx.moveTo(leftX, topLeftY);
+        pCtx.lineTo(midX, topMidY);
+        pCtx.lineTo(rightX, topRightY);
+        pCtx.stroke();
 
         // Large Dark Gridded Glass Curtain Wall
         const gwX1 = midX + (rightX - midX) * 0.41;
@@ -2338,36 +2387,36 @@
         const gwY2Top = topMidY + (topRightY - topMidY) * 0.87 + 26;
         const gwYBot = horizonY - 58;
 
-        ctx.fillStyle = '#172334';
-        ctx.beginPath();
-        ctx.moveTo(gwX1, gwY1Top);
-        ctx.lineTo(gwX2, gwY2Top);
-        ctx.lineTo(gwX2, gwYBot);
-        ctx.lineTo(gwX1, gwYBot);
-        ctx.closePath();
-        ctx.fill();
+        pCtx.fillStyle = '#172334';
+        pCtx.beginPath();
+        pCtx.moveTo(gwX1, gwY1Top);
+        pCtx.lineTo(gwX2, gwY2Top);
+        pCtx.lineTo(gwX2, gwYBot);
+        pCtx.lineTo(gwX1, gwYBot);
+        pCtx.closePath();
+        pCtx.fill();
 
-        ctx.strokeStyle = '#64748b';
-        ctx.lineWidth = 1.2;
+        pCtx.strokeStyle = '#64748b';
+        pCtx.lineWidth = 2;
         const gCols = 14;
         for (let c = 1; c < gCols; c++) {
           const t = c / gCols;
           const gx = gwX1 + (gwX2 - gwX1) * t;
           const gy = gwY1Top + (gwY2Top - gwY1Top) * t;
-          ctx.beginPath();
-          ctx.moveTo(gx, gy);
-          ctx.lineTo(gx, gwYBot);
-          ctx.stroke();
+          pCtx.beginPath();
+          pCtx.moveTo(gx, gy);
+          pCtx.lineTo(gx, gwYBot);
+          pCtx.stroke();
         }
         const gRows = 5;
         for (let r = 1; r < gRows; r++) {
           const rt = r / gRows;
           const ry1 = gwY1Top + (gwYBot - gwY1Top) * rt;
           const ry2 = gwY2Top + (gwYBot - gwY2Top) * rt;
-          ctx.beginPath();
-          ctx.moveTo(gwX1, ry1);
-          ctx.lineTo(gwX2, ry2);
-          ctx.stroke();
+          pCtx.beginPath();
+          pCtx.moveTo(gwX1, ry1);
+          pCtx.lineTo(gwX2, ry2);
+          pCtx.stroke();
         }
 
         // 11 Vertical Royal-Blue Structural Fins
@@ -2378,40 +2427,40 @@
           const fyTop = topMidY + (topRightY - topMidY) * t;
           const finH = (horizonY - fyTop) * (i < 4 ? 0.88 : 0.25);
 
-          ctx.fillStyle = '#184e9e';
-          ctx.fillRect(fx - 4.5, fyTop, 8, finH);
-          ctx.fillStyle = '#3174c4';
-          ctx.fillRect(fx + 3.5, fyTop + 2, 4.5, finH - 2);
-          ctx.fillStyle = '#0f336b';
-          ctx.fillRect(fx - 6, fyTop + 2, 1.5, finH - 2);
+          pCtx.fillStyle = '#184e9e';
+          pCtx.fillRect(fx - 4.5, fyTop, 8, finH);
+          pCtx.fillStyle = '#3174c4';
+          pCtx.fillRect(fx + 3.5, fyTop + 2, 4.5, finH - 2);
+          pCtx.fillStyle = '#0f336b';
+          pCtx.fillRect(fx - 6, fyTop + 2, 1.5, finH - 2);
         }
 
         // Protruding Blue & Warm-Orange Balcony Feature
         const bx = midX + (rightX - midX) * 0.255;
         const by = topMidY + (horizonY - topMidY) * 0.43;
 
-        ctx.fillStyle = '#d98a2b';
-        ctx.fillRect(bx + 7, by - 25, 17, 25);
-        ctx.fillStyle = '#f3b356';
-        ctx.fillRect(bx + 7, by - 25, 6, 25);
+        pCtx.fillStyle = '#d98a2b';
+        pCtx.fillRect(bx + 7, by - 25, 17, 25);
+        pCtx.fillStyle = '#f3b356';
+        pCtx.fillRect(bx + 7, by - 25, 6, 25);
 
-        ctx.fillStyle = '#1d5ba6';
-        ctx.beginPath();
-        ctx.moveTo(bx - 16, by);
-        ctx.lineTo(bx + 36, by);
-        ctx.lineTo(bx + 26, by + 20);
-        ctx.lineTo(bx - 6, by + 20);
-        ctx.closePath();
-        ctx.fill();
+        pCtx.fillStyle = '#1d5ba6';
+        pCtx.beginPath();
+        pCtx.moveTo(bx - 16, by);
+        pCtx.lineTo(bx + 36, by);
+        pCtx.lineTo(bx + 26, by + 20);
+        pCtx.lineTo(bx - 6, by + 20);
+        pCtx.closePath();
+        pCtx.fill();
 
-        ctx.fillStyle = '#0f356e';
-        ctx.beginPath();
-        ctx.moveTo(bx - 6, by + 20);
-        ctx.lineTo(bx + 26, by + 20);
-        ctx.lineTo(bx + 20, by + 31);
-        ctx.lineTo(bx + 2, by + 31);
-        ctx.closePath();
-        ctx.fill();
+        pCtx.fillStyle = '#0f356e';
+        pCtx.beginPath();
+        pCtx.moveTo(bx - 6, by + 20);
+        pCtx.lineTo(bx + 26, by + 20);
+        pCtx.lineTo(bx + 20, by + 31);
+        pCtx.lineTo(bx + 2, by + 31);
+        pCtx.closePath();
+        pCtx.fill();
       }
 
       function drawMainKeiLongBuilding(w, horizonY) {
@@ -2426,30 +2475,30 @@
         const yTowerTop = horizonY * 0.152;
 
         // A. Far-Right Royal-Blue 5-Story Open Stairwell Tower (#2368c9)
-        ctx.fillStyle = '#2368c9';
-        ctx.beginPath();
-        ctx.moveTo(xSideEnd - 14, yTowerTop);
-        ctx.lineTo(xTowerEnd - 22, yTowerTop + 5);
-        ctx.lineTo(xTowerEnd + 2, horizonY);
-        ctx.lineTo(xSideEnd - 14, horizonY);
-        ctx.closePath();
-        ctx.fill();
+        pCtx.fillStyle = '#2368c9';
+        pCtx.beginPath();
+        pCtx.moveTo(xSideEnd - 14, yTowerTop);
+        pCtx.lineTo(xTowerEnd - 22, yTowerTop + 5);
+        pCtx.lineTo(xTowerEnd + 2, horizonY);
+        pCtx.lineTo(xSideEnd - 14, horizonY);
+        pCtx.closePath();
+        pCtx.fill();
 
-        ctx.fillStyle = '#68a6d8';
-        ctx.beginPath();
-        ctx.moveTo(xTowerEnd - 22, yTowerTop + 5);
-        ctx.lineTo(xTowerEnd - 4, yTowerTop + 15);
-        ctx.lineTo(xTowerEnd + 10, horizonY);
-        ctx.lineTo(xTowerEnd + 2, horizonY);
-        ctx.closePath();
-        ctx.fill();
+        pCtx.fillStyle = '#68a6d8';
+        pCtx.beginPath();
+        pCtx.moveTo(xTowerEnd - 22, yTowerTop + 5);
+        pCtx.lineTo(xTowerEnd - 4, yTowerTop + 15);
+        pCtx.lineTo(xTowerEnd + 10, horizonY);
+        pCtx.lineTo(xTowerEnd + 2, horizonY);
+        pCtx.closePath();
+        pCtx.fill();
 
-        ctx.strokeStyle = '#bae6fd';
-        ctx.lineWidth = 1.5;
-        ctx.beginPath();
-        ctx.moveTo(xSideEnd - 10, yTowerTop - 8);
-        ctx.lineTo(xTowerEnd - 22, yTowerTop - 3);
-        ctx.stroke();
+        pCtx.strokeStyle = '#bae6fd';
+        pCtx.lineWidth = 2;
+        pCtx.beginPath();
+        pCtx.moveTo(xSideEnd - 10, yTowerTop - 8);
+        pCtx.lineTo(xTowerEnd - 22, yTowerTop - 3);
+        pCtx.stroke();
 
         // 5 Open Stairwell Landings with Dark Shadow Openings
         for (let lv = 1; lv <= 5; lv++) {
@@ -2459,27 +2508,24 @@
           const boxW = 28;
           const boxH = 18;
 
-          ctx.fillStyle = '#0c1f3a';
-          ctx.fillRect(lx, ly - boxH, boxW, boxH);
+          pCtx.fillStyle = '#0c1f3a';
+          pCtx.fillRect(lx, ly - boxH, boxW, boxH);
 
-          ctx.fillStyle = '#2b74d8';
-          ctx.fillRect(lx - 5, ly - boxH - 6, boxW + 7, 7);
-          ctx.fillStyle = '#173f82';
-          ctx.fillRect(lx - 5, ly - boxH + 1, boxW + 7, 3);
+          pCtx.fillStyle = '#2b74d8';
+          pCtx.fillRect(lx - 5, ly - boxH - 6, boxW + 7, 7);
+          pCtx.fillStyle = '#173f82';
+          pCtx.fillRect(lx - 5, ly - boxH + 1, boxW + 7, 3);
         }
 
-        // B. Right-Side Perspective Face (#86b9d6 / #9ad0ec) with Golden Cross & 直書「基朗中學」
-        const sideGrad = ctx.createLinearGradient(xCorner, yTopCorner, xSideEnd, horizonY);
-        sideGrad.addColorStop(0, '#9ad0ec');
-        sideGrad.addColorStop(1, '#86b9d6');
-        ctx.fillStyle = sideGrad;
-        ctx.beginPath();
-        ctx.moveTo(xCorner, yTopCorner);
-        ctx.lineTo(xSideEnd, yTopSide);
-        ctx.lineTo(xSideEnd, horizonY);
-        ctx.lineTo(xCorner, horizonY);
-        ctx.closePath();
-        ctx.fill();
+        // B. Right-Side Perspective Face (#8ec6e6) with Golden Cross
+        pCtx.fillStyle = '#8ec6e6';
+        pCtx.beginPath();
+        pCtx.moveTo(xCorner, yTopCorner);
+        pCtx.lineTo(xSideEnd, yTopSide);
+        pCtx.lineTo(xSideEnd, horizonY);
+        pCtx.lineTo(xCorner, horizonY);
+        pCtx.closePath();
+        pCtx.fill();
 
         // Side Wall Windows, Blue & Yellow Sunshades & AC Units
         for (let fl = 0; fl < 6; fl++) {
@@ -2489,318 +2535,214 @@
           const winW = (xSideEnd - xCorner) * 0.29;
           const winH = 15;
 
-          ctx.fillStyle = '#152232';
-          ctx.beginPath();
-          ctx.moveTo(wx, wy);
-          ctx.lineTo(wx + winW, wy + winW * 0.36);
-          ctx.lineTo(wx + winW, wy + winW * 0.36 + winH);
-          ctx.lineTo(wx, wy + winH);
-          ctx.closePath();
-          ctx.fill();
+          pCtx.fillStyle = '#152232';
+          pCtx.beginPath();
+          pCtx.moveTo(wx, wy);
+          pCtx.lineTo(wx + winW, wy + winW * 0.36);
+          pCtx.lineTo(wx + winW, wy + winW * 0.36 + winH);
+          pCtx.lineTo(wx, wy + winH);
+          pCtx.closePath();
+          pCtx.fill();
 
-          // Alternating Blue & Warm Yellow Sunshade Awnings
-          ctx.fillStyle = fl === 1 ? '#eab308' : '#1d5ba6';
-          ctx.beginPath();
-          ctx.moveTo(wx - 2, wy - 3);
-          ctx.lineTo(wx + winW + 2, wy + winW * 0.36 - 3);
-          ctx.lineTo(wx + winW + 4, wy + winW * 0.36 + 5);
-          ctx.lineTo(wx - 2, wy + 5);
-          ctx.closePath();
-          ctx.fill();
+          pCtx.fillStyle = fl === 1 ? '#eab308' : '#1d5ba6';
+          pCtx.beginPath();
+          pCtx.moveTo(wx - 2, wy - 3);
+          pCtx.lineTo(wx + winW + 2, wy + winW * 0.36 - 3);
+          pCtx.lineTo(wx + winW + 4, wy + winW * 0.36 + 5);
+          pCtx.lineTo(wx - 2, wy + 5);
+          pCtx.closePath();
+          pCtx.fill();
 
           if (fl % 2 === 1) {
-            ctx.fillStyle = '#e2e8f0';
-            ctx.fillRect(wx + winW - 8, wy + winW * 0.36 + winH - 6, 10, 7);
-            ctx.fillStyle = '#64748b';
-            ctx.fillRect(wx + winW - 6, wy + winW * 0.36 + winH - 4, 6, 3);
+            pCtx.fillStyle = '#e2e8f0';
+            pCtx.fillRect(wx + winW - 8, wy + winW * 0.36 + winH - 6, 10, 7);
+            pCtx.fillStyle = '#64748b';
+            pCtx.fillRect(wx + winW - 6, wy + winW * 0.36 + winH - 4, 6, 3);
           }
         }
 
         // Security Cage Grille Window on Lower Side Wall
         const cageX = xCorner + (xSideEnd - xCorner) * 0.38;
         const cageY = horizonY - 82;
-        ctx.strokeStyle = '#cbd5e1';
-        ctx.lineWidth = 1.5;
-        ctx.strokeRect(cageX, cageY, 34, 24);
+        pCtx.strokeStyle = '#cbd5e1';
+        pCtx.lineWidth = 2;
+        pCtx.strokeRect(cageX, cageY, 34, 24);
         for (let gx = cageX + 6; gx < cageX + 34; gx += 6) {
-          ctx.beginPath();
-          ctx.moveTo(gx, cageY);
-          ctx.lineTo(gx, cageY + 24);
-          ctx.stroke();
+          pCtx.beginPath();
+          pCtx.moveTo(gx, cageY);
+          pCtx.lineTo(gx, cageY + 24);
+          pCtx.stroke();
         }
 
         // White Exterior Staircase with Handrail at Bottom Right
         const extStairX = xSideEnd - 2;
         const extStairY = horizonY - 34;
-        ctx.strokeStyle = '#f8fafc';
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.moveTo(extStairX, extStairY);
-        ctx.lineTo(extStairX + 34, horizonY - 2);
-        ctx.moveTo(extStairX, extStairY - 12);
-        ctx.lineTo(extStairX + 34, horizonY - 14);
-        ctx.moveTo(extStairX, extStairY);
-        ctx.lineTo(extStairX, extStairY - 12);
-        ctx.moveTo(extStairX + 34, horizonY - 2);
-        ctx.lineTo(extStairX + 34, horizonY - 14);
-        ctx.stroke();
+        pCtx.strokeStyle = '#f8fafc';
+        pCtx.lineWidth = 2.5;
+        pCtx.beginPath();
+        pCtx.moveTo(extStairX, extStairY);
+        pCtx.lineTo(extStairX + 34, horizonY - 2);
+        pCtx.moveTo(extStairX, extStairY - 12);
+        pCtx.lineTo(extStairX + 34, horizonY - 14);
+        pCtx.moveTo(extStairX, extStairY);
+        pCtx.lineTo(extStairX, extStairY - 12);
+        pCtx.moveTo(extStairX + 34, horizonY - 2);
+        pCtx.lineTo(extStairX + 34, horizonY - 14);
+        pCtx.stroke();
 
         // Tall Golden Christian Cross (#eab308) on Upper-Left of Side Wall
         const crossX = xCorner + (xSideEnd - xCorner) * 0.185;
         const crossY = yTopCorner + (horizonY - yTopCorner) * 0.145;
-        ctx.fillStyle = '#eab308';
-        ctx.fillRect(crossX - 2.5, crossY, 5, 44);
-        ctx.fillRect(crossX - 11, crossY + 11, 22, 4.5);
-        ctx.fillStyle = '#fef08a';
-        ctx.fillRect(crossX - 1.5, crossY, 2, 44);
+        pCtx.fillStyle = '#eab308';
+        pCtx.fillRect(crossX - 3, crossY, 6, 44);
+        pCtx.fillRect(crossX - 13, crossY + 11, 26, 6);
 
-        // Vertical Dark Chinese Lettering 「基朗中學」
-        const mottoX = xCorner + (xSideEnd - xCorner) * 0.76;
-        const mottoStartY = yTopSide + 44;
-        const verticalChars = ['基', '朗', '中', '學'];
-        const charStep = Math.max(17, (horizonY - yTopSide) * 0.055);
-        ctx.fillStyle = '#172e4d';
-        ctx.font = `900 ${Math.max(12, Math.round(w * 0.0115))}px sans-serif`;
-        ctx.textAlign = 'center';
-        verticalChars.forEach((ch, idx) => {
-          ctx.fillText(ch, mottoX, mottoStartY + idx * charStep);
-        });
+        // C. Main 7-Story Front Facade (#9ecae6)
+        pCtx.fillStyle = '#9ecae6';
+        pCtx.beginPath();
+        pCtx.moveTo(xLeft, yTopLeft);
+        pCtx.lineTo(xCorner, yTopCorner);
+        pCtx.lineTo(xCorner, horizonY);
+        pCtx.lineTo(xLeft, horizonY);
+        pCtx.closePath();
+        pCtx.fill();
 
-        // Small Vertical School Motto Plaques beside 「基朗中學」
-        const plaqueX = xCorner + (xSideEnd - xCorner) * 0.88;
-        for (let p = 0; p < 4; p++) {
-          ctx.fillStyle = '#f8fafc';
-          ctx.strokeStyle = '#1d5ba6';
-          ctx.lineWidth = 1;
-          ctx.fillRect(plaqueX - 3, mottoStartY - 8 + p * (charStep * 0.9), 6, 11);
-          ctx.strokeRect(plaqueX - 3, mottoStartY - 8 + p * (charStep * 0.9), 6, 11);
-        }
+        // Subtle roof cornice highlight
+        pCtx.strokeStyle = '#e0f2fe';
+        pCtx.lineWidth = 3;
+        pCtx.beginPath();
+        pCtx.moveTo(xLeft, yTopLeft + 2);
+        pCtx.lineTo(xCorner, yTopCorner + 2);
+        pCtx.lineTo(xSideEnd, yTopSide + 2);
+        pCtx.stroke();
 
-        // C. Front-Left Light Sky-Blue Main Facade (#9ccbe4)
-        const frontGrad = ctx.createLinearGradient(xLeft, yTopLeft, xCorner, horizonY);
-        frontGrad.addColorStop(0, '#9ccbe4');
-        frontGrad.addColorStop(1, '#7eb7da');
-        ctx.fillStyle = frontGrad;
-        ctx.beginPath();
-        ctx.moveTo(xLeft, yTopLeft);
-        ctx.lineTo(xCorner, yTopCorner);
-        ctx.lineTo(xCorner, horizonY);
-        ctx.lineTo(xLeft, horizonY);
-        ctx.closePath();
-        ctx.fill();
+        // 6 Rows of Classroom Windows, Mullions, Sunshades & Window AC Units
+        const rows = 6;
+        const cols = 7;
+        for (let r = 0; r < rows; r++) {
+          const rowT = 0.165 + r * 0.116;
+          for (let c = 0; c < cols; c++) {
+            const c1 = 0.045 + c * 0.131;
+            const c2 = c1 + 0.108;
 
-        // Roof parapet edge & lightning rods
-        ctx.strokeStyle = '#e0f2fe';
-        ctx.lineWidth = 2.5;
-        ctx.beginPath();
-        ctx.moveTo(xLeft, yTopLeft);
-        ctx.lineTo(xCorner, yTopCorner);
-        ctx.stroke();
+            const wx1 = xLeft + (xCorner - xLeft) * c1;
+            const wx2 = xLeft + (xCorner - xLeft) * c2;
+            const topY1 = yTopLeft + (yTopCorner - yTopLeft) * c1;
+            const topY2 = yTopLeft + (yTopCorner - yTopLeft) * c2;
 
-        ctx.strokeStyle = '#334155';
-        ctx.lineWidth = 1.4;
-        [0.25, 0.48, 0.72].forEach(rt => {
-          const rx = xLeft + (xCorner - xLeft) * rt;
-          const ry = yTopLeft + (yTopCorner - yTopLeft) * rt;
-          ctx.beginPath();
-          ctx.moveTo(rx, ry);
-          ctx.lineTo(rx, ry - 18);
-          ctx.stroke();
-        });
+            const wy1 = topY1 + (horizonY - topY1) * rowT;
+            const wy2 = topY2 + (horizonY - topY2) * rowT;
+            const winH = Math.max(11, (horizonY - topY1) * 0.062);
 
-        // Vertical structural column lines
-        const numCols = 9;
-        ctx.strokeStyle = 'rgba(255, 255, 255, 0.22)';
-        ctx.lineWidth = 1.2;
-        for (let c = 1; c < numCols; c++) {
-          const t = c / numCols;
-          const cx = xLeft + (xCorner - xLeft) * t;
-          const cyTop = yTopLeft + (yTopCorner - yTopLeft) * t;
-          ctx.beginPath();
-          ctx.moveTo(cx, cyTop);
-          ctx.lineTo(cx, horizonY);
-          ctx.stroke();
-        }
+            // Window glass recess
+            pCtx.fillStyle = '#152232';
+            pCtx.beginPath();
+            pCtx.moveTo(wx1, wy1);
+            pCtx.lineTo(wx2, wy2);
+            pCtx.lineTo(wx2, wy2 + winH);
+            pCtx.lineTo(wx1, wy1 + winH);
+            pCtx.closePath();
+            pCtx.fill();
 
-        // 6 Rows of Detailed Classroom Windows, Sunshades & AC Units
-        const numFloors = 6;
-        for (let f = 0; f < numFloors; f++) {
-          const rowT = 0.145 + f * 0.118;
-          const yL = yTopLeft + (horizonY - yTopLeft) * rowT;
-          const yR = yTopCorner + (horizonY - yTopCorner) * rowT;
-          const bandH = Math.max(13, (horizonY - yTopCorner) * 0.052);
+            // Window frame dividers
+            pCtx.strokeStyle = '#64748b';
+            pCtx.lineWidth = 1.5;
+            const midWx = (wx1 + wx2) * 0.5;
+            const midWy = (wy1 + wy2) * 0.5;
+            pCtx.beginPath();
+            pCtx.moveTo(midWx, midWy);
+            pCtx.lineTo(midWx, midWy + winH);
+            pCtx.stroke();
 
-          ctx.fillStyle = '#132131';
-          ctx.beginPath();
-          ctx.moveTo(xLeft + 8, yL);
-          ctx.lineTo(xCorner - 7, yR);
-          ctx.lineTo(xCorner - 7, yR + bandH);
-          ctx.lineTo(xLeft + 8, yL + bandH);
-          ctx.closePath();
-          ctx.fill();
-
-          const segs = 14;
-          for (let s = 0; s < segs; s++) {
-            const st1 = s / segs;
-            const st2 = (s + 0.86) / segs;
-            const sx1 = xLeft + 8 + (xCorner - xLeft - 15) * st1;
-            const sx2 = xLeft + 8 + (xCorner - xLeft - 15) * st2;
-            const sy1 = yL + (yR - yL) * st1;
-            const sy2 = yL + (yR - yL) * st2;
-
-            // Glass reflection sheen
-            ctx.fillStyle = 'rgba(224, 242, 254, 0.18)';
-            ctx.beginPath();
-            ctx.moveTo(sx1 + 1, sy1 + 2);
-            ctx.lineTo(sx2 - 1, sy2 + 2);
-            ctx.lineTo(sx2 - 1, sy2 + bandH * 0.55);
-            ctx.lineTo(sx1 + 1, sy1 + bandH * 0.55);
-            ctx.closePath();
-            ctx.fill();
-
-            // Blue & Warm Yellow Sunshades
-            if (f === 0 || f === 2) {
-              ctx.fillStyle = f === 0 ? '#184e9e' : '#eab308';
-              ctx.beginPath();
-              ctx.moveTo(sx1, sy1 - 2);
-              ctx.lineTo(sx2, sy2 - 2);
-              ctx.lineTo(sx2, sy2 + 5);
-              ctx.lineTo(sx1, sy1 + 5);
-              ctx.closePath();
-              ctx.fill();
+            // Blue & Warm Yellow Sunshade Awnings
+            if (r === 1 || r === 0) {
+              pCtx.fillStyle = r === 1 ? '#eab308' : '#1d5ba6';
+              pCtx.beginPath();
+              pCtx.moveTo(wx1 - 1, wy1 - 2);
+              pCtx.lineTo(wx2 + 1, wy2 - 2);
+              pCtx.lineTo(wx2 + 2, wy2 + 4);
+              pCtx.lineTo(wx1 - 1, wy1 + 4);
+              pCtx.closePath();
+              pCtx.fill();
             }
 
-            // Window-Mounted Air Conditioners (冷氣機)
-            if ((f * 3 + s) % 3 !== 1) {
-              const acW = Math.max(7, (sx2 - sx1) * 0.55);
-              const acH = Math.max(5, bandH * 0.44);
-              const acX = sx1 + 1.5;
-              const acY = sy1 + bandH - acH + 1;
-
-              ctx.fillStyle = 'rgba(15, 23, 42, 0.35)';
-              ctx.fillRect(acX + 1, acY + 2, acW, acH);
-
-              ctx.fillStyle = '#e2e8f0';
-              ctx.fillRect(acX, acY, acW, acH);
-
-              ctx.fillStyle = '#475569';
-              ctx.fillRect(acX + 1.5, acY + 1.5, acW * 0.45, acH - 3);
+            // Scattered Window-Mounted Air Conditioners
+            if ((r + c) % 2 === 0) {
+              pCtx.fillStyle = '#f1f5f9';
+              pCtx.fillRect(wx2 - 9, wy2 + winH - 6, 9, 6);
+              pCtx.fillStyle = '#475569';
+              pCtx.fillRect(wx2 - 7, wy2 + winH - 4, 5, 2);
             }
           }
         }
 
-        // D. Dark Metallic 3D School Name: 「中華基督教會基朗中學」
-        ctx.save();
-        const angle = Math.atan2(yTopCorner - yTopLeft, xCorner - xLeft);
-        const signMidX = (xLeft + xCorner) * 0.5;
-        const signMidY = (yTopLeft + yTopCorner) * 0.5 + Math.max(16, horizonY * 0.031);
-        ctx.translate(signMidX, signMidY);
-        ctx.rotate(angle);
+        // Ground-Floor Covered Entrance & Notice Board Canopy
+        const lobbyX1 = xLeft + (xCorner - xLeft) * 0.28;
+        const lobbyX2 = xLeft + (xCorner - xLeft) * 0.88;
+        const lobbyTopY = horizonY - 34;
+        pCtx.fillStyle = '#e2e8f0';
+        pCtx.fillRect(lobbyX1, lobbyTopY, lobbyX2 - lobbyX1, 34);
+        pCtx.strokeStyle = '#475569';
+        pCtx.lineWidth = 2;
+        pCtx.strokeRect(lobbyX1, lobbyTopY, lobbyX2 - lobbyX1, 34);
 
-        const fontSize = Math.max(13, Math.min(25, Math.round((xCorner - xLeft) * 0.08)));
-        ctx.font = `900 ${fontSize}px sans-serif`;
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.42)';
-        ctx.fillText('中華基督教會基朗中學', 1.2, 1.8);
-        ctx.fillStyle = '#0f233d';
-        ctx.fillText('中華基督教會基朗中學', 0, 0);
-        ctx.restore();
-
-        // E. Ground Floor Covered Entrance & Parking Bay
-        const baseX = xLeft + (xCorner - xLeft) * 0.26;
-        const baseW = (xCorner - xLeft) * 0.68;
-        const baseH = Math.max(28, (horizonY - yTopCorner) * 0.092);
-
-        ctx.fillStyle = '#cbd5e1';
-        ctx.fillRect(baseX, horizonY - baseH, baseW, baseH);
-        ctx.fillStyle = '#293548';
-        ctx.fillRect(baseX + 10, horizonY - baseH + 6, baseW - 20, baseH - 6);
-        ctx.fillStyle = '#f8fafc';
-        ctx.fillRect(baseX + baseW * 0.32, horizonY - baseH + 4, 6, baseH - 4);
-        ctx.fillRect(baseX + baseW * 0.68, horizonY - baseH + 4, 6, baseH - 4);
+        pCtx.fillStyle = '#1e293b';
+        pCtx.fillRect(lobbyX1 + 14, lobbyTopY + 8, (lobbyX2 - lobbyX1) * 0.55, 26);
       }
 
       function drawCourtyardFenceAndCars(w, horizonY) {
-        const carBaseY = horizonY - 2;
+        // Parked School Van & Cars in Courtyard
+        const vanX = w * 0.485;
+        const vanY = horizonY - 22;
+        pCtx.fillStyle = '#cbd5e1';
+        pCtx.fillRect(vanX, vanY, 44, 18);
+        pCtx.fillStyle = '#334155';
+        pCtx.fillRect(vanX + 6, vanY + 3, 28, 7);
+        pCtx.fillStyle = '#0f172a';
+        pCtx.fillRect(vanX + 6, vanY + 16, 7, 5);
+        pCtx.fillRect(vanX + 31, vanY + 16, 7, 5);
 
-        // Dark cars on left (using roundRectPath)
-        ctx.fillStyle = '#1e293b';
-        roundRectPath(ctx, w * 0.245, carBaseY - 23, 48, 23, 6);
-        ctx.fill();
-        roundRectPath(ctx, w * 0.315, carBaseY - 25, 52, 25, 6);
-        ctx.fill();
-        roundRectPath(ctx, w * 0.375, carBaseY - 22, 46, 22, 5);
-        ctx.fill();
+        // Dark parked sedans to the left
+        [0.24, 0.31, 0.38].forEach((tx, idx) => {
+          const cx = w * tx;
+          const cy = horizonY - 15;
+          pCtx.fillStyle = idx === 1 ? '#f8fafc' : '#1e293b';
+          pCtx.fillRect(cx, cy, 32, 13);
+          pCtx.fillStyle = '#0f172a';
+          pCtx.fillRect(cx + 4, cy + 11, 6, 4);
+          pCtx.fillRect(cx + 22, cy + 11, 6, 4);
+        });
 
-        // Silver School Van in center bay
-        ctx.fillStyle = '#e2e8f0';
-        roundRectPath(ctx, w * 0.478, carBaseY - 27, 62, 27, 6);
-        ctx.fill();
+        // White Steel-Mesh Courtyard Security Fence on Foreground Left
+        const fenceX1 = 0;
+        const fenceX2 = w * 0.375;
+        const fenceTop = horizonY - 38;
+        const fenceBot = horizonY + 18;
 
-        ctx.fillStyle = '#334155';
-        ctx.fillRect(w * 0.486, carBaseY - 23, 17, 10);
-        ctx.fillRect(w * 0.512, carBaseY - 23, 22, 10);
-        ctx.fillStyle = '#0f172a';
-        ctx.beginPath();
-        ctx.arc(w * 0.495, carBaseY, 5, 0, Math.PI * 2);
-        ctx.arc(w * 0.542, carBaseY, 5, 0, Math.PI * 2);
-        ctx.fill();
+        pCtx.fillStyle = 'rgba(241, 245, 249, 0.35)';
+        pCtx.fillRect(fenceX1, fenceTop, fenceX2 - fenceX1, fenceBot - fenceTop);
 
-        // White Metal Grid Security Fence on Left
-        const midBreak = w * 0.242;
-        const fenceEndX = w * 0.432;
-        const fenceTopHigh = horizonY - 82;
-        const fenceTopLow = horizonY - 35;
+        pCtx.strokeStyle = '#f8fafc';
+        pCtx.lineWidth = 3;
+        pCtx.strokeRect(fenceX1, fenceTop, fenceX2 - fenceX1, fenceBot - fenceTop);
 
-        ctx.fillStyle = '#cbd5e1';
-        ctx.fillRect(0, horizonY - 4, midBreak, 22);
-
-        ctx.fillStyle = 'rgba(226, 232, 240, 0.22)';
-        ctx.fillRect(0, fenceTopHigh, midBreak, horizonY - fenceTopHigh - 4);
-
-        ctx.strokeStyle = 'rgba(241, 245, 249, 0.48)';
-        ctx.lineWidth = 1;
-        for (let fx = 12; fx < midBreak; fx += 14) {
-          ctx.beginPath();
-          ctx.moveTo(fx, fenceTopHigh);
-          ctx.lineTo(fx, horizonY - 4);
-          ctx.stroke();
+        // Vertical fence posts & horizontal rails
+        const posts = 8;
+        for (let i = 1; i < posts; i++) {
+          const px = fenceX1 + ((fenceX2 - fenceX1) * i) / posts;
+          pCtx.beginPath();
+          pCtx.moveTo(px, fenceTop);
+          pCtx.lineTo(px, fenceBot);
+          pCtx.stroke();
         }
-        for (let fy = fenceTopHigh + 12; fy < horizonY - 4; fy += 14) {
-          ctx.beginPath();
-          ctx.moveTo(0, fy);
-          ctx.lineTo(midBreak, fy);
-          ctx.stroke();
-        }
-
-        ctx.strokeStyle = '#f1f5f9';
-        ctx.lineWidth = 3.5;
-        ctx.strokeRect(0, fenceTopHigh, midBreak, horizonY - fenceTopHigh - 4);
-        ctx.beginPath();
-        ctx.moveTo(0, (fenceTopHigh + horizonY) * 0.5);
-        ctx.lineTo(midBreak, (fenceTopHigh + horizonY) * 0.5);
-        ctx.moveTo(midBreak * 0.5, fenceTopHigh);
-        ctx.lineTo(midBreak * 0.5, horizonY + 16);
-        ctx.moveTo(midBreak, fenceTopHigh);
-        ctx.lineTo(midBreak, horizonY + 18);
-        ctx.stroke();
-
-        // Lower White Gate
-        ctx.strokeStyle = '#f8fafc';
-        ctx.lineWidth = 2.6;
-        ctx.strokeRect(midBreak, fenceTopLow, fenceEndX - midBreak, horizonY - fenceTopLow + 14);
-        ctx.lineWidth = 1.3;
-        for (let fx = midBreak + 9; fx < fenceEndX; fx += 11) {
-          ctx.beginPath();
-          ctx.moveTo(fx, fenceTopLow);
-          ctx.lineTo(fx, horizonY + 14);
-          ctx.stroke();
-        }
+        pCtx.lineWidth = 2;
+        pCtx.beginPath();
+        pCtx.moveTo(fenceX1, (fenceTop + fenceBot) * 0.5);
+        pCtx.lineTo(fenceX2, (fenceTop + fenceBot) * 0.5);
+        pCtx.stroke();
       }
 
-      function drawFrontPlanters(w, horizonY) {
+      function drawFrontPlanters(w, horizonY, timeSec) {
         const startX = w * 0.388;
         const spacing = w * 0.052;
         for (let i = 0; i < 5; i++) {
@@ -2808,582 +2750,757 @@
           const py = horizonY + 2 - i * 2;
           const boxW = Math.max(28, w * 0.038);
           const boxH = 14;
+          const sway = Math.round(Math.sin((timeSec || 0) * 2.5 + i) * 1);
 
-          ctx.fillStyle = '#3f6212';
-          ctx.beginPath();
-          ctx.arc(px + boxW * 0.28, py - 4, boxW * 0.29, 0, Math.PI * 2);
-          ctx.arc(px + boxW * 0.72, py - 4, boxW * 0.29, 0, Math.PI * 2);
-          ctx.fill();
+          // Lush Stardew Pixel Foliage & Cute Tiny Blossoms
+          pCtx.fillStyle = '#276749';
+          pCtx.fillRect(px + 2 + sway, py - 11, boxW - 4, 12);
 
-          ctx.fillStyle = '#84cc16';
-          ctx.beginPath();
-          ctx.arc(px + boxW * 0.25, py - 7, boxW * 0.22, 0, Math.PI * 2);
-          ctx.arc(px + boxW * 0.70, py - 7, boxW * 0.22, 0, Math.PI * 2);
-          ctx.fill();
+          pCtx.fillStyle = '#68d391';
+          pCtx.fillRect(px + 4 + sway, py - 15, boxW * 0.42, 9);
+          pCtx.fillRect(px + boxW * 0.52 + sway, py - 15, boxW * 0.42, 9);
 
-          ctx.fillStyle = '#f8fafc';
-          ctx.strokeStyle = '#cbd5e1';
-          ctx.lineWidth = 1.5;
-          ctx.fillRect(px, py, boxW, boxH);
-          ctx.strokeRect(px, py, boxW, boxH);
-          ctx.fillStyle = '#e2e8f0';
-          ctx.fillRect(px + boxW * 0.65, py + 1, boxW * 0.34, boxH - 2);
+          // Cute Red & Yellow Pixel Flowers on Bushes
+          pCtx.fillStyle = i % 2 === 0 ? '#f87171' : '#fde047';
+          pCtx.fillRect(px + 7 + sway, py - 12, 3, 3);
+          pCtx.fillRect(px + boxW - 11 + sway, py - 10, 3, 3);
+
+          pCtx.fillStyle = '#fffbeb';
+          pCtx.strokeStyle = '#4a2511';
+          pCtx.lineWidth = 2;
+          pCtx.fillRect(px, py, boxW, boxH);
+          pCtx.strokeRect(px, py, boxW, boxH);
+          pCtx.fillStyle = '#e2e8f0';
+          pCtx.fillRect(px + boxW * 0.65, py + 1, boxW * 0.33, boxH - 2);
         }
       }
 
       // =====================================================================
-      // J. 3-FLOOR CAMPUS INTERIOR RENDERER (G/F, 1/F, 2/F)
+      // J. STARDEW-INSPIRED COZY 3-FLOOR CAMPUS INTERIOR RENDERER (G/F - 2/F)
       // =====================================================================
       function drawCampusInterior(vw, vh, dt, timeSec) {
-        // Architectural dark-slate backdrop around the campus floorplan
-        const bgGrad = ctx.createLinearGradient(0, 0, 0, vh);
-        bgGrad.addColorStop(0, '#0f172a');
-        bgGrad.addColorStop(1, '#1e293b');
-        ctx.fillStyle = bgGrad;
-        ctx.fillRect(0, 0, vw, vh);
+        const pw = pixelCanvas.width;
+        const ph = pixelCanvas.height;
+        const pxScale = pw / vw;
+        const pyScale = ph / vh;
+
+        // 1. Render Warm Stardew Pixel Floorplan, Cozy Rugs, Plants & Expressive Sprites onto pCtx
+        pCtx.save();
+        pCtx.scale(pxScale, pyScale);
+
+        // Warm Cozy Dark-Oak Backdrop around the School Floorplan
+        pCtx.fillStyle = '#2d1b12';
+        pCtx.fillRect(0, 0, vw, vh);
 
         const t = getInteriorTransform();
-        ctx.save();
-        ctx.translate(t.offsetX, t.offsetY);
-        ctx.scale(t.scale, t.scale);
+        pCtx.save();
+        pCtx.translate(t.offsetX, t.offsetY);
+        pCtx.scale(t.scale, t.scale);
 
         const floorData = FLOORS[state.currentFloor];
 
-        // 1. Outer Building Shell & Floor Surface
-        ctx.fillStyle = floorData.floorColor;
-        roundRectPath(ctx, 24, 24, WORLD_W - 48, WORLD_H - 48, 28);
-        ctx.fill();
+        // Warm Honey-Oak Wood Plank Floor Base
+        pCtx.fillStyle = floorData.floorColor;
+        pCtx.fillRect(24, 24, WORLD_W - 48, WORLD_H - 48);
 
-        // Subtle Floor Grid Tiles
-        ctx.strokeStyle = floorData.tileAccent;
-        ctx.lineWidth = 1.5;
-        const tileSize = 56;
-        for (let gx = 48; gx < WORLD_W - 48; gx += tileSize) {
-          ctx.beginPath();
-          ctx.moveTo(gx, 110);
-          ctx.lineTo(gx, WORLD_H - 44);
-          ctx.stroke();
+        // Stardew-Style Horizontal Wooden Floorboards with Staggered Plank Seams
+        const plankH = 28;
+        const plankW = 112;
+        for (let py = 114; py < WORLD_H - 36; py += plankH) {
+          const rowIdx = Math.floor((py - 114) / plankH);
+          if (rowIdx % 2 === 1) {
+            pCtx.fillStyle = floorData.tileAccent;
+            pCtx.fillRect(34, py, WORLD_W - 68, plankH);
+          }
+          // Horizontal plank groove
+          pCtx.fillStyle = floorData.plankSeam;
+          pCtx.fillRect(34, py, WORLD_W - 68, 2);
+
+          // Vertical staggered wood plank joints
+          const stagger = (rowIdx % 2) * (plankW * 0.5);
+          for (let px = 34 + stagger; px < WORLD_W - 44; px += plankW) {
+            pCtx.fillRect(px, py, 2, plankH);
+          }
         }
-        for (let gy = 110; gy < WORLD_H - 44; gy += tileSize) {
-          ctx.beginPath();
-          ctx.moveTo(48, gy);
-          ctx.lineTo(WORLD_W - 48, gy);
-          ctx.stroke();
-        }
 
-        // 2. Top Interior Wall & Floor Title Header Banner
-        ctx.fillStyle = floorData.wallColor;
-        roundRectPath(ctx, 24, 24, WORLD_W - 48, 92, [28, 28, 0, 0]);
-        ctx.fill();
+        // Cozy Cream & Wainscoting Wood Interior Upper Wall
+        pCtx.fillStyle = floorData.wallColor;
+        pCtx.fillRect(24, 24, WORLD_W - 48, 92);
 
-        // Decorative school windows along upper wall
+        // Lower Wooden Wainscoting Paneling along Upper Wall
+        pCtx.fillStyle = floorData.wallTrim;
+        pCtx.fillRect(24, 86, WORLD_W - 48, 30);
+        pCtx.fillStyle = '#a46537';
+        pCtx.fillRect(24, 86, WORLD_W - 48, 4);
+
+        // Sunlit Arched Classroom Windows with Flower Window-Boxes
         for (let wx = 85; wx < WORLD_W - 140; wx += 145) {
-          ctx.fillStyle = '#bae6fd';
-          ctx.fillRect(wx, 44, 72, 34);
-          ctx.strokeStyle = '#ffffff';
-          ctx.lineWidth = 2;
-          ctx.strokeRect(wx, 44, 72, 34);
-          ctx.beginPath();
-          ctx.moveTo(wx + 36, 44);
-          ctx.lineTo(wx + 36, 78);
-          ctx.stroke();
+          pCtx.fillStyle = '#bae6fd';
+          pCtx.fillRect(wx, 38, 72, 42);
+          // Warm diagonal sunbeam highlight on glass
+          pCtx.fillStyle = '#fffbeb';
+          pCtx.fillRect(wx + 6, 42, 18, 14);
+          pCtx.fillRect(wx + 12, 58, 10, 12);
+
+          // Warm wooden window frame
+          pCtx.strokeStyle = '#5c3317';
+          pCtx.lineWidth = 3;
+          pCtx.strokeRect(wx, 38, 72, 42);
+          pCtx.beginPath();
+          pCtx.moveTo(wx + 36, 38);
+          pCtx.lineTo(wx + 36, 80);
+          pCtx.moveTo(wx, 59);
+          pCtx.lineTo(wx + 72, 59);
+          pCtx.stroke();
+
+          // Cute Window Sill Flower Box
+          pCtx.fillStyle = '#8c5227';
+          pCtx.fillRect(wx - 4, 78, 80, 9);
+          pCtx.fillStyle = '#38a169';
+          pCtx.fillRect(wx + 2, 73, 68, 6);
+          pCtx.fillStyle = '#f87171';
+          pCtx.fillRect(wx + 10, 72, 4, 4);
+          pCtx.fillStyle = '#fde047';
+          pCtx.fillRect(wx + 34, 72, 4, 4);
+          pCtx.fillStyle = '#f472b6';
+          pCtx.fillRect(wx + 56, 72, 4, 4);
         }
 
-        // Floor Banner Pill
-        ctx.fillStyle = 'rgba(15, 23, 42, 0.9)';
-        roundRectPath(ctx, WORLD_W * 0.5 - 210, 88, 420, 38, 19);
-        ctx.fill();
-        ctx.strokeStyle = '#38bdf8';
-        ctx.lineWidth = 2;
-        ctx.stroke();
+        // Outer Perimeter Thick Warm-Oak Timber Walls
+        pCtx.strokeStyle = '#4a2511';
+        pCtx.lineWidth = 10;
+        pCtx.strokeRect(28, 28, WORLD_W - 56, WORLD_H - 56);
+        pCtx.strokeStyle = '#8c5227';
+        pCtx.lineWidth = 3;
+        pCtx.strokeRect(32, 32, WORLD_W - 64, WORLD_H - 64);
 
-        ctx.fillStyle = '#ffffff';
-        ctx.font = '900 17px sans-serif';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillText(floorData.title, WORLD_W * 0.5, 107);
-
-        // Outer Perimeter Thick Walls
-        ctx.strokeStyle = '#0f172a';
-        ctx.lineWidth = 10;
-        roundRectPath(ctx, 28, 28, WORLD_W - 56, WORLD_H - 56, 26);
-        ctx.stroke();
-
-        // 3. Floor-Specific Architectural Decorations
+        // Floor-Specific Cozy Woven Rugs, Cushions & Potted Plants
         drawFloorDecorations(state.currentFloor, timeSec);
 
-        // 4. Interactive Staircase Zones
+        // Interactive Warm-Oak Staircase Zones
         floorData.stairs.forEach(st => {
           drawStaircaseZone(st, timeSec);
         });
 
-        // 5. Solid Furniture / Display Obstacles
+        // Solid Cozy Pixel Furniture / Display Obstacles
         floorData.obstacles.forEach(obs => {
           drawObstacleFurniture(obs);
         });
 
-        // 6. Click-to-Walk Destination Ring
-        if (state.player.targetPoint) {
-          const tp = state.player.targetPoint;
-          const pulseR = 10 + Math.sin(timeSec * 8) * 3;
-          ctx.strokeStyle = '#0284c7';
-          ctx.lineWidth = 2.5;
-          ctx.beginPath();
-          ctx.arc(tp.x, tp.y, pulseR, 0, Math.PI * 2);
-          ctx.stroke();
+        // Cute Potted Stardew Plants in Campus Corners
+        drawCozyPottedPlant(64, 590, '#f87171', timeSec);
+        drawCozyPottedPlant(1032, 590, '#fde047', timeSec + 1.2);
+        if (state.currentFloor === 0) {
+          drawCozyPottedPlant(68, 165, '#f472b6', timeSec + 2.4);
         }
 
-        // 7. Station NPCs, Extra Friendly Teachers & Easter Eggs on Current Floor
+        // Click-to-Walk Cozy Golden Step Target
+        if (state.player.targetPoint) {
+          const tp = state.player.targetPoint;
+          const pulseR = Math.round(10 + Math.sin(timeSec * 8) * 3);
+          pCtx.strokeStyle = '#d97706';
+          pCtx.lineWidth = 3;
+          pCtx.strokeRect(tp.x - pulseR, tp.y - pulseR, pulseR * 2, pulseR * 2);
+          pCtx.fillStyle = 'rgba(251, 191, 36, 0.25)';
+          pCtx.fillRect(tp.x - pulseR, tp.y - pulseR, pulseR * 2, pulseR * 2);
+        }
+
+        // Cute Footstep Dust Puffs
+        state.dustPuffs.forEach(dp => {
+          pCtx.fillStyle = `rgba(255, 251, 235, ${Math.min(0.85, dp.life * 1.6)})`;
+          const s = Math.max(3, Math.round(dp.size));
+          pCtx.fillRect(Math.round(dp.x - s * 0.5), Math.round(dp.y - s * 0.5), s, s);
+        });
+
+        // Expressive Stardew Chibi Sprites for Quiz NPCs, Friendly Teachers & Easter Eggs
         const floorStations = state.stations.filter(s => s.floor === state.currentFloor);
         floorStations.forEach(st => {
-          drawStationNpc(st, timeSec);
+          drawStationNpcPixelBody(st, timeSec);
         });
 
-        EXTRA_TEACHERS.filter(t => t.floor === state.currentFloor).forEach(teacher => {
-          drawFriendlyTeacher(teacher, timeSec);
+        EXTRA_TEACHERS.filter(teacher => teacher.floor === state.currentFloor).forEach(teacher => {
+          drawFriendlyTeacherPixelBody(teacher, timeSec);
         });
 
-        EASTER_EGGS.filter(e => e.floor === state.currentFloor).forEach(egg => {
-          drawEasterEggSpot(egg, timeSec);
+        EASTER_EGGS.filter(egg => egg.floor === state.currentFloor).forEach(egg => {
+          drawEasterEggPixelBody(egg, timeSec);
         });
 
-        // 8. Chibi Student Player + Floating Golden Compass Arrow
-        drawChibiPlayer();
+        // Chibi Stardew Student Player + Floating Golden Compass Arrow
+        drawChibiPlayer(timeSec);
 
-        // 9. Celebratory Confetti Particles
+        // Gentle Floating Sunlit Dust Motes
+        state.dustMotes.forEach(m => {
+          const mx = m.x + Math.sin(timeSec * 1.2 + m.phase) * 10;
+          const my = m.y + Math.cos(timeSec * 0.9 + m.phase) * 7;
+          const alpha = 0.28 + Math.sin(timeSec * 2.5 + m.phase) * 0.18;
+          pCtx.fillStyle = `rgba(255, 251, 235, ${Math.max(0.1, alpha)})`;
+          pCtx.fillRect(Math.round(mx), Math.round(my), m.r, m.r);
+        });
+
+        // Square Pixel Confetti Particles
         state.confetti.forEach(c => {
-          ctx.fillStyle = c.color;
-          ctx.fillRect(c.x - c.size * 0.5, c.y - c.size * 0.5, c.size, c.size * 0.7);
+          pCtx.fillStyle = c.color;
+          const s = Math.max(6, Math.round(c.size));
+          pCtx.fillRect(Math.round(c.x - s * 0.5), Math.round(c.y - s * 0.5), s, s);
         });
+
+        pCtx.restore();
+        pCtx.restore();
+
+        // 2. Blit Pixel Art Canvas onto Full Screen with Nearest-Neighbor Sharpness
+        ctx.imageSmoothingEnabled = false;
+        ctx.clearRect(0, 0, vw, vh);
+        ctx.drawImage(pixelCanvas, 0, 0, vw, vh);
+
+        // 3. Render Crisp Cozy-Framed Text Labels, Nameplates & Icons on Main Ctx
+        ctx.save();
+        ctx.translate(t.offsetX, t.offsetY);
+        ctx.scale(t.scale, t.scale);
+
+        // Floor Banner Pill (Stardew Wood & Parchment Framed)
+        ctx.fillStyle = '#fdf3dc';
+        ctx.fillRect(WORLD_W * 0.5 - 215, 86, 430, 38);
+        ctx.strokeStyle = '#4a2511';
+        ctx.lineWidth = 3;
+        ctx.strokeRect(WORLD_W * 0.5 - 215, 86, 430, 38);
+
+        ctx.fillStyle = '#3b2314';
+        ctx.font = '900 16.5px "Courier New", monospace';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(floorData.title, WORLD_W * 0.5, 105);
+
+        if (state.currentFloor === 0) {
+          ctx.fillStyle = '#7c2d12';
+          ctx.font = '900 15px "Courier New", monospace';
+          ctx.fillText('✝ 識真理・得自由・以服務 — 歡迎蒞臨基朗中學開放日 ✝', 450, 350);
+        } else if (state.currentFloor === 2) {
+          ctx.fillStyle = '#1e40af';
+          ctx.font = '900 13px "Courier New", monospace';
+          ctx.fillText('💻 基朗創科電腦室 (COMPUTER ROOM)', 348, 390);
+        }
+
+        floorData.stairs.forEach(st => {
+          ctx.fillStyle = '#fdf3dc';
+          ctx.fillRect(st.x + 5, st.y + 5, st.w - 10, 24);
+          ctx.strokeStyle = '#4a2511';
+          ctx.lineWidth = 2.5;
+          ctx.strokeRect(st.x + 5, st.y + 5, st.w - 10, 24);
+          ctx.fillStyle = '#92400e';
+          ctx.font = '900 12px "Courier New", monospace';
+          ctx.fillText(st.label, st.x + st.w * 0.5, st.y + 17);
+        });
+
+        floorData.obstacles.forEach(obs => {
+          ctx.fillStyle = '#fffbeb';
+          ctx.font = '900 12.5px "Courier New", monospace';
+          if (obs.isBasketball) {
+            ctx.fillText('🏀 ' + obs.label + '（點擊或按 E 投籃）', obs.x + obs.w * 0.5, obs.y + 15);
+          } else if (obs.isComputerRoom) {
+            ctx.fillText('💻 ' + obs.label, obs.x + obs.w * 0.5, obs.y + 13);
+          } else if (obs.isArena) {
+            ctx.fillText(obs.label, obs.x + obs.w * 0.5, obs.y + 15);
+          } else {
+            ctx.fillText(obs.label, obs.x + obs.w * 0.5, obs.y + obs.h * 0.5);
+          }
+        });
+
+        floorStations.forEach(st => {
+          drawStationNpcLabels(st, timeSec);
+        });
+
+        EXTRA_TEACHERS.filter(teacher => teacher.floor === state.currentFloor).forEach(teacher => {
+          drawFriendlyTeacherLabels(teacher, timeSec);
+        });
+
+        EASTER_EGGS.filter(egg => egg.floor === state.currentFloor).forEach(egg => {
+          drawEasterEggIcon(egg, timeSec);
+        });
+
+        // Crisp Player Label
+        const p = state.player;
+        const bob = Math.abs(Math.sin(p.walkPhase)) * 4 + Math.sin(timeSec * 3.5) * 1.5;
+        ctx.fillStyle = '#3a8c4e';
+        ctx.fillRect(p.x - 28, p.y - 57 - bob, 56, 17);
+        ctx.strokeStyle = '#4a2511';
+        ctx.lineWidth = 2;
+        ctx.strokeRect(p.x - 28, p.y - 57 - bob, 56, 17);
+        ctx.fillStyle = '#fffbeb';
+        ctx.font = '900 10px "Courier New", monospace';
+        ctx.fillText('訪客同學', p.x, p.y - 48.5 - bob);
 
         ctx.restore();
       }
 
-      function drawFloorDecorations(floorId, timeSec) {
+      function drawCozyPottedPlant(x, y, flowerColor, timeSec) {
+        const sway = Math.round(Math.sin(timeSec * 2.4 + x) * 1);
+        // Terracotta pixel pot
+        pCtx.fillStyle = '#c05621';
+        pCtx.fillRect(x - 10, y - 4, 20, 16);
+        pCtx.fillStyle = '#9c4221';
+        pCtx.fillRect(x - 12, y - 8, 24, 5);
+        pCtx.strokeStyle = '#4a2511';
+        pCtx.lineWidth = 2;
+        pCtx.strokeRect(x - 10, y - 4, 20, 16);
+        pCtx.strokeRect(x - 12, y - 8, 24, 5);
+
+        // Lush leafy pixel foliage
+        pCtx.fillStyle = '#276749';
+        pCtx.fillRect(x - 14 + sway, y - 24, 28, 16);
+        pCtx.fillStyle = '#48bb78';
+        pCtx.fillRect(x - 11 + sway, y - 30, 22, 14);
+        pCtx.fillStyle = '#9ae6b4';
+        pCtx.fillRect(x - 6 + sway, y - 28, 8, 6);
+
+        // Cute pixel blossoms
+        pCtx.fillStyle = flowerColor;
+        pCtx.fillRect(x - 8 + sway, y - 22, 4, 4);
+        pCtx.fillRect(x + 5 + sway, y - 25, 4, 4);
+      }
+
+      function drawCozyWovenRug(x, y, w, h, mainColor, borderColor, trimColor) {
+        // Woven tassel fringes on left & right
+        pCtx.fillStyle = trimColor;
+        for (let fy = y + 6; fy < y + h - 4; fy += 8) {
+          pCtx.fillRect(x - 5, fy, 5, 3);
+          pCtx.fillRect(x + w, fy, 5, 3);
+        }
+        pCtx.fillStyle = mainColor;
+        pCtx.fillRect(x, y, w, h);
+        pCtx.strokeStyle = borderColor;
+        pCtx.lineWidth = 4;
+        pCtx.strokeRect(x, y, w, h);
+        pCtx.strokeStyle = trimColor;
+        pCtx.lineWidth = 2;
+        pCtx.strokeRect(x + 7, y + 7, w - 14, h - 14);
+      }
+
+      function drawFloorDecorations(floorId) {
         if (floorId === 0) {
-          // G/F Welcome Carpet
-          ctx.fillStyle = 'rgba(2, 132, 199, 0.14)';
-          roundRectPath(ctx, 140, 290, 620, 120, 24);
-          ctx.fill();
-          ctx.strokeStyle = 'rgba(2, 132, 199, 0.35)';
-          ctx.lineWidth = 2;
-          ctx.stroke();
+          // Royal Blue & Gold Woven Welcome Carpet
+          drawCozyWovenRug(140, 290, 620, 120, '#dbeafe', '#2b6cb0', '#f6c445');
 
-          ctx.fillStyle = '#0369a1';
-          ctx.font = '900 16px sans-serif';
-          ctx.textAlign = 'center';
-          ctx.textBaseline = 'middle';
-          ctx.fillText('✝ 識真理・得自由・以服務 — 歡迎蒞臨基朗中學開放日 ✝', 450, 350);
+          // Lush Grassy Mini-Court Mat on Bottom-Left
+          pCtx.fillStyle = '#9ae6b4';
+          pCtx.fillRect(92, 455, 240, 148);
+          pCtx.strokeStyle = '#2f855a';
+          pCtx.lineWidth = 3;
+          pCtx.strokeRect(92, 455, 240, 148);
 
-          // G/F Mini Basketball Court Zone Floor Marking
-          ctx.fillStyle = 'rgba(34, 197, 94, 0.18)';
-          roundRectPath(ctx, 92, 455, 240, 148, 22);
-          ctx.fill();
-          ctx.strokeStyle = '#16a34a';
-          ctx.lineWidth = 2.5;
-          ctx.stroke();
-
-          ctx.strokeStyle = '#ffffff';
-          ctx.lineWidth = 2;
-          ctx.beginPath();
-          ctx.arc(212, 530, 46, 0, Math.PI * 2);
-          ctx.stroke();
+          pCtx.strokeStyle = '#fffbeb';
+          pCtx.lineWidth = 2.5;
+          pCtx.beginPath();
+          pCtx.arc(212, 530, 46, 0, Math.PI * 2);
+          pCtx.stroke();
         } else if (floorId === 1) {
-          // 1/F Cozy Reading Rug
-          ctx.fillStyle = 'rgba(245, 158, 11, 0.16)';
-          roundRectPath(ctx, 210, 240, 250, 175, 28);
-          ctx.fill();
-          ctx.strokeStyle = 'rgba(217, 119, 6, 0.4)';
-          ctx.lineWidth = 2;
-          ctx.stroke();
+          // Warm Terracotta & Cream Reading Corner Rug + Cute Floor Cushions
+          drawCozyWovenRug(210, 240, 250, 175, '#fed7aa', '#c05621', '#f6c445');
+
+          // Cute Reading Floor Cushions
+          const cushions = [
+            { cx: 245, cy: 365, col: '#f87171' },
+            { cx: 415, cy: 365, col: '#60a5fa' }
+          ];
+          cushions.forEach(c => {
+            pCtx.fillStyle = c.col;
+            pCtx.fillRect(c.cx - 14, c.cy - 10, 28, 20);
+            pCtx.strokeStyle = '#4a2511';
+            pCtx.lineWidth = 2;
+            pCtx.strokeRect(c.cx - 14, c.cy - 10, 28, 20);
+          });
         } else if (floorId === 2) {
-          // 2/F Computer Room Floor Zone (電腦室專屬地板與電路紋理)
-          ctx.fillStyle = 'rgba(14, 165, 233, 0.13)';
-          roundRectPath(ctx, 185, 145, 325, 255, 24);
-          ctx.fill();
-          ctx.strokeStyle = 'rgba(2, 132, 199, 0.45)';
-          ctx.lineWidth = 2.5;
-          ctx.stroke();
+          // Cozy Sky-Blue & Mint Tech Rug in Computer Room
+          drawCozyWovenRug(185, 145, 325, 255, '#e0f2fe', '#0284c7', '#38bdf8');
 
-          // Subtle circuit lines inside Computer Room
-          ctx.strokeStyle = 'rgba(56, 189, 248, 0.35)';
-          ctx.lineWidth = 2;
-          ctx.beginPath();
-          ctx.moveTo(210, 265);
-          ctx.lineTo(295, 265);
-          ctx.lineTo(315, 285);
-          ctx.lineTo(475, 285);
-          ctx.stroke();
-
-          ctx.fillStyle = '#0369a1';
-          ctx.font = '900 13px sans-serif';
-          ctx.textAlign = 'center';
-          ctx.textBaseline = 'middle';
-          ctx.fillText('💻 基朗創科電腦室 (COMPUTER ROOM)', 348, 390);
+          pCtx.strokeStyle = 'rgba(2, 132, 199, 0.45)';
+          pCtx.lineWidth = 2.5;
+          pCtx.beginPath();
+          pCtx.moveTo(210, 265);
+          pCtx.lineTo(295, 265);
+          pCtx.lineTo(315, 285);
+          pCtx.lineTo(475, 285);
+          pCtx.stroke();
         }
       }
 
       function drawStaircaseZone(st, timeSec) {
-        const glow = 0.75 + Math.sin(timeSec * 4) * 0.2;
-        ctx.fillStyle = st.direction === 'up' ? 'rgba(250, 204, 21, 0.28)' : 'rgba(56, 189, 248, 0.25)';
-        roundRectPath(ctx, st.x, st.y, st.w, st.h, 16);
-        ctx.fill();
+        const glow = 0.78 + Math.sin(timeSec * 4) * 0.18;
+        pCtx.fillStyle = st.direction === 'up' ? 'rgba(251, 191, 36, 0.34)' : 'rgba(96, 165, 250, 0.32)';
+        pCtx.fillRect(st.x, st.y, st.w, st.h);
 
-        ctx.strokeStyle = st.direction === 'up' ? `rgba(217, 119, 6, ${glow})` : `rgba(2, 132, 199, ${glow})`;
-        ctx.lineWidth = 2.5;
-        ctx.stroke();
+        pCtx.strokeStyle = st.direction === 'up' ? `rgba(180, 83, 9, ${glow})` : `rgba(30, 64, 175, ${glow})`;
+        pCtx.lineWidth = 3;
+        pCtx.strokeRect(st.x, st.y, st.w, st.h);
 
-        // Draw stair steps
+        // Warm Honey-Oak Stair Steps
         const steps = 6;
         const stepH = (st.h - 46) / steps;
         for (let i = 0; i < steps; i++) {
           const sy = st.y + 34 + i * stepH;
-          ctx.fillStyle = i % 2 === 0 ? '#cbd5e1' : '#94a3b8';
-          ctx.fillRect(st.x + 14, sy, st.w - 28, stepH - 2);
+          pCtx.fillStyle = i % 2 === 0 ? '#d69e5c' : '#b77938';
+          pCtx.fillRect(st.x + 14, sy, st.w - 28, stepH - 2);
+          pCtx.strokeStyle = '#5c3317';
+          pCtx.lineWidth = 1.5;
+          pCtx.strokeRect(st.x + 14, sy, st.w - 28, stepH - 2);
         }
-
-        // Stair label badge
-        ctx.fillStyle = '#0f172a';
-        roundRectPath(ctx, st.x + 6, st.y + 6, st.w - 12, 24, 8);
-        ctx.fill();
-
-        ctx.fillStyle = '#fde047';
-        ctx.font = '900 12px sans-serif';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillText(st.label, st.x + st.w * 0.5, st.y + 18);
       }
 
       function drawObstacleFurniture(obs) {
-        // Drop shadow
-        ctx.fillStyle = 'rgba(15, 23, 42, 0.16)';
-        roundRectPath(ctx, obs.x + 4, obs.y + 6, obs.w, obs.h, 14);
-        ctx.fill();
+        // Warm Wood Drop Shadow
+        pCtx.fillStyle = 'rgba(59, 31, 14, 0.38)';
+        pCtx.fillRect(obs.x + 5, obs.y + 5, obs.w, obs.h);
 
-        // Main furniture body
-        ctx.fillStyle = obs.color;
-        roundRectPath(ctx, obs.x, obs.y, obs.w, obs.h, 14);
-        ctx.fill();
+        // Main Cozy Pixel Furniture Block
+        pCtx.fillStyle = obs.color;
+        pCtx.fillRect(obs.x, obs.y, obs.w, obs.h);
 
-        ctx.strokeStyle = '#ffffff';
-        ctx.lineWidth = 2;
-        ctx.stroke();
+        pCtx.strokeStyle = '#4a2511';
+        pCtx.lineWidth = 3;
+        pCtx.strokeRect(obs.x, obs.y, obs.w, obs.h);
 
-        // G/F Mini Basketball Hoop Station
-        if (obs.isBasketball) {
-          ctx.fillStyle = '#15803d';
-          roundRectPath(ctx, obs.x + 10, obs.y + 28, obs.w - 20, obs.h - 36, 10);
-          ctx.fill();
-
-          // Backboard & Orange Rim
-          const bx = obs.x + obs.w * 0.5 - 24;
-          const by = obs.y + 34;
-          ctx.fillStyle = '#ffffff';
-          ctx.fillRect(bx, by, 48, 28);
-          ctx.strokeStyle = '#0f172a';
-          ctx.lineWidth = 2;
-          ctx.strokeRect(bx, by, 48, 28);
-          ctx.strokeStyle = '#ea580c';
-          ctx.strokeRect(bx + 14, by + 10, 20, 12);
-
-          // Rim & Net
-          ctx.strokeStyle = '#ea580c';
-          ctx.lineWidth = 3.5;
-          ctx.beginPath();
-          ctx.moveTo(bx + 13, by + 24);
-          ctx.lineTo(bx + 35, by + 24);
-          ctx.stroke();
-
-          // Bouncing Basketball Icon
-          ctx.fillStyle = '#f97316';
-          ctx.beginPath();
-          ctx.arc(obs.x + obs.w - 34, obs.y + obs.h - 24, 11, 0, Math.PI * 2);
-          ctx.fill();
-          ctx.strokeStyle = '#431407';
-          ctx.lineWidth = 1.5;
-          ctx.stroke();
-
-          ctx.fillStyle = '#ffffff';
-          ctx.font = '900 12.5px sans-serif';
-          ctx.textAlign = 'center';
-          ctx.textBaseline = 'middle';
-          ctx.fillText('🏀 ' + obs.label + '（點擊或按 E 投籃）', obs.x + obs.w * 0.5, obs.y + 15);
+        if (obs.isBookshelf) {
+          // Colorful Stardew Book Spines inside Reading Corner Bookshelf
+          const bookColors = ['#ef4444', '#f59e0b', '#10b981', '#3b82f6', '#8b5cf6', '#ec4899'];
+          pCtx.fillStyle = '#5c3317';
+          pCtx.fillRect(obs.x + 10, obs.y + 44, obs.w - 20, 20);
+          for (let bx = obs.x + 14, bIdx = 0; bx < obs.x + obs.w - 22; bx += 11, bIdx++) {
+            pCtx.fillStyle = bookColors[bIdx % bookColors.length];
+            pCtx.fillRect(bx, obs.y + 46, 8, 16);
+          }
           return;
         }
 
-        // 2/F Computer Room Workstations with Glowing Monitors
+        if (obs.isBasketball) {
+          pCtx.fillStyle = '#276749';
+          pCtx.fillRect(obs.x + 10, obs.y + 28, obs.w - 20, obs.h - 36);
+
+          const bx = obs.x + obs.w * 0.5 - 24;
+          const by = obs.y + 34;
+          pCtx.fillStyle = '#fffbeb';
+          pCtx.fillRect(bx, by, 48, 28);
+          pCtx.strokeStyle = '#4a2511';
+          pCtx.lineWidth = 2.5;
+          pCtx.strokeRect(bx, by, 48, 28);
+          pCtx.strokeStyle = '#ea580c';
+          pCtx.strokeRect(bx + 14, by + 10, 20, 12);
+
+          pCtx.strokeStyle = '#ea580c';
+          pCtx.lineWidth = 3.5;
+          pCtx.beginPath();
+          pCtx.moveTo(bx + 13, by + 24);
+          pCtx.lineTo(bx + 35, by + 24);
+          pCtx.stroke();
+
+          pCtx.fillStyle = '#f97316';
+          pCtx.fillRect(obs.x + obs.w - 44, obs.y + obs.h - 34, 20, 20);
+          pCtx.strokeStyle = '#4a2511';
+          pCtx.lineWidth = 2;
+          pCtx.strokeRect(obs.x + obs.w - 44, obs.y + obs.h - 34, 20, 20);
+          return;
+        }
+
         if (obs.isComputerRoom) {
-          ctx.fillStyle = '#0f172a';
-          roundRectPath(ctx, obs.x + 8, obs.y + 24, obs.w - 16, obs.h - 30, 8);
-          ctx.fill();
+          pCtx.fillStyle = '#1e293b';
+          pCtx.fillRect(obs.x + 8, obs.y + 24, obs.w - 16, obs.h - 30);
 
           for (let m = 0; m < 4; m++) {
             const mx = obs.x + 20 + m * 54;
             const my = obs.y + 29;
-            ctx.fillStyle = m === 3 ? '#10b981' : '#38bdf8';
-            ctx.fillRect(mx, my, 38, 20);
-            ctx.fillStyle = '#0f172a';
-            ctx.fillRect(mx + 3, my + 3, 32, 14);
-            // Tiny glowing code bars on monitor
-            ctx.fillStyle = m === 3 ? '#34d399' : '#7dd3fc';
-            ctx.fillRect(mx + 5, my + 5, 18, 2.5);
-            ctx.fillRect(mx + 5, my + 9, 25, 2.5);
-            ctx.fillRect(mx + 5, my + 13, 14, 2.5);
-            // Keyboard
-            ctx.fillStyle = '#cbd5e1';
-            ctx.fillRect(mx + 4, my + 22, 30, 4);
+            pCtx.fillStyle = m === 3 ? '#10b981' : '#38bdf8';
+            pCtx.fillRect(mx, my, 38, 20);
+            pCtx.fillStyle = '#0f172a';
+            pCtx.fillRect(mx + 3, my + 3, 32, 14);
+            pCtx.fillStyle = m === 3 ? '#6ee7b7' : '#bae6fd';
+            pCtx.fillRect(mx + 5, my + 5, 18, 3);
+            pCtx.fillRect(mx + 5, my + 10, 25, 3);
+            pCtx.fillStyle = '#fef3c7';
+            pCtx.fillRect(mx + 4, my + 22, 30, 4);
           }
-
-          ctx.fillStyle = '#ffffff';
-          ctx.font = '900 12px sans-serif';
-          ctx.textAlign = 'center';
-          ctx.textBaseline = 'middle';
-          ctx.fillText('💻 ' + obs.label, obs.x + obs.w * 0.5, obs.y + 13);
           return;
         }
 
-        // If Robotics Arena on 2/F, draw track & moving mini-robots
         if (obs.isArena) {
-          ctx.fillStyle = '#1e293b';
-          roundRectPath(ctx, obs.x + 10, obs.y + 28, obs.w - 20, obs.h - 36, 10);
-          ctx.fill();
+          pCtx.fillStyle = '#293548';
+          pCtx.fillRect(obs.x + 10, obs.y + 28, obs.w - 20, obs.h - 36);
 
-          ctx.strokeStyle = '#38bdf8';
-          ctx.lineWidth = 2;
-          ctx.strokeRect(obs.x + 22, obs.y + 38, obs.w - 44, obs.h - 56);
+          pCtx.strokeStyle = '#38bdf8';
+          pCtx.lineWidth = 2.5;
+          pCtx.strokeRect(obs.x + 22, obs.y + 38, obs.w - 44, obs.h - 56);
 
           state.miniRobots.forEach(bot => {
-            ctx.fillStyle = bot.color;
-            ctx.beginPath();
-            ctx.arc(bot.x, bot.y, 8, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.fillStyle = '#0f172a';
-            ctx.fillRect(bot.x - 4, bot.y - 3, 3, 3);
-            ctx.fillRect(bot.x + 1, bot.y - 3, 3, 3);
+            pCtx.fillStyle = bot.color;
+            pCtx.fillRect(bot.x - 8, bot.y - 8, 16, 16);
+            pCtx.strokeStyle = '#4a2511';
+            pCtx.lineWidth = 2;
+            pCtx.strokeRect(bot.x - 8, bot.y - 8, 16, 16);
+            pCtx.fillStyle = '#0f172a';
+            pCtx.fillRect(bot.x - 5, bot.y - 4, 3, 3);
+            pCtx.fillRect(bot.x + 2, bot.y - 4, 3, 3);
           });
-
-          ctx.fillStyle = '#f8fafc';
-          ctx.font = '800 12px sans-serif';
-          ctx.textAlign = 'center';
-          ctx.textBaseline = 'middle';
-          ctx.fillText(obs.label, obs.x + obs.w * 0.5, obs.y + 15);
-          return;
         }
-
-        ctx.fillStyle = '#ffffff';
-        ctx.font = '800 13px sans-serif';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillText(obs.label, obs.x + obs.w * 0.5, obs.y + obs.h * 0.5);
       }
 
-      function drawStationNpc(st, timeSec) {
-        const pulse = Math.sin(timeSec * 4.5) * 4;
+      // Shared Adorable Stardew Chibi Pixel Sprite Renderer (Breathes, Blinks & Has Cute Details!)
+      function drawStardewChibiCharacter(opts) {
+        const {
+          x,
+          y,
+          timeSec,
+          seed,
+          walkPhase,
+          dir,
+          shirtColor,
+          pantsColor,
+          hairColor,
+          hairStyle,
+          hasGlasses,
+          hasTie,
+          hasApron,
+          hasCap
+        } = opts;
+
+        const walkBob = walkPhase ? Math.round(Math.abs(Math.sin(walkPhase)) * 4) : 0;
+        const breathBob = walkPhase ? 0 : Math.round(Math.sin(timeSec * 3.4 + (seed || 0)) * 1.4);
+        const bob = walkBob + breathBob;
+        const legSwing = walkPhase ? Math.round(Math.sin(walkPhase) * 5) : 0;
+        const isBlinking = Math.sin(timeSec * 1.9 + (seed || 0) * 3.1) > 0.965;
+
+        // Soft Warm Oval Ground Shadow
+        pCtx.fillStyle = 'rgba(59, 31, 14, 0.30)';
+        pCtx.fillRect(x - 14, y + 13, 28, 7);
+
+        // Cute Little Shoes & Trousers
+        pCtx.fillStyle = pantsColor || '#1e3a8a';
+        pCtx.fillRect(x - 9, y + 4 - walkBob + legSwing * 0.4, 7, 11);
+        pCtx.fillRect(x + 2, y + 4 - walkBob - legSwing * 0.4, 7, 11);
+        pCtx.fillStyle = '#4a2511';
+        pCtx.fillRect(x - 10, y + 13 - walkBob + legSwing * 0.4, 8, 3);
+        pCtx.fillRect(x + 2, y + 13 - walkBob - legSwing * 0.4, 8, 3);
+
+        // Rounded Chibi Torso & Sleeves
+        pCtx.fillStyle = shirtColor || '#38bdf8';
+        pCtx.fillRect(x - 13, y - 11 - bob, 26, 18);
+        // Cute little arms
+        pCtx.fillRect(x - 16, y - 9 - bob, 4, 12);
+        pCtx.fillRect(x + 12, y - 9 - bob, 4, 12);
+        pCtx.strokeStyle = '#4a2511';
+        pCtx.lineWidth = 2;
+        pCtx.strokeRect(x - 13, y - 11 - bob, 26, 18);
+
+        if (hasTie) {
+          pCtx.fillStyle = '#1e3a8a';
+          pCtx.fillRect(x - 2, y - 9 - bob, 4, 13);
+        }
+        if (hasApron) {
+          pCtx.fillStyle = '#fffbeb';
+          pCtx.fillRect(x - 8, y - 7 - bob, 16, 13);
+        }
+
+        // Stepped Rounded Stardew Chibi Head
+        pCtx.fillStyle = '#fed7aa';
+        pCtx.fillRect(x - 13, y - 33 - bob, 26, 22);
+        pCtx.fillRect(x - 10, y - 36 - bob, 20, 26);
+        pCtx.strokeStyle = '#4a2511';
+        pCtx.lineWidth = 2;
+        pCtx.strokeRect(x - 12, y - 34 - bob, 24, 23);
+
+        // Cute Hair Style
+        pCtx.fillStyle = hairColor || '#3b2314';
+        pCtx.fillRect(x - 13, y - 37 - bob, 26, 9);
+        pCtx.fillRect(x - 14, y - 32 - bob, 4, 10);
+        pCtx.fillRect(x + 10, y - 32 - bob, 4, 10);
+
+        if (hairStyle === 'bun') {
+          pCtx.fillRect(x - 6, y - 43 - bob, 12, 7);
+          pCtx.fillStyle = '#f472b6';
+          pCtx.fillRect(x + 5, y - 39 - bob, 5, 4);
+        } else if (hairStyle === 'long') {
+          pCtx.fillRect(x - 15, y - 24 - bob, 4, 14);
+          pCtx.fillRect(x + 11, y - 24 - bob, 4, 14);
+        } else if (hasCap) {
+          pCtx.fillStyle = '#ea580c';
+          pCtx.fillRect(x - 13, y - 39 - bob, 26, 7);
+          pCtx.fillStyle = '#fef08a';
+          pCtx.fillRect(x - 4, y - 37 - bob, 8, 3);
+        }
+
+        // Expressive Eyes & Rosy Stardew Cheeks
+        const eyeOffset = dir === 'left' ? -2 : dir === 'right' ? 2 : 0;
+        pCtx.fillStyle = '#3b2314';
+        if (isBlinking) {
+          pCtx.fillRect(x - 7 + eyeOffset, y - 23 - bob, 5, 2);
+          pCtx.fillRect(x + 2 + eyeOffset, y - 23 - bob, 5, 2);
+        } else {
+          pCtx.fillRect(x - 6 + eyeOffset, y - 25 - bob, 4, 5);
+          pCtx.fillRect(x + 2 + eyeOffset, y - 25 - bob, 4, 5);
+          // Cute eye sparkle dot
+          pCtx.fillStyle = '#ffffff';
+          pCtx.fillRect(x - 6 + eyeOffset, y - 25 - bob, 2, 2);
+          pCtx.fillRect(x + 2 + eyeOffset, y - 25 - bob, 2, 2);
+        }
+
+        if (hasGlasses) {
+          pCtx.strokeStyle = '#4a2511';
+          pCtx.lineWidth = 1.5;
+          pCtx.strokeRect(x - 8 + eyeOffset, y - 26 - bob, 7, 7);
+          pCtx.strokeRect(x + 1 + eyeOffset, y - 26 - bob, 7, 7);
+        }
+
+        // Rosy Pink Cheeks
+        pCtx.fillStyle = '#fda4af';
+        pCtx.fillRect(x - 10 + eyeOffset, y - 19 - bob, 4, 3);
+        pCtx.fillRect(x + 6 + eyeOffset, y - 19 - bob, 4, 3);
+      }
+
+      function drawStationNpcPixelBody(st, timeSec) {
+        const pulse = Math.round(Math.sin(timeSec * 4.5) * 4);
         const activeTarget = getActiveTargetStation();
         const isTarget = activeTarget && activeTarget.id === st.id;
 
-        // Ground halo ring
-        ctx.save();
-        ctx.beginPath();
-        ctx.arc(st.x, st.y + 14, 34 + (st.completed ? 0 : pulse), 0, Math.PI * 2);
+        // Cozy Halo Ring
+        pCtx.beginPath();
+        pCtx.arc(st.x, st.y + 14, 34 + (st.completed ? 0 : pulse), 0, Math.PI * 2);
         if (st.completed) {
-          ctx.fillStyle = 'rgba(16, 185, 129, 0.22)';
-          ctx.strokeStyle = '#10b981';
+          pCtx.fillStyle = 'rgba(58, 140, 78, 0.25)';
+          pCtx.strokeStyle = '#2f855a';
         } else {
-          ctx.fillStyle = isTarget ? 'rgba(250, 204, 21, 0.34)' : 'rgba(56, 189, 248, 0.22)';
-          ctx.strokeStyle = isTarget ? '#f59e0b' : '#0284c7';
+          pCtx.fillStyle = isTarget ? 'rgba(246, 196, 69, 0.38)' : 'rgba(56, 189, 248, 0.24)';
+          pCtx.strokeStyle = isTarget ? '#d97706' : '#2b6cb0';
         }
-        ctx.lineWidth = 3;
-        ctx.fill();
-        ctx.stroke();
-        ctx.restore();
+        pCtx.lineWidth = 3;
+        pCtx.fill();
+        pCtx.stroke();
 
-        // NPC Body
-        ctx.fillStyle = st.completed ? '#059669' : '#1d4ed8';
-        roundRectPath(ctx, st.x - 16, st.y - 6, 32, 26, 10);
-        ctx.fill();
-        ctx.strokeStyle = '#ffffff';
-        ctx.lineWidth = 2;
-        ctx.stroke();
+        const styleMap = {
+          math_p1: { shirt: '#2b6cb0', hair: '#2d1b12', glasses: true, tie: true },
+          chi_p3: { shirt: '#d97706', hair: '#3b2314', hairStyle: 'bun' },
+          math_p5: { shirt: '#0d9488', hair: '#2d1b12', glasses: true },
+          steam_p3: { shirt: '#fffbeb', hair: '#4a2511', hairStyle: 'long', apron: true },
+          steam_p5: { shirt: '#7dd3fc', hair: '#1e293b', cap: true, tie: true }
+        };
+        const cfg = styleMap[st.id] || { shirt: '#2b6cb0', hair: '#3b2314' };
 
-        // NPC Head & Emoji Avatar
-        ctx.fillStyle = '#fde68a';
-        ctx.beginPath();
-        ctx.arc(st.x, st.y - 18, 16, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.strokeStyle = '#0f172a';
-        ctx.lineWidth = 1.8;
-        ctx.stroke();
+        drawStardewChibiCharacter({
+          x: st.x,
+          y: st.y,
+          timeSec,
+          seed: st.x * 0.05,
+          shirtColor: st.completed ? '#3a8c4e' : cfg.shirt,
+          pantsColor: '#1e3a8a',
+          hairColor: cfg.hair,
+          hairStyle: cfg.hairStyle,
+          hasGlasses: cfg.glasses,
+          hasTie: cfg.tie,
+          hasApron: cfg.apron,
+          hasCap: cfg.cap
+        });
+      }
 
-        ctx.font = '22px sans-serif';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillText(st.avatar, st.x, st.y - 17);
-
-        // Floating Subject + Level Pill above NPC
-        const badgeW = 166;
+      function drawStationNpcLabels(st, timeSec) {
+        const badgeW = 176;
         const badgeH = 38;
         const bx = st.x - badgeW * 0.5;
-        const by = st.y - 78 + Math.sin(timeSec * 3) * 2;
+        const by = st.y - 80 + Math.sin(timeSec * 3) * 2;
 
-        ctx.fillStyle = st.completed ? '#065f46' : '#0f172a';
-        roundRectPath(ctx, bx, by, badgeW, badgeH, 12);
-        ctx.fill();
-        ctx.strokeStyle = st.completed ? '#34d399' : '#facc15';
-        ctx.lineWidth = 2;
-        ctx.stroke();
+        ctx.fillStyle = st.completed ? '#dcfce7' : '#fdf3dc';
+        ctx.fillRect(bx, by, badgeW, badgeH);
+        ctx.strokeStyle = st.completed ? '#15803d' : '#4a2511';
+        ctx.lineWidth = 2.5;
+        ctx.strokeRect(bx, by, badgeW, badgeH);
 
-        ctx.fillStyle = '#ffffff';
-        ctx.font = '900 12px sans-serif';
-        ctx.fillText(st.npcName, st.x, by + 13);
-
-        ctx.fillStyle = st.completed ? '#6ee7b7' : '#fde047';
-        ctx.font = '800 10.5px sans-serif';
-        ctx.fillText(st.completed ? '✓ 已完成挑戰' : `${st.subject} • ${st.level}`, st.x, by + 28);
-      }
-
-      function drawFriendlyTeacher(teacher, timeSec) {
-        // Gentle green/teal welcome ring
-        ctx.save();
-        ctx.beginPath();
-        ctx.arc(teacher.x, teacher.y + 14, 28, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(20, 184, 166, 0.16)';
-        ctx.strokeStyle = 'rgba(13, 148, 136, 0.7)';
-        ctx.lineWidth = 2;
-        ctx.fill();
-        ctx.stroke();
-        ctx.restore();
-
-        // Teacher Body
-        ctx.fillStyle = teacher.shirtColor;
-        roundRectPath(ctx, teacher.x - 14, teacher.y - 5, 28, 24, 9);
-        ctx.fill();
-        ctx.strokeStyle = '#ffffff';
-        ctx.lineWidth = 2;
-        ctx.stroke();
-
-        // Teacher Head & Avatar
-        ctx.fillStyle = '#fef3c7';
-        ctx.beginPath();
-        ctx.arc(teacher.x, teacher.y - 16, 14, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.strokeStyle = '#0f172a';
-        ctx.lineWidth = 1.6;
-        ctx.stroke();
-
-        ctx.font = '19px sans-serif';
+        ctx.fillStyle = '#3b2314';
+        ctx.font = '900 12px "Courier New", monospace';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
-        ctx.fillText(teacher.avatar, teacher.x, teacher.y - 15);
+        ctx.fillText(`${st.avatar} ${st.npcName}`, st.x, by + 13);
 
-        // Name Tag Pill
-        const tagW = 128;
-        const tagH = 22;
-        const tx = teacher.x - tagW * 0.5;
-        const ty = teacher.y - 52 + Math.sin(timeSec * 2.5 + teacher.x) * 1.5;
-
-        ctx.fillStyle = 'rgba(15, 23, 42, 0.85)';
-        roundRectPath(ctx, tx, ty, tagW, tagH, 10);
-        ctx.fill();
-        ctx.strokeStyle = '#5eead4';
-        ctx.lineWidth = 1.5;
-        ctx.stroke();
-
-        ctx.fillStyle = '#ffffff';
-        ctx.font = '800 11px sans-serif';
-        ctx.fillText('💬 ' + teacher.npcName, teacher.x, ty + 11);
+        ctx.fillStyle = st.completed ? '#15803d' : '#b45309';
+        ctx.font = '900 10.5px "Courier New", monospace';
+        ctx.fillText(st.completed ? '✓ 已獲得印章' : `★ ${st.subject} • ${st.level}`, st.x, by + 28);
       }
 
-      function drawEasterEggSpot(egg, timeSec) {
+      function drawFriendlyTeacherPixelBody(teacher, timeSec) {
+        pCtx.beginPath();
+        pCtx.arc(teacher.x, teacher.y + 14, 28, 0, Math.PI * 2);
+        pCtx.fillStyle = 'rgba(58, 140, 78, 0.18)';
+        pCtx.strokeStyle = '#3a8c4e';
+        pCtx.lineWidth = 2.5;
+        pCtx.fill();
+        pCtx.stroke();
+
+        const isFemale = teacher.id === 'eng_dan' || teacher.id === 'va_lee';
+        drawStardewChibiCharacter({
+          x: teacher.x,
+          y: teacher.y,
+          timeSec,
+          seed: teacher.x * 0.07,
+          shirtColor: teacher.shirtColor,
+          pantsColor: '#334155',
+          hairColor: teacher.id === 'eng_dan' ? '#92400e' : '#2d1b12',
+          hairStyle: isFemale ? 'long' : 'short',
+          hasGlasses: teacher.id === 'vp_chan' || teacher.id === 'ict_tong',
+          hasTie: teacher.id === 'vp_chan',
+          hasCap: teacher.id === 'pe_ho'
+        });
+      }
+
+      function drawFriendlyTeacherLabels(teacher, timeSec) {
+        const tagW = 148;
+        const tagH = 24;
+        const tx = teacher.x - tagW * 0.5;
+        const ty = teacher.y - 60 + Math.sin(timeSec * 2.5 + teacher.x) * 1.5;
+
+        ctx.fillStyle = '#fdf3dc';
+        ctx.fillRect(tx, ty, tagW, tagH);
+        ctx.strokeStyle = '#4a2511';
+        ctx.lineWidth = 2;
+        ctx.strokeRect(tx, ty, tagW, tagH);
+
+        ctx.fillStyle = '#3b2314';
+        ctx.font = '900 11px "Courier New", monospace';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(`${teacher.avatar} ${teacher.npcName}`, teacher.x, ty + 12);
+      }
+
+      function drawEasterEggPixelBody(egg, timeSec) {
         const found = !!state.foundEggs[egg.id];
-        const bob = Math.sin(timeSec * 4.2 + egg.x) * 3;
-        const radius = 16 + Math.sin(timeSec * 5) * 2;
+        const bob = Math.round(Math.sin(timeSec * 4.2 + egg.x) * 3);
+        const r = Math.round(15 + Math.sin(timeSec * 5) * 2);
 
-        ctx.save();
-        ctx.beginPath();
-        ctx.arc(egg.x, egg.y + bob, radius, 0, Math.PI * 2);
-        ctx.fillStyle = found ? 'rgba(16, 185, 129, 0.25)' : 'rgba(192, 132, 252, 0.35)';
-        ctx.strokeStyle = found ? '#10b981' : '#a855f7';
-        ctx.lineWidth = 2.2;
-        ctx.fill();
-        ctx.stroke();
+        pCtx.fillStyle = found ? 'rgba(58, 140, 78, 0.32)' : 'rgba(246, 196, 69, 0.45)';
+        pCtx.fillRect(egg.x - r, egg.y - r + bob, r * 2, r * 2);
+        pCtx.strokeStyle = found ? '#15803d' : '#b45309';
+        pCtx.lineWidth = 2.5;
+        pCtx.strokeRect(egg.x - r, egg.y - r + bob, r * 2, r * 2);
+      }
 
+      function drawEasterEggIcon(egg, timeSec) {
+        const found = !!state.foundEggs[egg.id];
+        const bob = Math.round(Math.sin(timeSec * 4.2 + egg.x) * 3);
         ctx.font = '18px sans-serif';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         ctx.fillText(found ? '🌟' : '✨', egg.x, egg.y + bob);
-        ctx.restore();
       }
 
-      function drawChibiPlayer() {
+      function drawChibiPlayer(timeSec) {
         const p = state.player;
-        const bob = Math.abs(Math.sin(p.walkPhase)) * 4;
-        const legSwing = Math.sin(p.walkPhase) * 5;
+        drawStardewChibiCharacter({
+          x: p.x,
+          y: p.y,
+          timeSec,
+          seed: 0,
+          walkPhase: p.walkPhase,
+          dir: p.dir,
+          shirtColor: '#7dd3fc',
+          pantsColor: '#1e3a8a',
+          hairColor: '#2d1b12',
+          hasTie: true
+        });
 
-        // Soft ground shadow
-        ctx.fillStyle = 'rgba(15, 23, 42, 0.25)';
-        ctx.beginPath();
-        ctx.ellipse(p.x, p.y + 18, 17, 7, 0, 0, Math.PI * 2);
-        ctx.fill();
-
-        // Navy school trousers & shoes
-        ctx.fillStyle = '#1e3a8a';
-        ctx.fillRect(p.x - 10, p.y + 4 - bob + legSwing * 0.4, 8, 12);
-        ctx.fillRect(p.x + 2, p.y + 4 - bob - legSwing * 0.4, 8, 12);
-
-        // CCC Kei Long College Light-Blue School Uniform Shirt
-        ctx.fillStyle = '#7dd3fc';
-        roundRectPath(ctx, p.x - 14, p.y - 12 - bob, 28, 20, 8);
-        ctx.fill();
-        ctx.strokeStyle = '#0369a1';
-        ctx.lineWidth = 2;
-        ctx.stroke();
-
-        // Navy School Tie
-        ctx.fillStyle = '#1e3a8a';
-        ctx.beginPath();
-        ctx.moveTo(p.x - 2, p.y - 10 - bob);
-        ctx.lineTo(p.x + 2, p.y - 10 - bob);
-        ctx.lineTo(p.x + 3, p.y + 2 - bob);
-        ctx.lineTo(p.x, p.y + 5 - bob);
-        ctx.lineTo(p.x - 3, p.y + 2 - bob);
-        ctx.closePath();
-        ctx.fill();
-
-        // Chibi Head
-        ctx.fillStyle = '#fed7aa';
-        ctx.beginPath();
-        ctx.arc(p.x, p.y - 24 - bob, 14, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.strokeStyle = '#0f172a';
-        ctx.lineWidth = 1.8;
-        ctx.stroke();
-
-        // Neat Hair
-        ctx.fillStyle = '#1e293b';
-        ctx.beginPath();
-        ctx.arc(p.x, p.y - 27 - bob, 14.5, Math.PI, Math.PI * 2);
-        ctx.fill();
-
-        // Eyes looking in movement direction
-        const eyeOffset = p.dir === 'left' ? -3 : p.dir === 'right' ? 3 : 0;
-        ctx.fillStyle = '#0f172a';
-        ctx.beginPath();
-        ctx.arc(p.x - 4 + eyeOffset, p.y - 23 - bob, 2, 0, Math.PI * 2);
-        ctx.arc(p.x + 4 + eyeOffset, p.y - 23 - bob, 2, 0, Math.PI * 2);
-        ctx.fill();
-
-        // Player Tag
-        ctx.fillStyle = 'rgba(2, 132, 199, 0.92)';
-        roundRectPath(ctx, p.x - 26, p.y - 54 - bob, 52, 16, 8);
-        ctx.fill();
-        ctx.fillStyle = '#ffffff';
-        ctx.font = '800 10px sans-serif';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillText('訪客同學', p.x, p.y - 46 - bob);
-
-        // Floating Golden Directional Compass Arrow pointing toward active target
+        // Floating Golden Pixel Directional Compass Arrow
         const targetSt = getActiveTargetStation();
         if (targetSt) {
           let goalX = targetSt.x;
@@ -3404,21 +3521,21 @@
           const ax = p.x + Math.cos(angle) * orbitDist;
           const ay = p.y + Math.sin(angle) * orbitDist;
 
-          ctx.save();
-          ctx.translate(ax, ay);
-          ctx.rotate(angle);
-          ctx.fillStyle = '#facc15';
-          ctx.strokeStyle = '#0f172a';
-          ctx.lineWidth = 2;
-          ctx.beginPath();
-          ctx.moveTo(11, 0);
-          ctx.lineTo(-6, -7);
-          ctx.lineTo(-3, 0);
-          ctx.lineTo(-6, 7);
-          ctx.closePath();
-          ctx.fill();
-          ctx.stroke();
-          ctx.restore();
+          pCtx.save();
+          pCtx.translate(ax, ay);
+          pCtx.rotate(angle);
+          pCtx.fillStyle = '#f6c445';
+          pCtx.strokeStyle = '#4a2511';
+          pCtx.lineWidth = 2.5;
+          pCtx.beginPath();
+          pCtx.moveTo(12, 0);
+          pCtx.lineTo(-6, -8);
+          pCtx.lineTo(-3, 0);
+          pCtx.lineTo(-6, 8);
+          pCtx.closePath();
+          pCtx.fill();
+          pCtx.stroke();
+          pCtx.restore();
         }
       }
 
@@ -3426,17 +3543,21 @@
       // K. MOVEMENT, COLLISION & PROXIMITY INTERACTION
       // =====================================================================
       function collidesWithWorld(nx, ny, radius) {
-        if (nx - radius < 42 || nx + radius > WORLD_W - 42) return true;
-        if (ny - radius < 124 || ny + radius > WORLD_H - 42) return true;
+        const minX = 44 + radius;
+        const maxX = WORLD_W - 44 - radius;
+        const minY = 122 + radius;
+        const maxY = WORLD_H - 44 - radius;
+
+        if (nx < minX || nx > maxX || ny < minY || ny > maxY) {
+          return true;
+        }
 
         const floorData = FLOORS[state.currentFloor];
         for (let i = 0; i < floorData.obstacles.length; i++) {
           const obs = floorData.obstacles[i];
           const closestX = Math.max(obs.x, Math.min(nx, obs.x + obs.w));
           const closestY = Math.max(obs.y, Math.min(ny, obs.y + obs.h));
-          const dx = nx - closestX;
-          const dy = ny - closestY;
-          if (dx * dx + dy * dy < radius * radius) {
+          if (Math.hypot(nx - closestX, ny - closestY) < radius) {
             return true;
           }
         }
@@ -3444,22 +3565,7 @@
       }
 
       function updateGameplay(dt) {
-        const isQuizOpen = !document.getElementById('quizModal').classList.contains('hidden');
-        const isSummaryOpen = !document.getElementById('summaryModal').classList.contains('hidden');
-        const isTalkOpen = !document.getElementById('npcTalkModal').classList.contains('hidden');
-        const isBballOpen = !document.getElementById('basketballModal').classList.contains('hidden');
-
-        // 1. Update 5-Minute Countdown Timer
-        if (!isQuizOpen && !isSummaryOpen && !isTalkOpen && !isBballOpen && state.remainingSeconds > 0) {
-          state.remainingSeconds = Math.max(0, state.remainingSeconds - dt);
-          updateTimerDisplay();
-          if (state.remainingSeconds <= 0) {
-            openSummaryModal(true);
-            return;
-          }
-        }
-
-        // Update confetti particles
+        // Update confetti particles & footstep dust puffs
         for (let i = state.confetti.length - 1; i >= 0; i--) {
           const c = state.confetti[i];
           c.x += c.vx * dt;
@@ -3467,6 +3573,13 @@
           c.vy += 260 * dt;
           c.life -= dt;
           if (c.life <= 0) state.confetti.splice(i, 1);
+        }
+        for (let i = state.dustPuffs.length - 1; i >= 0; i--) {
+          const dp = state.dustPuffs[i];
+          dp.y -= 14 * dt;
+          dp.size += 8 * dt;
+          dp.life -= dt;
+          if (dp.life <= 0) state.dustPuffs.splice(i, 1);
         }
 
         // Animate mini-robots on 2/F (with turbo speed boost if Easter Egg #3 unlocked!)
@@ -3489,8 +3602,23 @@
           state.stairCooldown = Math.max(0, state.stairCooldown - dt);
         }
 
+        const isQuizOpen = !document.getElementById('quizModal').classList.contains('hidden');
         const isQuestOpen = !document.getElementById('questListModal').classList.contains('hidden');
+        const isSummaryOpen = !document.getElementById('summaryModal').classList.contains('hidden');
+        const isTalkOpen = !document.getElementById('npcTalkModal').classList.contains('hidden');
+        const isBballOpen = !document.getElementById('basketballModal').classList.contains('hidden');
         if (isQuizOpen || isQuestOpen || isSummaryOpen || isTalkOpen || isBballOpen) return;
+
+        // 1. Update 5-minute countdown timer
+        if (state.remainingSeconds > 0) {
+          state.remainingSeconds = Math.max(0, state.remainingSeconds - dt);
+          updateTimerDisplay();
+          if (state.remainingSeconds <= 0) {
+            sfx.playWrong();
+            openSummaryModal(true);
+            return;
+          }
+        }
 
         // 2. Player Movement (Keyboard WASD / Arrow Keys / Touch D-Pad / Click-to-Walk)
         let vx = 0;
@@ -3528,7 +3656,16 @@
             state.player.y += stepY;
           }
 
+          const prevPhase = state.player.walkPhase;
           state.player.walkPhase += dt * 11;
+          if (Math.floor(state.player.walkPhase / Math.PI) > Math.floor(prevPhase / Math.PI)) {
+            state.dustPuffs.push({
+              x: state.player.x + (Math.random() - 0.5) * 10,
+              y: state.player.y + 14,
+              size: 4,
+              life: 0.35
+            });
+          }
           if (Math.abs(vx) > Math.abs(vy)) {
             state.player.dir = vx < 0 ? 'left' : 'right';
           } else {
@@ -4052,7 +4189,7 @@
           if (b.y > h + 25 || b.x > w + 25 || b.x < -25) {
             if (!b.scoredThisShot) {
               bballState.streak = 0;
-              bballState.bannerText = '差一點點，再試一次！';
+              bballState.bannerText = '差一點點！再試一次吧！';
               bballState.bannerTimer = 1.2;
               updateBballStatsUI();
             }
@@ -4060,36 +4197,54 @@
           }
         }
 
-        // Render Mini Basketball Court Scene
-        const sky = bballCtx.createLinearGradient(0, 0, 0, h);
-        sky.addColorStop(0, '#7dd3fc');
-        sky.addColorStop(0.75, '#e0f2fe');
-        sky.addColorStop(0.75, '#228e5c');
-        sky.addColorStop(1, '#15803d');
-        bballCtx.fillStyle = sky;
-        bballCtx.fillRect(0, 0, w, h);
+        // Render Cozy Stardew-Style Mini Basketball Court Scene
+        bballCtx.imageSmoothingEnabled = false;
+        bballCtx.fillStyle = '#64a6ed';
+        bballCtx.fillRect(0, 0, w, h * 0.45);
+        bballCtx.fillStyle = '#bae6fd';
+        bballCtx.fillRect(0, h * 0.45, w, h * 0.30);
+        bballCtx.fillStyle = '#48bb78';
+        bballCtx.fillRect(0, h * 0.75, w, h * 0.14);
+        bballCtx.fillStyle = '#2f855a';
+        bballCtx.fillRect(0, h * 0.89, w, h * 0.11);
+
+        // Fluffy Stardew Pixel Cloud in Mini-Game Sky
+        bballCtx.fillStyle = '#fffbeb';
+        bballCtx.fillRect(72, 34, 68, 14);
+        bballCtx.fillStyle = '#ffffff';
+        bballCtx.fillRect(84, 24, 44, 12);
+
+        // Cute Bushes along Mini-Court Background
+        [45, 165, 295].forEach((bxPos, idx) => {
+          bballCtx.fillStyle = '#276749';
+          bballCtx.fillRect(bxPos, h * 0.75 - 16, 44, 16);
+          bballCtx.fillStyle = '#68d391';
+          bballCtx.fillRect(bxPos + 6, h * 0.75 - 22, 32, 10);
+          bballCtx.fillStyle = idx % 2 === 0 ? '#fde047' : '#f87171';
+          bballCtx.fillRect(bxPos + 14, h * 0.75 - 15, 4, 4);
+        });
 
         // Court white line
-        bballCtx.strokeStyle = '#ffffff';
-        bballCtx.lineWidth = 3;
+        bballCtx.strokeStyle = '#fffbeb';
+        bballCtx.lineWidth = 4;
         bballCtx.beginPath();
         bballCtx.moveTo(0, h * 0.75);
         bballCtx.lineTo(w, h * 0.75);
         bballCtx.stroke();
 
         // Hoop Pole & Backboard
-        bballCtx.fillStyle = '#1e293b';
+        bballCtx.fillStyle = '#4a2511';
         bballCtx.fillRect(hoopX + 42, hoopY - 20, 10, h * 0.75 - (hoopY - 20));
-        bballCtx.fillStyle = '#ffffff';
+        bballCtx.fillStyle = '#fffbeb';
         bballCtx.fillRect(hoopX + 34, hoopY - 56, 10, 68);
-        bballCtx.strokeStyle = '#0f172a';
-        bballCtx.lineWidth = 2;
+        bballCtx.strokeStyle = '#4a2511';
+        bballCtx.lineWidth = 3;
         bballCtx.strokeRect(hoopX + 34, hoopY - 56, 10, 68);
 
         // Net
-        const sway = Math.sin(bballState.netRipple * Math.PI * 3) * 6;
+        const sway = Math.round(Math.sin(bballState.netRipple * Math.PI * 3) * 6);
         bballCtx.strokeStyle = '#ffffff';
-        bballCtx.lineWidth = 2;
+        bballCtx.lineWidth = 2.5;
         bballCtx.beginPath();
         bballCtx.moveTo(hoopX - 24, hoopY);
         bballCtx.lineTo(hoopX - 16 + sway, hoopY + 34);
@@ -4099,13 +4254,13 @@
 
         // Orange Rim
         bballCtx.strokeStyle = '#ea580c';
-        bballCtx.lineWidth = 5;
+        bballCtx.lineWidth = 6;
         bballCtx.beginPath();
         bballCtx.moveTo(hoopX - 26, hoopY);
         bballCtx.lineTo(hoopX + 34, hoopY);
         bballCtx.stroke();
 
-        // Aim Trajectory Dots when ready to shoot
+        // Stepped Pixel Aim Trajectory Squares when ready to shoot
         if (!bballState.ball.flying) {
           const speed = 555;
           const vx = Math.cos(bballState.aimAngle) * speed;
@@ -4113,24 +4268,24 @@
           bballCtx.fillStyle = '#facc15';
           for (let step = 1; step <= 8; step++) {
             const t = step * 0.085;
-            const px = bballState.ball.x + vx * t;
-            const py = bballState.ball.y + vy * t + 0.5 * 680 * t * t;
-            bballCtx.beginPath();
-            bballCtx.arc(px, py, Math.max(2.5, 6 - step * 0.4), 0, Math.PI * 2);
-            bballCtx.fill();
+            const px = Math.round(bballState.ball.x + vx * t);
+            const py = Math.round(bballState.ball.y + vy * t + 0.5 * 680 * t * t);
+            const sq = Math.max(5, Math.round(11 - step * 0.7));
+            bballCtx.fillRect(px - sq * 0.5, py - sq * 0.5, sq, sq);
+            bballCtx.strokeStyle = '#0f172a';
+            bballCtx.lineWidth = 1.5;
+            bballCtx.strokeRect(px - sq * 0.5, py - sq * 0.5, sq, sq);
           }
         }
 
-        // Basketball
-        const bx = bballState.ball.x;
-        const by = bballState.ball.y;
+        // Pixel Basketball
+        const bx = Math.round(bballState.ball.x);
+        const by = Math.round(bballState.ball.y);
         bballCtx.fillStyle = '#f97316';
-        bballCtx.beginPath();
-        bballCtx.arc(bx, by, 15, 0, Math.PI * 2);
-        bballCtx.fill();
-        bballCtx.strokeStyle = '#431407';
-        bballCtx.lineWidth = 2;
-        bballCtx.stroke();
+        bballCtx.fillRect(bx - 14, by - 14, 28, 28);
+        bballCtx.strokeStyle = '#0f172a';
+        bballCtx.lineWidth = 3;
+        bballCtx.strokeRect(bx - 14, by - 14, 28, 28);
         bballCtx.beginPath();
         bballCtx.moveTo(bx - 14, by);
         bballCtx.lineTo(bx + 14, by);
@@ -4138,13 +4293,15 @@
         bballCtx.lineTo(bx, by + 14);
         bballCtx.stroke();
 
-        // Feedback Banner inside Mini-Game
+        // Pixel-Framed Feedback Banner inside Mini-Game
         if (bballState.bannerTimer > 0 && bballState.bannerText) {
-          bballCtx.fillStyle = 'rgba(15, 23, 42, 0.85)';
-          roundRectPath(bballCtx, w * 0.5 - 145, 14, 290, 32, 16);
-          bballCtx.fill();
+          bballCtx.fillStyle = '#0f172a';
+          bballCtx.fillRect(w * 0.5 - 150, 14, 300, 32);
+          bballCtx.strokeStyle = '#facc15';
+          bballCtx.lineWidth = 3;
+          bballCtx.strokeRect(w * 0.5 - 150, 14, 300, 32);
           bballCtx.fillStyle = '#fde047';
-          bballCtx.font = '900 14px sans-serif';
+          bballCtx.font = '900 14px "Courier New", monospace';
           bballCtx.textAlign = 'center';
           bballCtx.textBaseline = 'middle';
           bballCtx.fillText(bballState.bannerText, w * 0.5, 30);
